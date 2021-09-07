@@ -1,0 +1,197 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="99.Default">
+      <UniqueIdentifier>{3cffe0ef-9d64-4b31-82cb-fffcfdf86db0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00.MainFrm">
+      <UniqueIdentifier>{e8f18027-5c69-404a-ae93-c1b32fcd2118}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.ToolView">
+      <UniqueIdentifier>{3b104d1c-ac9d-4041-9ab1-c8616d5eb4e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.ToolDoc">
+      <UniqueIdentifier>{1a0d813a-200f-4c76-9db9-368bb8e8f4d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.GraphicDevice">
+      <UniqueIdentifier>{48c7ec4e-576c-4183-be08-68bfc424166e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="98.Include">
+      <UniqueIdentifier>{e9a3f0e9-18dd-4238-9483-9696711f43a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97.Manager">
+      <UniqueIdentifier>{d41ae4c5-c52d-45a0-9bca-0dc8668539da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97.Manager\00.Texture">
+      <UniqueIdentifier>{76648fda-955b-48a1-9646-6dc54e9a9c85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97.Manager\00.Texture\00.Single">
+      <UniqueIdentifier>{8c23601b-6e42-4d34-a2fc-7b37debff184}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97.Manager\00.Texture\01.Multi">
+      <UniqueIdentifier>{78a95854-bb2b-402c-8675-2ce8fd36d672}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.ToolView\01.MiniView">
+      <UniqueIdentifier>{5e05a9fe-83fb-45cb-af6d-94078bad0e7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.Terrain">
+      <UniqueIdentifier>{2f40e058-99fd-4400-8a44-96f463fce8c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05.FileInfo">
+      <UniqueIdentifier>{6c30fff3-a566-46f2-9446-5ba7ff6fc9b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06.Mouse">
+      <UniqueIdentifier>{6ce150ac-b10c-4240-8e7f-1a8e2e658035}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.ToolView\02.Form">
+      <UniqueIdentifier>{89814fbb-4078-4e27-81f1-098ff9f234f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.ToolView\02.Form\UnitTool">
+      <UniqueIdentifier>{835c6323-2c70-456c-8da5-9662907168a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.ToolView\02.Form\MapTool">
+      <UniqueIdentifier>{f1671be4-a4ff-46a8-bef8-e7cebc66d035}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="MainFrm.h">
+      <Filter>00.MainFrm</Filter>
+    </ClInclude>
+    <ClInclude Include="MFC ToolView.h">
+      <Filter>01.ToolView</Filter>
+    </ClInclude>
+    <ClInclude Include="MFC ToolDoc.h">
+      <Filter>02.ToolDoc</Filter>
+    </ClInclude>
+    <ClInclude Include="MFC Tool.h">
+      <Filter>99.Default</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>99.Default</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>99.Default</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicDevice.h">
+      <Filter>03.GraphicDevice</Filter>
+    </ClInclude>
+    <ClInclude Include="Include.h">
+      <Filter>98.Include</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>98.Include</Filter>
+    </ClInclude>
+    <ClInclude Include="MultiTexture.h">
+      <Filter>97.Manager\00.Texture\01.Multi</Filter>
+    </ClInclude>
+    <ClInclude Include="SingTexture.h">
+      <Filter>97.Manager\00.Texture\00.Single</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>97.Manager\00.Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="TexturMgr.h">
+      <Filter>97.Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="MiniView.h">
+      <Filter>01.ToolView\01.MiniView</Filter>
+    </ClInclude>
+    <ClInclude Include="Form.h">
+      <Filter>01.ToolView\02.Form</Filter>
+    </ClInclude>
+    <ClInclude Include="Terrain.h">
+      <Filter>04.Terrain</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectTool.h">
+      <Filter>01.ToolView\02.Form\UnitTool</Filter>
+    </ClInclude>
+    <ClInclude Include="FileInfo.h">
+      <Filter>05.FileInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="Mouse.h">
+      <Filter>06.Mouse</Filter>
+    </ClInclude>
+    <ClInclude Include="MapTool.h">
+      <Filter>01.ToolView\02.Form\MapTool</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="MainFrm.cpp">
+      <Filter>00.MainFrm</Filter>
+    </ClCompile>
+    <ClCompile Include="MFC ToolView.cpp">
+      <Filter>01.ToolView</Filter>
+    </ClCompile>
+    <ClCompile Include="MFC ToolDoc.cpp">
+      <Filter>02.ToolDoc</Filter>
+    </ClCompile>
+    <ClCompile Include="MFC Tool.cpp">
+      <Filter>99.Default</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>99.Default</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicDevice.cpp">
+      <Filter>03.GraphicDevice</Filter>
+    </ClCompile>
+    <ClCompile Include="MultiTexture.cpp">
+      <Filter>97.Manager\00.Texture\01.Multi</Filter>
+    </ClCompile>
+    <ClCompile Include="SingTexture.cpp">
+      <Filter>97.Manager\00.Texture\00.Single</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>97.Manager\00.Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="TexturMgr.cpp">
+      <Filter>97.Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="MiniView.cpp">
+      <Filter>01.ToolView\01.MiniView</Filter>
+    </ClCompile>
+    <ClCompile Include="Form.cpp">
+      <Filter>01.ToolView\02.Form</Filter>
+    </ClCompile>
+    <ClCompile Include="Terrain.cpp">
+      <Filter>04.Terrain</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectTool.cpp">
+      <Filter>01.ToolView\02.Form\UnitTool</Filter>
+    </ClCompile>
+    <ClCompile Include="FileInfo.cpp">
+      <Filter>05.FileInfo</Filter>
+    </ClCompile>
+    <ClCompile Include="Mouse.cpp">
+      <Filter>06.Mouse</Filter>
+    </ClCompile>
+    <ClCompile Include="MapTool.cpp">
+      <Filter>01.ToolView\02.Form\MapTool</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\MFC Tool.ico">
+      <Filter>99.Default</Filter>
+    </Image>
+    <Image Include="res\MFC ToolDoc.ico">
+      <Filter>99.Default</Filter>
+    </Image>
+    <Image Include="res\Toolbar.bmp">
+      <Filter>99.Default</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="MFC Tool.rc">
+      <Filter>99.Default</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\MFCTool.rc2">
+      <Filter>99.Default</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt">
+      <Filter>99.Default</Filter>
+    </Text>
+  </ItemGroup>
+</Project>
