@@ -171,7 +171,7 @@ void CMFCToolView::OnLButtonDown(UINT nFlags, CPoint point)
 
 	//오브젝트 배치 
 //	if(pForm->m_tObjectTool.IsWindowVisible())
-		m_Terrain->AddObj(vMouse, pForm->m_tObjectTool.GetObjINFO());
+		m_Terrain->AddObj(vMouse, pForm->m_tObjectTool.GetObjINFO().strName);
 
 	/*
 	//오브젝트 배치?

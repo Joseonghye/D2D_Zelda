@@ -105,7 +105,10 @@ void CMapTool::OnLbnSelchangeMapTexture()
 
 void CMapTool::OnBnClickedSave()
 {
-	CFileDialog Dlg(false, L"dat", L".dat");
+	CFileDialog Dlg(false, L"dat", L"*.dat", OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT
+			, NULL, NULL, 0, FALSE);
+
+	//CFileDialog Dlg(false, L"dat", L".dat");
 	TCHAR szFilePath[MAX_PATH]{};
 
 	GetCurrentDirectory(MAX_PATH, szFilePath);
@@ -136,7 +139,10 @@ void CMapTool::OnBnClickedSave()
 
 void CMapTool::OnBnClickedLoad()
 {
-	CFileDialog Dlg(true, L"dat", L".dat");
+	CFileDialog Dlg(true, L"dat", L"*.dat", OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT
+			, NULL, NULL, 0, FALSE);
+
+	//CFileDialog Dlg(true, L"dat", L".dat");
 	TCHAR szFilePath[MAX_PATH]{};
 
 	GetCurrentDirectory(MAX_PATH, szFilePath);

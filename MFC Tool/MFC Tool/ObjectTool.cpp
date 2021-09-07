@@ -200,7 +200,9 @@ bool CObjectTool::CheckRadioBtn(const CButton* pBtn)
 
 void CObjectTool::OnBnClickedListSave()
 {
-	CFileDialog Dlg(false, L"dat", L"*.dat");
+	CFileDialog Dlg(false, L"dat", L"*.dat", OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT
+			, NULL, NULL, 0, FALSE);
+	//CFileDialog Dlg(false, L"dat", L"*.dat");
 	TCHAR szFilePath[MAX_PATH] = L"";
 
 	GetCurrentDirectory(MAX_PATH, szFilePath);
@@ -239,7 +241,9 @@ void CObjectTool::OnBnClickedListSave()
 
 void CObjectTool::OnBnClickedListLoad()
 {
-	CFileDialog Dlg(true, L"dat", L"*.dat");
+	CFileDialog Dlg(true, L"dat", L"*.dat", OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT
+			, NULL, NULL, 0, FALSE);
+	//CFileDialog Dlg(true, L"dat", L"*.dat");
 
 	TCHAR szFilePath[MAX_PATH] = L"";
 
@@ -310,7 +314,10 @@ void CObjectTool::OnBnClickedListLoad()
 
 void CObjectTool::OnBnClickedObjSave()
 {
-	CFileDialog Dlg(false, L"dat", L"*.dat");
+	CFileDialog Dlg(false, L"dat", L"*.dat", OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT
+		, NULL, NULL, 0, FALSE);
+
+	//CFileDialog Dlg(false, L"dat", L"*.dat");
 	TCHAR szFilePath[MAX_PATH] = L"";
 
 	GetCurrentDirectory(MAX_PATH, szFilePath);
@@ -328,17 +335,17 @@ void CObjectTool::OnBnClickedObjSave()
 
 		CMainFrame* pMain = dynamic_cast<CMainFrame*>(AfxGetApp()->GetMainWnd());
 		CMFCToolView* pView = dynamic_cast<CMFCToolView*>(pMain->m_MainSplitter.GetPane(0, 1));
-		map<CString, INFO*>& objList = pView->m_Terrain->GetObj();
+		list<OBJDATA*>& objList = pView->m_Terrain->GetObj();
 
 		DWORD dwByte = 0;
 		DWORD dwStrByte = 0;
-		for (auto& rPair : objList) 
+		for (auto& pObj : objList) 
 		{
-			dwStrByte = (rPair.first.GetLength() + 1) * sizeof(wchar_t);
+			dwStrByte = (lstrlen(pObj->szName) + 1) * sizeof(wchar_t);
 			WriteFile(hFile, &dwStrByte, sizeof(DWORD), &dwByte, nullptr);
-			WriteFile(hFile, rPair.first.GetString(), dwStrByte, &dwByte, nullptr);
+			WriteFile(hFile, pObj->szName, dwStrByte, &dwByte, nullptr);
 
-			WriteFile(hFile, rPair.second, sizeof(INFO), &dwByte, nullptr);
+			WriteFile(hFile, &pObj->m_tInfo, sizeof(INFO), &dwByte, nullptr);
 		}
 		CloseHandle(hFile);
 	}
@@ -346,7 +353,10 @@ void CObjectTool::OnBnClickedObjSave()
 
 void CObjectTool::OnBnClickedObjLoad()
 {
-	CFileDialog Dlg(true, L"dat", L".dat");
+		CFileDialog Dlg(true, L"dat", L"*.dat", OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT
+			, NULL, NULL, 0, FALSE);
+
+	//CFileDialog Dlg(true, L"dat", L".dat");
 	TCHAR szFilePath[MAX_PATH]{};
 
 	GetCurrentDirectory(MAX_PATH, szFilePath);
@@ -385,8 +395,12 @@ void CObjectTool::OnBnClickedObjLoad()
 				Safe_Delete(pInfo);
 				break;
 			}
+			OBJDATA* data = new OBJDATA;
+			lstrcpy(data->szName, pStr);
 
-			pView->m_Terrain->AddObjData(pStr,pInfo);
+			data->m_tInfo = *pInfo;
+
+			pView->m_Terrain->AddObjData(data);
 
 			delete[] pStr;
 			pStr = nullptr;

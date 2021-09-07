@@ -102,22 +102,22 @@ Terrain * Terrain::Create() /*LPVOID pArg = nullptr   >> 이게 뭐지? nullptr을 넣
 	return pInstance;
 }
 
-void Terrain::AddObjData(CString wstrName,INFO * pInfo)
+void Terrain::AddObjData(OBJDATA* data)
 {
-	m_ObjMap.emplace(wstrName,pInfo);
+	m_ObjList.emplace_back(data);
 }
 
 void Terrain::RenderObject()
 {
-	if (m_ObjMap.empty()) return;
+	if (m_ObjList.empty()) return;
 
-	for (auto& iter : m_ObjMap)
+	for (auto& iter : m_ObjList)
 	{
-		const TEXINFO* pTexInfo = CTexturMgr::getInstance()->getTexture(iter.first.GetString(), L"Walk");
+		const TEXINFO* pTexInfo = CTexturMgr::getInstance()->getTexture(iter->szName, L"Walk");
 		if (nullptr == pTexInfo)
 			return;
 
-		CGraphicDevice::getInstance()->GetSprite()->SetTransform(&iter.second->matWorld);
+		CGraphicDevice::getInstance()->GetSprite()->SetTransform(&iter->m_tInfo.matWorld);
 		CGraphicDevice::getInstance()->GetSprite()->Draw(pTexInfo->pTexture, nullptr, &pTexInfo->tCenter, nullptr, D3DCOLOR_ARGB(255, 255, 255, 255));
 	}
 //	CGraphicDevice::getInstance()->GetSprite()->End();
@@ -126,15 +126,8 @@ void Terrain::RenderObject()
 
 void Terrain::ReleaseObject()
 {
-	for_each(m_ObjMap.begin(), m_ObjMap.end(),
-		[](auto& MyPair)
-	{
-		if (MyPair.second)
-		{
-			delete MyPair.second;
-			MyPair.second = nullptr;
-		}
-	});
+	for_each(m_ObjList.begin(), m_ObjList.end(), Safe_Delete<OBJDATA*>);
+	m_ObjList.clear();
 }
 
 void Terrain::ChangeTile(const D3DXVECTOR3 & vMouse, const int & iDrawID, const int & iOption)
@@ -146,19 +139,19 @@ void Terrain::ChangeTile(const D3DXVECTOR3 & vMouse, const int & iDrawID, const 
 	m_vecTile[iIndex]->dwOption = iOption;
 }
 
-void Terrain::AddObj(const D3DXVECTOR3 & vMouse, const OBJINFO & tObjInfo)
+void Terrain::AddObj(const D3DXVECTOR3 & vMouse, const CString & objName)
 {
+	OBJDATA* pInfo = new OBJDATA;
+	lstrcpy(pInfo->szName,objName.GetString());
 
-	INFO* pInfo = new INFO;
-	
-	pInfo->vPos = vMouse;
-	pInfo->vSize = D3DXVECTOR3(1.f, 1.f, 0.f);
+	pInfo->m_tInfo.vPos = vMouse;
+	pInfo->m_tInfo.vSize = D3DXVECTOR3(1.f, 1.f, 0.f);
 
-	D3DXMatrixScaling(&pInfo->matScale, pInfo->vSize.x, pInfo->vSize.y, 0.0f);
-	D3DXMatrixTranslation(&pInfo->matTrans, vMouse.x, vMouse.y, 0.f);
-	pInfo->matWorld = pInfo->matScale * pInfo->matTrans;
+	D3DXMatrixScaling(&pInfo->m_tInfo.matScale, pInfo->m_tInfo.vSize.x, pInfo->m_tInfo.vSize.y, 0.0f);
+	D3DXMatrixTranslation(&pInfo->m_tInfo.matTrans, vMouse.x, vMouse.y, 0.f);
+	pInfo->m_tInfo.matWorld = pInfo->m_tInfo.matScale * pInfo->m_tInfo.matTrans;
 
-	m_ObjMap.emplace(tObjInfo.strName,pInfo);
+	m_ObjList.emplace_back(pInfo);
 }
 
 int Terrain::GetTileIndex(const D3DXVECTOR3 & vMouse)
