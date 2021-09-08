@@ -2,6 +2,7 @@
 
 #include "ObjectTool.h"
 #include "MapTool.h"
+#include "CollisionTool.h"
 
 // Form Æû ºäÀÔ´Ï´Ù.
 class Form : public CFormView
@@ -30,6 +31,7 @@ protected:
 public:
 	afx_msg void OnBnClickedMapTool();
 	afx_msg void OnBnClickedObjectTool();
+	afx_msg void OnBnClickedCollisionTool();
 
 	/*
 	afx_msg void OnDropFiles(HDROP hDropInfo);
@@ -40,10 +42,12 @@ public:
 public:
 	CMapTool m_tMapTool;
 	CObjectTool m_tObjectTool;
+	CCollisionTool m_tCollTool;
 
 	//CListBox m_ListBox;
 	//map<CString, OBJINFO*> m_InfoMap;
 	
+
 };
 
 

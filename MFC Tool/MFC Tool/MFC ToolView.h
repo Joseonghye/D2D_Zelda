@@ -23,6 +23,8 @@ public:
 	Terrain* m_Terrain;
 	Mouse* m_Mouse;
 
+	CClientDC* m_DC;
+
 // 재정의입니다.
 public:
 	virtual void OnDraw(CDC* pDC);  // 이 뷰를 그리기 위해 재정의되었습니다.
@@ -48,6 +50,7 @@ protected:
 public:
 	virtual void OnInitialUpdate();
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
+	afx_msg void OnRButtonDown(UINT nFlags, CPoint point);
 };
 
 #ifndef _DEBUG  // MFC ToolView.cpp의 디버그 버전

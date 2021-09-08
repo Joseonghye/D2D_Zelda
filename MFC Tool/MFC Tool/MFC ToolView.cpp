@@ -31,6 +31,7 @@ BEGIN_MESSAGE_MAP(CMFCToolView, CView)
 	ON_COMMAND(ID_FILE_PRINT_PREVIEW, &CView::OnFilePrintPreview)
 	ON_WM_DROPFILES()
 	ON_WM_LBUTTONDOWN()
+	ON_WM_RBUTTONDOWN()
 END_MESSAGE_MAP()
 
 // CMFCToolView 생성/소멸
@@ -76,8 +77,12 @@ void CMFCToolView::OnDraw(CDC* /*pDC*/)
 	m_Terrain->RenderObject();
 
 	m_pDevice->GetSprite()->End();
-	m_pDevice->EndDraw();
 
+	m_pDevice->getLine()->Begin();
+	m_Terrain->RenderColl();
+	m_pDevice->getLine()->End();
+
+	m_pDevice->EndDraw();
 
 	Invalidate(false);
 	// TODO: 여기에 원시 데이터에 대한 그리기 코드를 추가합니다.
@@ -140,21 +145,20 @@ void CMFCToolView::OnInitialUpdate()
 
 	pFrame->SetWindowPos(nullptr, 0, 0, WINCX + iRow, WINCY + iCol, SWP_NOZORDER);
 	g_hWnd = m_hWnd;
-	if (FAILED(CGraphicDevice::getInstance()->Initialize()))
+	if (FAILED(CGraphicDevice::GetInstance()->Initialize()))
 		AfxMessageBox(L"CDevice Create Fail");
 
-	m_pDevice = CGraphicDevice::getInstance();
-	
+	m_pDevice = CGraphicDevice::GetInstance();
 	m_Terrain = Terrain::Create();
 
 	//텍스쳐추가
 	{
-		CTexturMgr::getInstance()->InsertTexture(TEXTYPE::MULTI, L"../Texture/Tile/tile0%d.png", L"Terrain", L"Tile", 9);
+		CTexturMgr::GetInstance()->InsertTexture(TEXTYPE::MULTI, L"../Texture/Tile/tile0%d.png", L"Terrain", L"Tile", 9);
 
-		CTexturMgr::getInstance()->InsertTexture(TEXTYPE::MULTI, L"../Texture/Monster/Octo/Walk/Octo0%d.png", L"Octo",L"Walk",2);
-		CTexturMgr::getInstance()->InsertTexture(TEXTYPE::SINGLE, L"../Texture/Monster/Goomba/Goomba.png", L"Goomba");
+		CTexturMgr::GetInstance()->InsertTexture(TEXTYPE::MULTI, L"../Texture/Monster/Octo/Walk/Octo0%d.png", L"Octo",L"Walk",2);
+		CTexturMgr::GetInstance()->InsertTexture(TEXTYPE::SINGLE, L"../Texture/Monster/Goomba/Goomba.png", L"Goomba");
 	}
-	m_Mouse = Mouse::getInstance();
+	m_Mouse = Mouse::GetInstance();
 }
 
 void CMFCToolView::OnLButtonDown(UINT nFlags, CPoint point)
@@ -166,12 +170,19 @@ void CMFCToolView::OnLButtonDown(UINT nFlags, CPoint point)
 	D3DXVECTOR3 vMouse = { float(point.x + GetScrollPos(SB_HORZ)), float(point.y + GetScrollPos(SB_VERT)) , 0.f };
 
 	//타일 변경
-	//if(pForm->m_tMapTool.IsWindowVisible())
-	//	m_Terrain->ChangeTile(vMouse, pForm->m_tMapTool.GetDrawID());
+	if(pForm->m_tMapTool.GetSafeHwnd())
+		if(pForm->m_tMapTool.IsWindowVisible())
+			m_Terrain->ChangeTile(vMouse, pForm->m_tMapTool.GetDrawID());
 
 	//오브젝트 배치 
-//	if(pForm->m_tObjectTool.IsWindowVisible())
-		m_Terrain->AddObj(vMouse, pForm->m_tObjectTool.GetObjINFO().strName);
+	if(pForm->m_tObjectTool.GetSafeHwnd())
+		if(pForm->m_tObjectTool.IsWindowVisible())
+			m_Terrain->AddObj(vMouse, pForm->m_tObjectTool.GetObjINFO().strName);
+
+	//충돌박스 설치 
+	if (pForm->m_tCollTool.GetSafeHwnd())
+		if (pForm->m_tCollTool.IsWindowVisible())
+			m_Terrain->AddCollision(vMouse);
 
 	/*
 	//오브젝트 배치?
@@ -192,4 +203,23 @@ void CMFCToolView::OnLButtonDown(UINT nFlags, CPoint point)
 	Invalidate(false);
 	*/
 
+}
+
+
+void CMFCToolView::OnRButtonDown(UINT nFlags, CPoint point)
+{
+	CMainFrame* pMain = dynamic_cast<CMainFrame*>(AfxGetApp()->GetMainWnd());
+	Form* pForm = dynamic_cast<Form*>(pMain->m_SecSplitter.GetPane(1, 0));
+
+	D3DXVECTOR3 vMouse = { float(point.x + GetScrollPos(SB_HORZ)), float(point.y + GetScrollPos(SB_VERT)) , 0.f };
+
+	//오브젝트 삭제 : 미구현
+	//if (pForm->m_tObjectTool.GetSafeHwnd())
+	//	if (pForm->m_tObjectTool.IsWindowVisible())
+	//		m_Terrain->DeleteObject()
+
+	//충돌박스 삭제  
+	if (pForm->m_tCollTool.GetSafeHwnd())
+		if (pForm->m_tCollTool.IsWindowVisible())
+			m_Terrain->DeleteColl(vMouse);
 }

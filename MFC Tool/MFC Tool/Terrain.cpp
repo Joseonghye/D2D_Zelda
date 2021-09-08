@@ -10,6 +10,7 @@ Terrain::~Terrain()
 {
 	ReleaseTerrain();
 	ReleaseObject();
+	ReleaseColl();
 }
 
 void Terrain::AddTileData(TILE * pTile)
@@ -51,7 +52,7 @@ void Terrain::RenderTerrain()
 
 	for (int i = 0; i < iSize; ++i)
 	{
-		const TEXINFO* pTexInfo = CTexturMgr::getInstance()->getTexture(L"Terrain", L"Tile", m_vecTile[i]->dwDrawID);
+		const TEXINFO* pTexInfo = CTexturMgr::GetInstance()->getTexture(L"Terrain", L"Tile", m_vecTile[i]->dwDrawID);
 		if (nullptr == pTexInfo)
 			return;
 	
@@ -61,11 +62,11 @@ void Terrain::RenderTerrain()
 		D3DXMatrixTranslation(&matTrans, m_vecTile[i]->vPos.x, m_vecTile[i]->vPos.y, 0.f);
 		matWorld = matScale * matTrans;
 
-		CGraphicDevice::getInstance()->GetSprite()->SetTransform(&matWorld);
-		CGraphicDevice::getInstance()->GetSprite()->Draw(pTexInfo->pTexture, nullptr, &pTexInfo->tCenter, nullptr, D3DCOLOR_ARGB(255, 255, 255, 255));
+		CGraphicDevice::GetInstance()->GetSprite()->SetTransform(&matWorld);
+		CGraphicDevice::GetInstance()->GetSprite()->Draw(pTexInfo->pTexture, nullptr, &pTexInfo->tCenter, nullptr, D3DCOLOR_ARGB(255, 255, 255, 255));
 	}
 
-//	CGraphicDevice::getInstance()->GetSprite()->End();
+//	CGraphicDevice::GetInstance()->GetSprite()->End();
 
 	 //라인 그리기 
 	/*float fY = (TILECY >> 1);
@@ -82,7 +83,7 @@ void Terrain::RenderTerrain()
 			{ temp->vPos.x - fX, temp->vPos.y + fY } 
 		};
 
-//		CGraphicDevice::getInstance()->getLine()->Draw(vLine, 4, D3DCOLOR_ARGB(255, 255, 255, 255));
+//		CGraphicDevice::GetInstance()->getLine()->Draw(vLine, 4, D3DCOLOR_ARGB(255, 255, 255, 255));
 	}*/
 }
 
@@ -113,14 +114,14 @@ void Terrain::RenderObject()
 
 	for (auto& iter : m_ObjList)
 	{
-		const TEXINFO* pTexInfo = CTexturMgr::getInstance()->getTexture(iter->szName, L"Walk");
+		const TEXINFO* pTexInfo = CTexturMgr::GetInstance()->getTexture(iter->szName, L"Walk");
 		if (nullptr == pTexInfo)
 			return;
 
-		CGraphicDevice::getInstance()->GetSprite()->SetTransform(&iter->m_tInfo.matWorld);
-		CGraphicDevice::getInstance()->GetSprite()->Draw(pTexInfo->pTexture, nullptr, &pTexInfo->tCenter, nullptr, D3DCOLOR_ARGB(255, 255, 255, 255));
+		CGraphicDevice::GetInstance()->GetSprite()->SetTransform(&iter->m_tInfo.matWorld);
+		CGraphicDevice::GetInstance()->GetSprite()->Draw(pTexInfo->pTexture, nullptr, &pTexInfo->tCenter, nullptr, D3DCOLOR_ARGB(255, 255, 255, 255));
 	}
-//	CGraphicDevice::getInstance()->GetSprite()->End();
+//	CGraphicDevice::GetInstance()->GetSprite()->End();
 
 }
 
@@ -128,6 +129,44 @@ void Terrain::ReleaseObject()
 {
 	for_each(m_ObjList.begin(), m_ObjList.end(), Safe_Delete<OBJDATA*>);
 	m_ObjList.clear();
+}
+
+void Terrain::AddCollData(int index,D3DXVECTOR3 vPos)
+{
+	m_CollList.emplace(index,vPos);
+}
+
+void Terrain::RenderColl()
+{
+	if (m_CollList.empty()) return;
+
+	float fX = (TILECX*0.5f);
+	float fY = (TILECY *0.5f);
+
+	for (auto& iter : m_CollList)
+	{
+		float left = iter.second.x - fX;
+		float right = iter.second.x + fX;
+
+		float top = iter.second.y - fY;
+		float bottom = iter.second.y + fY;
+	/*	RECT rc{ iter.second.x - (TILECX*0.5f),iter.second.y - (TILECY *0.5f),iter.second.x + (TILECX*0.5f),iter.second.y + (TILECY *0.5f) };
+		_dc->Rectangle((int)rc.left, (int)rc.top, (int)rc.right, (int)rc.bottom);*/
+
+		D3DXVECTOR2 vLine[4] = {
+			{ left,top },
+			{ right,top},
+			{ right,bottom },
+			{ left,bottom}
+		};
+
+	CGraphicDevice::GetInstance()->getLine()->Draw(vLine, 4, D3DCOLOR_ARGB(255, 255, 0, 0));
+	}
+}
+
+void Terrain::ReleaseColl()
+{
+	m_CollList.clear();
 }
 
 void Terrain::ChangeTile(const D3DXVECTOR3 & vMouse, const int & iDrawID, const int & iOption)
@@ -152,6 +191,29 @@ void Terrain::AddObj(const D3DXVECTOR3 & vMouse, const CString & objName)
 	pInfo->m_tInfo.matWorld = pInfo->m_tInfo.matScale * pInfo->m_tInfo.matTrans;
 
 	m_ObjList.emplace_back(pInfo);
+}
+
+void Terrain::DeleteObject(D3DXVECTOR3 vMouse)
+{
+}
+
+void Terrain::AddCollision(const D3DXVECTOR3 & vMouse)
+{
+	int iIndex = GetTileIndex(vMouse);
+	if (iIndex == -1) return;
+
+	m_CollList.emplace(iIndex,m_vecTile[iIndex]->vPos);
+}
+
+void Terrain::DeleteColl(D3DXVECTOR3 vMouse)
+{
+	int iIndex = GetTileIndex(vMouse);
+	if (iIndex == -1) return;
+
+	auto& iter = m_CollList.find(iIndex);
+	if (iter == m_CollList.end()) return;
+
+	m_CollList.erase(iter);
 }
 
 int Terrain::GetTileIndex(const D3DXVECTOR3 & vMouse)

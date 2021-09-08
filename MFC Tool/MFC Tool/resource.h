@@ -10,8 +10,10 @@
 #define IDD_FORMVIEW                    311
 #define IDD_OBJECTTOOL                  312
 #define IDD_MAPTOOL                     313
+#define IDD_COLLISIONTOOL               314
 #define IDC_BUTTON1                     1000
 #define IDC_LIST1                       1001
+#define IDC_BUTTON8                     1001
 #define IDC_PICTURE                     1002
 #define IDC_BUTTON5                     1002
 #define IDC_EDIT1                       1003
@@ -35,6 +37,6 @@
 #define _APS_NEXT_RESOURCE_VALUE        314
 #define _APS_NEXT_COMMAND_VALUE         32771
 #define _APS_NEXT_CONTROL_VALUE         1013
-#define _APS_NEXT_SYMED_VALUE           314
+#define _APS_NEXT_SYMED_VALUE           315
 #endif
 #endif

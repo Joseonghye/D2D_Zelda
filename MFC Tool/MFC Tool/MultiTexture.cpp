@@ -38,7 +38,7 @@ HRESULT CMultiTexture::InsterTexture(const wstring& wstrFilePath, const wstring&
 				MSG_BOX(szPath);
 			}
 
-			if (FAILED(D3DXCreateTextureFromFileEx(CGraphicDevice::getInstance()->GetDevice()
+			if (FAILED(D3DXCreateTextureFromFileEx(CGraphicDevice::GetInstance()->GetDevice()
 				, szPath
 				, pTexInfo->tTextureInfo.Width, pTexInfo->tTextureInfo.Height
 				, pTexInfo->tTextureInfo.MipLevels, 0, pTexInfo->tTextureInfo.Format
@@ -69,7 +69,7 @@ HRESULT CMultiTexture::InsterTexture(const wstring& wstrFilePath, const wstring&
 				MSG_BOX(szPath);
 			}
 
-			if (FAILED(D3DXCreateTextureFromFileEx(CGraphicDevice::getInstance()->GetDevice()
+			if (FAILED(D3DXCreateTextureFromFileEx(CGraphicDevice::GetInstance()->GetDevice()
 				, szPath
 				, pTexInfo->tTextureInfo.Width, pTexInfo->tTextureInfo.Height
 				, pTexInfo->tTextureInfo.MipLevels, 0, pTexInfo->tTextureInfo.Format

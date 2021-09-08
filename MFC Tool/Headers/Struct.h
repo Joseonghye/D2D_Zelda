@@ -16,16 +16,6 @@ typedef struct tagTile {
 	DWORD dwOption;
 }TILE;
 
-typedef struct tagObjInfo
-{
-	CString strObjKey;
-	CString strName;
-	OBJID eID;
-	bool bMove;
-	bool bDestroy;
-
-}OBJINFO;
-
 typedef struct tagInfo
 {
 	D3DXVECTOR3 vPos;

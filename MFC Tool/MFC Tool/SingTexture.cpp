@@ -24,7 +24,7 @@ HRESULT CSingTexture::InsterTexture(const wstring& wstrFilePath, const wstring& 
 		MSG_BOX(wstrFilePath.c_str());
 	}
 
-	if (FAILED(D3DXCreateTextureFromFileEx(CGraphicDevice::getInstance()->GetDevice(), wstrFilePath.c_str()
+	if (FAILED(D3DXCreateTextureFromFileEx(CGraphicDevice::GetInstance()->GetDevice(), wstrFilePath.c_str()
 		, m_pTextureInfo->tTextureInfo.Width, m_pTextureInfo->tTextureInfo.Height
 		, m_pTextureInfo->tTextureInfo.MipLevels, 0, m_pTextureInfo->tTextureInfo.Format
 		, D3DPOOL_MANAGED, D3DX_DEFAULT, D3DX_DEFAULT, NULL

@@ -82,10 +82,10 @@ void CMapTool::OnLbnSelchangeMapTexture()
 	wstrTextureName.Delete(0, i);
 	m_dwDrawID = _ttoi(wstrTextureName.GetString());
 
-	CGraphicDevice::getInstance()->BeginDraw();
-	CGraphicDevice::getInstance()->GetSprite()->Begin(D3DXSPRITE_ALPHABLEND);
+	CGraphicDevice::GetInstance()->BeginDraw();
+	CGraphicDevice::GetInstance()->GetSprite()->Begin(D3DXSPRITE_ALPHABLEND);
 
-	const TEXINFO* pTexInfo = CTexturMgr::getInstance()->getTexture(L"Terrain", L"Tile", m_dwDrawID);
+	const TEXINFO* pTexInfo = CTexturMgr::GetInstance()->getTexture(L"Terrain", L"Tile", m_dwDrawID);
 	if (pTexInfo == nullptr) return;
 
 	float fX = WINCX / TILECX;
@@ -95,11 +95,11 @@ void CMapTool::OnLbnSelchangeMapTexture()
 	D3DXMatrixTranslation(&matTrans, 670.f, 360.f, 0.f);
 	matWorld = matScale * matTrans;
 
-	CGraphicDevice::getInstance()->GetSprite()->SetTransform(&matWorld);
-	CGraphicDevice::getInstance()->GetSprite()->Draw(pTexInfo->pTexture, nullptr, &pTexInfo->tCenter, nullptr, D3DCOLOR_ARGB(255, 255, 255, 255));
+	CGraphicDevice::GetInstance()->GetSprite()->SetTransform(&matWorld);
+	CGraphicDevice::GetInstance()->GetSprite()->Draw(pTexInfo->pTexture, nullptr, &pTexInfo->tCenter, nullptr, D3DCOLOR_ARGB(255, 255, 255, 255));
 
-	CGraphicDevice::getInstance()->GetSprite()->End();
-	CGraphicDevice::getInstance()->EndDraw(m_MapPicture.m_hWnd);
+	CGraphicDevice::GetInstance()->GetSprite()->End();
+	CGraphicDevice::GetInstance()->EndDraw(m_MapPicture.m_hWnd);
 }
 
 

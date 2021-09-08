@@ -96,10 +96,10 @@ void CObjectTool::OnLbnSelchangeTexture()
 	if (i != 0)
 		wstrTextureName.Delete(i, iTextureNameSize - 1);
 
-	CGraphicDevice::getInstance()->BeginDraw();
-	CGraphicDevice::getInstance()->GetSprite()->Begin(D3DXSPRITE_ALPHABLEND);
+	CGraphicDevice::GetInstance()->BeginDraw();
+	CGraphicDevice::GetInstance()->GetSprite()->Begin(D3DXSPRITE_ALPHABLEND);
 
-	const TEXINFO* pTexInfo = CTexturMgr::getInstance()->getTexture(wstrTextureName.GetString(), L"Walk");
+	const TEXINFO* pTexInfo = CTexturMgr::GetInstance()->getTexture(wstrTextureName.GetString(), L"Walk");
 	if (nullptr == pTexInfo)
 		return;
 
@@ -108,11 +108,11 @@ void CObjectTool::OnLbnSelchangeTexture()
 	D3DXMatrixTranslation(&matTrans, 700.f,500.f, 0.f);
 	matWorld = matScale * matTrans;
 
-	CGraphicDevice::getInstance()->GetSprite()->SetTransform(&matWorld);
-	CGraphicDevice::getInstance()->GetSprite()->Draw(pTexInfo->pTexture, nullptr, &pTexInfo->tCenter, nullptr, D3DCOLOR_ARGB(255, 255, 255, 255));
+	CGraphicDevice::GetInstance()->GetSprite()->SetTransform(&matWorld);
+	CGraphicDevice::GetInstance()->GetSprite()->Draw(pTexInfo->pTexture, nullptr, &pTexInfo->tCenter, nullptr, D3DCOLOR_ARGB(255, 255, 255, 255));
 
-	CGraphicDevice::getInstance()->GetSprite()->End();
-	CGraphicDevice::getInstance()->EndDraw(m_Picture.m_hWnd);
+	CGraphicDevice::GetInstance()->GetSprite()->End();
+	CGraphicDevice::GetInstance()->EndDraw(m_Picture.m_hWnd);
 }
 
 void CObjectTool::OnLbnSelchangeObject()

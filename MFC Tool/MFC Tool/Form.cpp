@@ -7,7 +7,6 @@
 #include "MainFrm.h"
 #include "MFC ToolView.h"
 #include "Mouse.h"
-#include "ObjectTool.h"
 
 // Form
 
@@ -39,6 +38,7 @@ BEGIN_MESSAGE_MAP(Form, CFormView)
 //	ON_WM_DROPFILES()
 //	ON_LBN_SELCHANGE(IDC_LIST1, &Form::OnLbnSelchangePickObejct)
 //	ON_BN_CLICKED(IDC_BUTTON2, &Form::OnBnClickedLoad)
+ON_BN_CLICKED(IDC_BUTTON8, &Form::OnBnClickedCollisionTool)
 END_MESSAGE_MAP()
 
 
@@ -71,7 +71,6 @@ void Form::OnBnClickedMapTool()
 
 void Form::OnBnClickedObjectTool()
 {
-	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	if (nullptr == m_tObjectTool.GetSafeHwnd())
 		m_tObjectTool.Create(IDD_OBJECTTOOL);
 	m_tObjectTool.ShowWindow(SW_SHOW);
@@ -181,3 +180,10 @@ void Form::OnBnClickedLoad()
 	
 }
 */
+
+void Form::OnBnClickedCollisionTool()
+{
+	if (nullptr == m_tCollTool.GetSafeHwnd())
+		m_tCollTool.Create(IDD_COLLISIONTOOL);
+	m_tCollTool.ShowWindow(SW_SHOW);
+}

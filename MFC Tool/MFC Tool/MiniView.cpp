@@ -64,7 +64,7 @@ void CMiniView::OnInitialUpdate()
 {
 	// CView::OnInitialUpdate();
 
-	m_pDevice = CGraphicDevice::getInstance();
+	m_pDevice = CGraphicDevice::GetInstance();
 	m_pSprite = m_pDevice->GetSprite();
 
 	CMainFrame* mainFrm = dynamic_cast<CMainFrame*>(AfxGetMainWnd());

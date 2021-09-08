@@ -9,4 +9,5 @@
 #define SAFE_DELETE(p) if(p) {delete p; p=nullptr;}
 
 #define MSG_BOX(text) MessageBox(NULL, text, L"System message", MB_OK); return E_FAIL;
-#endif
+
+#endif //__DEFINE_H__

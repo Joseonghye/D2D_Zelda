@@ -196,10 +196,10 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CollisionTool.h" />
     <ClInclude Include="FileInfo.h" />
     <ClInclude Include="Form.h" />
     <ClInclude Include="GraphicDevice.h" />
-    <ClInclude Include="Include.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="MapTool.h" />
     <ClInclude Include="MFC Tool.h" />
@@ -218,6 +218,7 @@
     <ClInclude Include="TexturMgr.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CollisionTool.cpp" />
     <ClCompile Include="FileInfo.cpp" />
     <ClCompile Include="Form.cpp" />
     <ClCompile Include="GraphicDevice.cpp" />

@@ -52,6 +52,9 @@
     <Filter Include="01.ToolView\02.Form\MapTool">
       <UniqueIdentifier>{f1671be4-a4ff-46a8-bef8-e7cebc66d035}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01.ToolView\02.Form\CollisionTool">
+      <UniqueIdentifier>{d094858a-47ae-4c33-8049-b29a3443a85d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainFrm.h">
@@ -74,9 +77,6 @@
     </ClInclude>
     <ClInclude Include="GraphicDevice.h">
       <Filter>03.GraphicDevice</Filter>
-    </ClInclude>
-    <ClInclude Include="Include.h">
-      <Filter>98.Include</Filter>
     </ClInclude>
     <ClInclude Include="stdafx.h">
       <Filter>98.Include</Filter>
@@ -113,6 +113,9 @@
     </ClInclude>
     <ClInclude Include="MapTool.h">
       <Filter>01.ToolView\02.Form\MapTool</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionTool.h">
+      <Filter>01.ToolView\02.Form\CollisionTool</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -166,6 +169,9 @@
     </ClCompile>
     <ClCompile Include="MapTool.cpp">
       <Filter>01.ToolView\02.Form\MapTool</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionTool.cpp">
+      <Filter>01.ToolView\02.Form\CollisionTool</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

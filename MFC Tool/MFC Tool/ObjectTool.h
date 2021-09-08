@@ -3,6 +3,16 @@
 
 // CObjectTool 대화 상자입니다.
 
+typedef struct tagObjInfo
+{
+	CString strObjKey;
+	CString strName;
+	OBJID eID;
+	bool bMove;
+	bool bDestroy;
+
+}OBJINFO;
+
 class CObjectTool : public CDialog
 {
 	DECLARE_DYNAMIC(CObjectTool)

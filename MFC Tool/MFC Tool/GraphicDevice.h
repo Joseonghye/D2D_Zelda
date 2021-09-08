@@ -10,7 +10,7 @@ private:
 	LPDIRECT3D9 m_pSDK;
 	LPDIRECT3DDEVICE9 m_pDevice;
 	LPD3DXSPRITE m_pSprite;
-//	LPD3DXLINE m_pLine;
+	LPD3DXLINE m_pLine;
 
 private:
 	explicit CGraphicDevice();
@@ -25,7 +25,7 @@ private:
 public:
 	const LPDIRECT3DDEVICE9& const GetDevice() { return m_pDevice; }
 	const LPD3DXSPRITE& const GetSprite() { return m_pSprite; }
-//	const LPD3DXLINE& const getLine() { return m_pLine; }
+	const LPD3DXLINE& const getLine() { return m_pLine; }
 };
 #endif
 

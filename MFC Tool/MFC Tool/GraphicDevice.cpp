@@ -3,7 +3,7 @@
 
 //IMPLEMENT_SINGLETON(CGraphicDevice)
 
-CGraphicDevice::CGraphicDevice() : m_pSDK(nullptr), m_pDevice(nullptr), m_pSprite(nullptr)//, m_pLine(nullptr)
+CGraphicDevice::CGraphicDevice() : m_pSDK(nullptr), m_pDevice(nullptr), m_pSprite(nullptr), m_pLine(nullptr)
 {
 }
 
@@ -45,10 +45,10 @@ HRESULT CGraphicDevice::Initialize()
 	{
 		MSG_BOX(L"Create Sprite Fail")
 	}
-	/*if (FAILED(D3DXCreateLine(m_pDevice, &m_pLine)))
+	if (FAILED(D3DXCreateLine(m_pDevice, &m_pLine)))
 	{
 		MSG_BOX(L"Create Line Fail")
-	}*/
+	}
 	
 	return S_OK;
 }
@@ -69,7 +69,7 @@ void CGraphicDevice::EndDraw(HWND _hWnd)
 
 void CGraphicDevice::Release()
 {
-	//Safe_Release(m_pLine);
+	Safe_Release(m_pLine);
 	Safe_Release(m_pSprite);
 	Safe_Release(m_pDevice);
 	Safe_Release(m_pSDK);

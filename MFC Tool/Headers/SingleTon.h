@@ -1,19 +1,23 @@
 #pragma once
 #ifndef __SINGLETON_H__
 #define __SINGLETON_H__
+
 template<class T>
 class CSingleTon
 {
-private:
+protected:
 	static T* m_pInstance;
-public:
+
+protected:
 	explicit CSingleTon() {};
 	virtual ~CSingleTon() {};
+
 public:
-	static T* getInstance()
+	static T* GetInstance()
 	{
 		if (!m_pInstance)
 			m_pInstance = new T;
+
 		return m_pInstance;
 	}
 	static void DestoryInstacne()
@@ -26,6 +30,8 @@ public:
 	}
 	
 };
-template<class T> T* CSingleTon<T>::m_pInstance = nullptr;
+
+template<class T> 
+T* CSingleTon<T>::m_pInstance = nullptr;
 #endif
 
