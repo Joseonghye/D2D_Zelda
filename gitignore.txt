@@ -1,4 +1,0 @@
-MFC Tool/.vs/
-MFC Tool/Debug/
-MFC Tool/ipch/
-MFC Tool/MFC Tool/Debug/
