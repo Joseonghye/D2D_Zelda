@@ -148,12 +148,12 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BaseComponent.h" />
     <ClInclude Include="CollisionMgr.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameObjectMgr.h" />
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="GraphicDevice.h" />
-    <ClInclude Include="IComponent.h" />
     <ClInclude Include="KeyMgr.h" />
     <ClInclude Include="MainGame.h" />
     <ClInclude Include="MultiTexture.h" />

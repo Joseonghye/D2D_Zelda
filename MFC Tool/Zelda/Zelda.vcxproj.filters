@@ -116,8 +116,10 @@
     <ClInclude Include="Player.h">
       <Filter>01. Game Object\Player</Filter>
     </ClInclude>
-    <ClInclude Include="CollisionMgr.h" />
-    <ClInclude Include="IComponent.h">
+    <ClInclude Include="CollisionMgr.h">
+      <Filter>98. Manager\CollisionMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseComponent.h">
       <Filter>97.Componet</Filter>
     </ClInclude>
   </ItemGroup>
@@ -168,7 +170,9 @@
     <ClCompile Include="Player.cpp">
       <Filter>01. Game Object\Player</Filter>
     </ClCompile>
-    <ClCompile Include="CollisionMgr.cpp" />
+    <ClCompile Include="CollisionMgr.cpp">
+      <Filter>98. Manager\CollisionMgr</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Zelda.rc">
