@@ -1,0 +1,191 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="00.MainGame">
+      <UniqueIdentifier>{1479ea16-fd0b-4962-8b8b-221b4fd370fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="99.Default">
+      <UniqueIdentifier>{8927ada4-968b-46e2-8778-a8bc91889339}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="99.Default\리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="01. Game Object">
+      <UniqueIdentifier>{6b9460f7-6479-4d9e-ba05-7ccd251fbb4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Game Object\00. GameObjectMgr">
+      <UniqueIdentifier>{e07cb089-0a6e-4071-81fc-3451f31487fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Texture">
+      <UniqueIdentifier>{2f3bc920-a820-4a1e-84f6-cbd9bc4e1fe4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. GraphicDevice">
+      <UniqueIdentifier>{a6ea7fad-a2ac-4b45-b2ab-bad9cb8edadf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Scene">
+      <UniqueIdentifier>{9dd85450-d9bc-4c4b-bf67-f842b277797c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Scene\01. Tilte">
+      <UniqueIdentifier>{b16f5b28-11ae-4b99-982c-e29a05eb3caf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Scene\02. Game">
+      <UniqueIdentifier>{b4e7a787-1782-44f9-b1e9-7cc21a8081aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Scene\00. SceneMgr">
+      <UniqueIdentifier>{71b44dea-f529-46ae-a837-ba3651f404e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="98. Manager">
+      <UniqueIdentifier>{dd1193d2-d85f-48e1-8167-ad8b02135eb8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Texture\01. Multi">
+      <UniqueIdentifier>{7560cb2a-27ad-4c75-b7d6-0c65080cbab8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Texture\02. Single">
+      <UniqueIdentifier>{0205cad4-f3c5-48c1-a881-001b740781c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Texture\00. TextureMgr">
+      <UniqueIdentifier>{29adba8f-a5bc-45f3-b928-ec51761042a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Game Object\Terrain">
+      <UniqueIdentifier>{5e57a3a8-44e0-46b1-9101-6ffbe5848457}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Game Object\Player">
+      <UniqueIdentifier>{cba603d9-b89f-4a2a-9713-3f03558dcb88}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="98. Manager\KeyMgr">
+      <UniqueIdentifier>{e4d2042b-9920-4723-9017-97dbc6680190}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="98. Manager\CollisionMgr">
+      <UniqueIdentifier>{92d351a8-7808-4c55-8201-ae73628f93f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97.Componet">
+      <UniqueIdentifier>{6ae580e1-1a24-439c-a15e-b1038785135e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Zelda.h">
+      <Filter>99.Default</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>99.Default</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>99.Default</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="MainGame.h">
+      <Filter>00.MainGame</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>04. Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>01. Game Object</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicDevice.h">
+      <Filter>03. GraphicDevice</Filter>
+    </ClInclude>
+    <ClInclude Include="MultiTexture.h">
+      <Filter>02. Texture\01. Multi</Filter>
+    </ClInclude>
+    <ClInclude Include="SingTexture.h">
+      <Filter>02. Texture\02. Single</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureMgr.h">
+      <Filter>02. Texture\00. TextureMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="Terrain.h">
+      <Filter>01. Game Object\Terrain</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjectMgr.h">
+      <Filter>01. Game Object\00. GameObjectMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene.h">
+      <Filter>04. Scene\02. Game</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneMgr.h">
+      <Filter>04. Scene\00. SceneMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>02. Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyMgr.h">
+      <Filter>98. Manager\KeyMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>01. Game Object\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionMgr.h" />
+    <ClInclude Include="IComponent.h">
+      <Filter>97.Componet</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>99.Default</Filter>
+    </ClCompile>
+    <ClCompile Include="Zelda.cpp" />
+    <ClCompile Include="MainGame.cpp">
+      <Filter>00.MainGame</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>04. Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>01. Game Object</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicDevice.cpp">
+      <Filter>03. GraphicDevice</Filter>
+    </ClCompile>
+    <ClCompile Include="MultiTexture.cpp">
+      <Filter>02. Texture\01. Multi</Filter>
+    </ClCompile>
+    <ClCompile Include="SingTexture.cpp">
+      <Filter>02. Texture\02. Single</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureMgr.cpp">
+      <Filter>02. Texture\00. TextureMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="Terrain.cpp">
+      <Filter>01. Game Object\Terrain</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjectMgr.cpp">
+      <Filter>01. Game Object\00. GameObjectMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScene.cpp">
+      <Filter>04. Scene\02. Game</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneMgr.cpp">
+      <Filter>04. Scene\00. SceneMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>02. Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyMgr.cpp">
+      <Filter>98. Manager\KeyMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>01. Game Object\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionMgr.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Zelda.rc">
+      <Filter>99.Default\리소스 파일</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="small.ico">
+      <Filter>99.Default\리소스 파일</Filter>
+    </Image>
+    <Image Include="Zelda.ico">
+      <Filter>99.Default\리소스 파일</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt">
+      <Filter>99.Default</Filter>
+    </Text>
+  </ItemGroup>
+</Project>
