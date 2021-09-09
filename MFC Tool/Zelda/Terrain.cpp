@@ -120,7 +120,7 @@ HRESULT Terrain::LoadColliderFile(const wstring & wstrFilePath)
 
 		CGameObject* pGameObject = CWall::Create();
 		pGameObject->SetPos(vPos);
-		GAMEOBJECTMGR->Add_GameObject(WALL, pGameObject);
+		GAMEOBJECTMGR->Add_GameObject(OBJID::WALL, pGameObject);
 
 	//	m_mapCollider.emplace(iIndex, vPos);
 	}

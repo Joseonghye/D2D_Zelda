@@ -19,9 +19,25 @@ HRESULT CMainGame::Initialized()
 	//Insert Texture
 	if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Tile/tile0%d.png", L"Terrain", L"Tile", 9)))
 		return E_FAIL;
-	if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Player/Walk/Link_Walk0%d.png", L"Player", L"Walk", 2)))
-		return E_FAIL;
+	{
+		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Player/Walk/Link_Walk0%d.png", L"Player", L"WALK_FRONT", 2)))
+			return E_FAIL;
+		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Player/Walk/Link_Walk_Back0%d.png", L"Player", L"WALK_BACK", 2)))
+			return E_FAIL;
+		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Player/Walk/Link_Walk_Left0%d.png", L"Player", L"WALK_LEFT", 2)))
+			return E_FAIL;
+		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Player/Walk/Link_Walk_Right0%d.png", L"Player", L"WALK_RIGHT", 2)))
+			return E_FAIL;
 
+		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::SINGLE, L"../Texture/Player/Walk/Link_Walk00.png", L"Player", L"IDLE_FRONT", 1)))
+			return E_FAIL;
+		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::SINGLE, L"../Texture/Player/Walk/Link_Walk_Back00.png", L"Player", L"IDLE_BACK", 1)))
+			return E_FAIL;
+		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::SINGLE, L"../Texture/Player/Walk/Link_Walk_Left00.png", L"Player", L"IDLE_LEFT", 1)))
+			return E_FAIL;
+		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::SINGLE, L"../Texture/Player/Walk/Link_Walk_Right00.png", L"Player", L"IDLE_RIGHT", 1)))
+			return E_FAIL;
+	}
 	//Set Scene
 	if (FAILED(SCENEMGR->Change_SceneMgr(SCENE::GAME)))
 		return E_FAIL;

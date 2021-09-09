@@ -56,9 +56,6 @@
     <Filter Include="98. Manager\KeyMgr">
       <UniqueIdentifier>{e4d2042b-9920-4723-9017-97dbc6680190}</UniqueIdentifier>
     </Filter>
-    <Filter Include="98. Manager\CollisionMgr">
-      <UniqueIdentifier>{92d351a8-7808-4c55-8201-ae73628f93f7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="97.Componet">
       <UniqueIdentifier>{6ae580e1-1a24-439c-a15e-b1038785135e}</UniqueIdentifier>
     </Filter>
@@ -125,9 +122,6 @@
     <ClInclude Include="Player.h">
       <Filter>01. Game Object\Player</Filter>
     </ClInclude>
-    <ClInclude Include="CollisionMgr.h">
-      <Filter>98. Manager\CollisionMgr</Filter>
-    </ClInclude>
     <ClInclude Include="BaseComponent.h">
       <Filter>97.Componet</Filter>
     </ClInclude>
@@ -187,9 +181,6 @@
     </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>01. Game Object\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="CollisionMgr.cpp">
-      <Filter>98. Manager\CollisionMgr</Filter>
     </ClCompile>
     <ClCompile Include="BoxCollider.cpp">
       <Filter>97.Componet\BoxCollider</Filter>

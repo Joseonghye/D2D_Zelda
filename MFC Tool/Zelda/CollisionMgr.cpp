@@ -13,6 +13,6 @@ CCollisionMgr::~CCollisionMgr()
 
 bool CCollisionMgr::CollisionRect(CGameObject* pSrc, CGameObject* pDst)
 {
-	if(IntersectRect())
-	return false;
+//	if(IntersectRect())
+//	return false;
 }
