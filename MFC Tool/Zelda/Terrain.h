@@ -25,7 +25,7 @@ private:
 
 private:
 	vector<TILE*> m_vecTile;
-	map<int, D3DXVECTOR3> m_mapCollider;
+//	map<int, D3DXVECTOR3> m_mapCollider;
 };
 
 #endif // !__TERRAIN_H__

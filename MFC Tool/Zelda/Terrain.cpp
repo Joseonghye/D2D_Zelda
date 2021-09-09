@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "Terrain.h"
-
+#include "Wall.h"
 
 Terrain::Terrain()
 {
@@ -28,6 +28,7 @@ HRESULT Terrain::Initialized_GameObject()
 	Release_GameObject();
 	if(FAILED(LoadTileFile(L"../Data/Tile/Tile.dat")))
 		return E_FAIL;
+
 	if(FAILED(LoadColliderFile(L"../Data/Collider/Collider.dat")))
 		return E_FAIL;
 
@@ -93,6 +94,8 @@ HRESULT Terrain::LoadTileFile(const wstring & wstrFilePath)
 		m_vecTile.emplace_back(pTile);
 	}
 	CloseHandle(hFile);
+
+	return S_OK;
 }
 
 HRESULT Terrain::LoadColliderFile(const wstring & wstrFilePath)
@@ -115,8 +118,14 @@ HRESULT Terrain::LoadColliderFile(const wstring & wstrFilePath)
 			break;
 		}
 
-		m_mapCollider.emplace(iIndex, vPos);
+		CGameObject* pGameObject = CWall::Create();
+		pGameObject->SetPos(vPos);
+		GAMEOBJECTMGR->Add_GameObject(WALL, pGameObject);
+
+	//	m_mapCollider.emplace(iIndex, vPos);
 	}
 	CloseHandle(hFile);
+
+	return S_OK;
 
 }

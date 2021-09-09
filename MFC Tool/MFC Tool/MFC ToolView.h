@@ -21,7 +21,6 @@ public:
 public:
 	CGraphicDevice* m_pDevice;
 	Terrain* m_Terrain;
-	Mouse* m_Mouse;
 
 	CClientDC* m_DC;
 

@@ -62,6 +62,15 @@
     <Filter Include="97.Componet">
       <UniqueIdentifier>{6ae580e1-1a24-439c-a15e-b1038785135e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="97.Componet\BoxCollider">
+      <UniqueIdentifier>{cf373cd9-8ece-4d05-9f50-655dc9dd5aba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Game Object\Wall">
+      <UniqueIdentifier>{7b6d960e-1ae0-4665-b4b5-9274516c68da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97.Componet\Animator">
+      <UniqueIdentifier>{4b3c66d6-525c-460c-b3f0-594f8479385d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Zelda.h">
@@ -122,6 +131,15 @@
     <ClInclude Include="BaseComponent.h">
       <Filter>97.Componet</Filter>
     </ClInclude>
+    <ClInclude Include="BoxCollider.h">
+      <Filter>97.Componet\BoxCollider</Filter>
+    </ClInclude>
+    <ClInclude Include="Wall.h">
+      <Filter>01. Game Object\Wall</Filter>
+    </ClInclude>
+    <ClInclude Include="Animator.h">
+      <Filter>97.Componet\Animator</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -172,6 +190,15 @@
     </ClCompile>
     <ClCompile Include="CollisionMgr.cpp">
       <Filter>98. Manager\CollisionMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="BoxCollider.cpp">
+      <Filter>97.Componet\BoxCollider</Filter>
+    </ClCompile>
+    <ClCompile Include="Wall.cpp">
+      <Filter>01. Game Object\Wall</Filter>
+    </ClCompile>
+    <ClCompile Include="Animator.cpp">
+      <Filter>97.Componet\Animator</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

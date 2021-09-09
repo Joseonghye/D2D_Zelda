@@ -206,7 +206,6 @@
     <ClInclude Include="MFC ToolDoc.h" />
     <ClInclude Include="MFC ToolView.h" />
     <ClInclude Include="MiniView.h" />
-    <ClInclude Include="Mouse.h" />
     <ClInclude Include="MultiTexture.h" />
     <ClInclude Include="ObjectTool.h" />
     <ClInclude Include="Resource.h" />
@@ -228,7 +227,6 @@
     <ClCompile Include="MFC ToolDoc.cpp" />
     <ClCompile Include="MFC ToolView.cpp" />
     <ClCompile Include="MiniView.cpp" />
-    <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="MultiTexture.cpp" />
     <ClCompile Include="ObjectTool.cpp" />
     <ClCompile Include="SingTexture.cpp" />

@@ -40,9 +40,6 @@
     <Filter Include="05.FileInfo">
       <UniqueIdentifier>{6c30fff3-a566-46f2-9446-5ba7ff6fc9b7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="06.Mouse">
-      <UniqueIdentifier>{6ce150ac-b10c-4240-8e7f-1a8e2e658035}</UniqueIdentifier>
-    </Filter>
     <Filter Include="01.ToolView\02.Form">
       <UniqueIdentifier>{89814fbb-4078-4e27-81f1-098ff9f234f7}</UniqueIdentifier>
     </Filter>
@@ -108,9 +105,6 @@
     <ClInclude Include="FileInfo.h">
       <Filter>05.FileInfo</Filter>
     </ClInclude>
-    <ClInclude Include="Mouse.h">
-      <Filter>06.Mouse</Filter>
-    </ClInclude>
     <ClInclude Include="MapTool.h">
       <Filter>01.ToolView\02.Form\MapTool</Filter>
     </ClInclude>
@@ -163,9 +157,6 @@
     </ClCompile>
     <ClCompile Include="FileInfo.cpp">
       <Filter>05.FileInfo</Filter>
-    </ClCompile>
-    <ClCompile Include="Mouse.cpp">
-      <Filter>06.Mouse</Filter>
     </ClCompile>
     <ClCompile Include="MapTool.cpp">
       <Filter>01.ToolView\02.Form\MapTool</Filter>

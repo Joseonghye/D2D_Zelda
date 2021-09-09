@@ -19,8 +19,10 @@ public:
 
 	void Add_GameObject(OBJID eID, CGameObject* pGameObject);
 
+	vector<CGameObject*> GetObjList(int objID) { return m_ObjList[objID]; }
+
 private:
-	list<CGameObject*>	m_ObjList[OBJID::OBJID_END];
+	vector<CGameObject*> m_ObjList[OBJID::OBJID_END];
 };
 
 #endif //__GAMEOBJMGR_H__

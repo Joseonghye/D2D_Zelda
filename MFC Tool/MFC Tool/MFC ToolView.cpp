@@ -13,7 +13,6 @@
 #include "MFC ToolView.h"
 #include "MainFrm.h"
 #include "Form.h"
-#include "Mouse.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -45,7 +44,6 @@ CMFCToolView::CMFCToolView()
 CMFCToolView::~CMFCToolView()
 {
 	Safe_Delete(m_Terrain);
-	Safe_Delete(m_Mouse);
 	CTexturMgr::DestoryInstacne();
 	CGraphicDevice::DestoryInstacne();
 }
@@ -70,7 +68,6 @@ void CMFCToolView::OnDraw(CDC* /*pDC*/)
 	m_pDevice->BeginDraw();
 	m_pDevice->GetSprite()->Begin(D3DXSPRITE_ALPHABLEND);
 
-	m_Mouse->RenderMouse(m_hWnd);
 	m_pDevice->GetSprite()->End();
 	m_pDevice->GetSprite()->Begin(D3DXSPRITE_ALPHABLEND);
 	m_Terrain->RenderTerrain();
@@ -158,7 +155,6 @@ void CMFCToolView::OnInitialUpdate()
 		CTexturMgr::GetInstance()->InsertTexture(TEXTYPE::MULTI, L"../Texture/Monster/Octo/Walk/Octo0%d.png", L"Octo",L"Walk",2);
 		CTexturMgr::GetInstance()->InsertTexture(TEXTYPE::SINGLE, L"../Texture/Monster/Goomba/Goomba.png", L"Goomba");
 	}
-	m_Mouse = Mouse::GetInstance();
 }
 
 void CMFCToolView::OnLButtonDown(UINT nFlags, CPoint point)

@@ -19,7 +19,7 @@ HRESULT CMainGame::Initialized()
 	//Insert Texture
 	if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Tile/tile0%d.png", L"Terrain", L"Tile", 9)))
 		return E_FAIL;
-	if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::SINGLE, L"../Texture/Player/Link.png", L"Player", L"Attack", 9)))
+	if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Player/Walk/Link_Walk0%d.png", L"Player", L"Walk", 2)))
 		return E_FAIL;
 
 	//Set Scene

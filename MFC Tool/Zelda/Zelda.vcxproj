@@ -148,7 +148,9 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Animator.h" />
     <ClInclude Include="BaseComponent.h" />
+    <ClInclude Include="BoxCollider.h" />
     <ClInclude Include="CollisionMgr.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameObjectMgr.h" />
@@ -167,9 +169,12 @@
     <ClInclude Include="Terrain.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TextureMgr.h" />
+    <ClInclude Include="Wall.h" />
     <ClInclude Include="Zelda.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Animator.cpp" />
+    <ClCompile Include="BoxCollider.cpp" />
     <ClCompile Include="CollisionMgr.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameObjectMgr.cpp" />
@@ -191,6 +196,7 @@
     <ClCompile Include="Terrain.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TextureMgr.cpp" />
+    <ClCompile Include="Wall.cpp" />
     <ClCompile Include="Zelda.cpp" />
   </ItemGroup>
   <ItemGroup>
