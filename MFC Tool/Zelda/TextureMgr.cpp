@@ -51,7 +51,7 @@ HRESULT CTextureMgr::InsertTexture(TEXTYPE etype, const wstring& wstrFilePath, c
 	{
 		if (etype == TEXTYPE::MULTI)
 		{
-			iter->second->Release();
+			//iter->second->Release();
 			if (FAILED(iter->second->InsterTexture(wstrFilePath, wstrObjectKey, wstrStateKey, iCount)))
 			{
 				MSG_BOX(L"멀티 텍스쳐 생성 실패")

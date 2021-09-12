@@ -18,9 +18,13 @@ void CGameObjectMgr::Update_GameObjectMgr()
 		for (auto iter = m_ObjList[i].begin(); iter != m_ObjList[i].end();)
 		{
 			(*iter)->Update_Components();
-			(*iter)->Update_GameObject();
-			//이벤트 값에 따른 처리 
-			
+
+			if (DEAD == (*iter)->Update_GameObject()) 
+			{
+				//이벤트 값에 따른 처리 
+				SAFE_DELETE(*iter);
+				m_ObjList[i].erase(iter);
+			}
 			iter++;
 		}
 	}

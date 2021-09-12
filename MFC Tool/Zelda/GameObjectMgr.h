@@ -19,6 +19,7 @@ public:
 
 	void Add_GameObject(OBJID eID, CGameObject* pGameObject);
 
+	CGameObject* GetPlayer() { return m_ObjList[PLAYER].front(); }
 	vector<CGameObject*> GetObjList(int objID) { return m_ObjList[objID]; }
 
 private:

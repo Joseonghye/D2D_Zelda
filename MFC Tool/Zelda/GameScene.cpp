@@ -14,11 +14,14 @@ CGameScene::~CGameScene()
 
 HRESULT CGameScene::Initialized_Scene()
 {
+
 	CGameObject* pGameObject = Terrain::Create();
 	GAMEOBJECTMGR->Add_GameObject(BACKGROUND, pGameObject);
 
 	pGameObject = CPlayer::Create();
 	GAMEOBJECTMGR->Add_GameObject(PLAYER, pGameObject);
+
+	LoadGameObject(L"../Data/Obj/ObjData.dat");
 
 	return S_OK;
 }

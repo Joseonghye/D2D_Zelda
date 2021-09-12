@@ -1,13 +1,24 @@
 #include "stdafx.h"
 #include "Animator.h"
 
-CAnimator::CAnimator(CGameObject* owner, const wstring & wstrObjectKey, ANISTATE eState, DIR dir)
+CAnimator::CAnimator(CGameObject* owner, const wstring & wstrObjectKey, wstring wstrState, wstring wstrdir,float fEndFrame)
 	:CBaseComponent(owner, COMPONENTID::ANIMATOR),
-	m_wstrObjectKey(wstrObjectKey), m_eCurState(ANISTATE_END), m_eNextState(eState), m_eDir(dir)
+	m_wstrObjectKey(wstrObjectKey)
 {
-	m_wstrStateKey = L"Walk";
+	m_wstrStateKey = wstrState;
+	m_wstrDir = wstrdir;
+
+	//string str = enumToString(m_eNextState);
+	//m_wstrStateKey.assign(str.begin(), str.end());
+
+	//str = enumToString(m_eDir);
+	//wstring wstr;
+	//wstr.assign(str.begin(), str.end());
+
+	m_wstrStateKey += L"_" + m_wstrDir;
+
 	m_fFrame = 0;
-	m_fEndFrame = 2;
+	m_fEndFrame = fEndFrame;
 }
 
 CAnimator::~CAnimator()
@@ -27,6 +38,7 @@ void CAnimator::LateUpdate_Component()
 
 void CAnimator::Render_Component()
 {
+	// wstrState += wstr;
 	const TEXINFO* pTexInfo = TEXTUREMGR->GetTexture(m_wstrObjectKey, m_wstrStateKey, DWORD(m_fFrame));
 	if (nullptr == pTexInfo)
 		return;
@@ -41,20 +53,31 @@ void CAnimator::Release_Component()
 
 void CAnimator::Update_Animation()
 {
-	m_fFrame += m_fEndFrame*0.1f;
+	m_fFrame += m_fEndFrame*0.05f;
 	if (m_fFrame >= m_fEndFrame)
 		m_fFrame = 0;
 }
 
-void CAnimator::SetAniState(ANISTATE eState, DIR eDir, float fEndFrame)
+void CAnimator::SetAniState(const wstring& wstrState, wstring wstrdir,float fEndFrame)
 {
-	if (eState == m_eCurState) return;
+	if (fEndFrame != -1)
+	{
+		m_wstrStateKey = wstrState;
+		m_fEndFrame = fEndFrame;
+	}
+	if(!wstrdir.empty())
+		m_wstrDir = wstrdir;
 
-	m_eNextState = eState;
-	m_wstrStateKey = m_eNextState + m_eDir;
-	m_fEndFrame = fEndFrame;
+	m_wstrStateKey += L"_" + m_wstrDir;
 
-	m_eCurState = m_eNextState;
+	/*wstring wstrState;
+	wstrState.assign(m_wstrStateKey.begin(), m_wstrStateKey.end());
+	wstrState.append(L"_");
+	wstring wstr;
+	wstr.assign(m_wstrDir.begin(), m_wstrDir.end());*/
+
+	m_fFrame = 0;
+	//m_eCurState = m_eNextState;
 }
 
 

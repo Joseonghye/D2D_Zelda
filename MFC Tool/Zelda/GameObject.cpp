@@ -2,7 +2,7 @@
 #include "GameObject.h"
 #include "BaseComponent.h"
 
-CGameObject::CGameObject()
+CGameObject::CGameObject() :m_bDestory(false)
 {
 }
 

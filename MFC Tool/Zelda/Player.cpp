@@ -3,7 +3,7 @@
 #include "BoxCollider.h"
 #include "Animator.h"
 
-CPlayer::CPlayer() :m_fSpeed(5.f)
+CPlayer::CPlayer() :m_fSpeed(5.f), m_eCurState(IDLE), m_eNextState(STATE_END), m_eCurDir(FRONT), m_eNextDir(FRONT)
 {
 }
 
@@ -22,35 +22,46 @@ HRESULT CPlayer::Initialized_GameObject()
 	D3DXMatrixTranslation(&m_tInfo.matTrans, m_tInfo.vPos.x, m_tInfo.vPos.y, m_tInfo.vPos.z);
 
 	m_Collider = static_cast<CBoxCollider*>(AddComponent(new CBoxCollider(this, m_tInfo.vSize.x, m_tInfo.vSize.y)));
-	AddComponent(new CAnimator(this, L"Player", ANISTATE::WALK));
+	m_Animator = static_cast<CAnimator*>(AddComponent(new CAnimator(this, L"Player", L"IDLE")));
 
 	return S_OK;
 }
 
 int CPlayer::Update_GameObject()
 {
+	m_eNextState = IDLE;
 
 	if (KEYMGR->Key_Pressing(KEY_LEFT)) 
 	{
 		m_tInfo.vPos.x -= m_fSpeed;
 		m_tInfo.vDir.x = -1.f;
+		m_eNextDir = LEFT;
+		m_eNextState = WALK;
 	}
 	else if (KEYMGR->Key_Pressing(KEY_RIGHT)) 
 	{
 		m_tInfo.vPos.x += m_fSpeed;
 		m_tInfo.vDir.x = 1.f;
+		m_eNextDir = RIGHT;
+		m_eNextState = WALK;
 	}
 
 	if (KEYMGR->Key_Pressing(KEY_UP))
 	{
 		m_tInfo.vPos.y -= m_fSpeed;
 		m_tInfo.vDir.y = -1.f;
+		m_eNextDir = BACK;
+		m_eNextState = WALK;
 	}
 	else if (KEYMGR->Key_Pressing(KEY_DOWN)) 
 	{
 		m_tInfo.vPos.y += m_fSpeed;
 		m_tInfo.vDir.y = 1.f;
+		m_eNextDir = FRONT;
+		m_eNextState = WALK;
 	}
+
+	ChangeState();
 
 	D3DXMatrixTranslation(&m_tInfo.matTrans, m_tInfo.vPos.x, m_tInfo.vPos.y, m_tInfo.vPos.z);
 
@@ -68,8 +79,7 @@ int CPlayer::Update_GameObject()
 				m_tInfo.vPos.x -= m_tInfo.vDir.x *m_fSpeed;
 				m_tInfo.vPos.y -= m_tInfo.vDir.y *m_fSpeed;
 
-				D3DXMatrixTranslation(&m_tInfo.matTrans, m_tInfo.vPos.x, m_tInfo.vPos.y, m_tInfo.vPos.z);
-				
+				D3DXMatrixTranslation(&m_tInfo.matTrans, m_tInfo.vPos.x, m_tInfo.vPos.y, m_tInfo.vPos.z);	
 			}
 		}
 	}
@@ -106,4 +116,61 @@ CPlayer * CPlayer::Create()
 		Safe_Delete(pInstance);
 
 	return pInstance;
+}
+
+void CPlayer::Attack()
+{
+}
+
+void CPlayer::ChangeState()
+{
+	if (m_eCurState == m_eNextState && m_eCurDir == m_eNextDir) return;
+
+	wstring wstrStateKey;
+	wstring wstrDir;
+	float fEndFrame = -1;
+
+	if (m_eCurState != m_eNextState)
+	{
+		switch (m_eNextState)
+		{
+		case IDLE:
+			wstrStateKey = L"IDLE";
+			fEndFrame = 1;
+			break;
+		case WALK:
+			wstrStateKey = L"WALK";
+			fEndFrame = 2;
+			break;
+		case ATTACK:
+			wstrStateKey = L"ATTACK";
+			fEndFrame = 2;
+			break;
+		}
+		m_eCurState = m_eNextState;
+	}
+
+	if (m_eCurDir != m_eNextDir)
+	{
+		switch (m_eNextDir)
+		{
+		case FRONT:
+			wstrDir = L"FRONT";
+			break;
+		case BACK:
+			wstrDir = L"BACK";
+			break;
+		case LEFT:
+			wstrDir = L"LEFT";
+			break;
+		case RIGHT:
+			wstrDir = L"RIGHT";
+			break;
+		}
+		m_eCurDir = m_eNextDir;
+	}
+
+
+	m_Animator->SetAniState(wstrStateKey, wstrDir, fEndFrame);
+
 }
