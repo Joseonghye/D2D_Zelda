@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "BoxCollider.h"
 #include "Animator.h"
+#include "Sword.h"
 
 CPlayer::CPlayer() :m_fSpeed(5.f), m_eCurState(IDLE), m_eNextState(STATE_END), m_eCurDir(FRONT), m_eNextDir(FRONT)
 {
@@ -24,11 +25,18 @@ HRESULT CPlayer::Initialized_GameObject()
 	m_Collider = static_cast<CBoxCollider*>(AddComponent(new CBoxCollider(this, m_tInfo.vSize.x, m_tInfo.vSize.y)));
 	m_Animator = static_cast<CAnimator*>(AddComponent(new CAnimator(this, L"Player", L"IDLE")));
 
+	m_pItem = new CSword();
+	static_cast<CSword*>(m_pItem)->SetPlayer(this);
+	m_pItem->Initialized_GameObject();
+
 	return S_OK;
 }
 
 int CPlayer::Update_GameObject()
 {
+	if (m_pItem != nullptr)
+		m_pItem->Update_GameObject();
+
 	m_eNextState = IDLE;
 
 	if (KEYMGR->Key_Pressing(KEY_LEFT)) 
@@ -59,6 +67,11 @@ int CPlayer::Update_GameObject()
 		m_tInfo.vDir.y = 1.f;
 		m_eNextDir = FRONT;
 		m_eNextState = WALK;
+	}
+	if (KEYMGR->Key_Pressing(KEY_RETURN))
+	{
+		m_eNextState = ATTACK;
+		Attack();
 	}
 
 	ChangeState();
@@ -95,14 +108,8 @@ void CPlayer::LateUpdate_GameObject()
 
 void CPlayer::Render_GameObject()
 {
-	/*const TEXINFO* pTexInfo =TEXTUREMGR->GetTexture(L"Player", L"Attack");
-	if (nullptr == pTexInfo)
-		return;
-
-	m_tInfo.matWorld = m_tInfo.matScale * m_tInfo.matTrans;
-
-	GRAPHICDEVICE->GetSprite()->SetTransform(&m_tInfo.matWorld);
-	GRAPHICDEVICE->GetSprite()->Draw(pTexInfo->pTexture, nullptr, &pTexInfo->tCenter, nullptr, D3DCOLOR_ARGB(255, 255, 255, 255));*/
+	if (m_pItem != nullptr)
+		m_pItem->Render_GameObject();
 }
 
 void CPlayer::Release_GameObject()
@@ -120,6 +127,7 @@ CPlayer * CPlayer::Create()
 
 void CPlayer::Attack()
 {
+	static_cast<CSword*>(m_pItem)->Attack();
 }
 
 void CPlayer::ChangeState()
@@ -144,7 +152,7 @@ void CPlayer::ChangeState()
 			break;
 		case ATTACK:
 			wstrStateKey = L"ATTACK";
-			fEndFrame = 2;
+			fEndFrame = 3;
 			break;
 		}
 		m_eCurState = m_eNextState;

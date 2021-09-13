@@ -8,13 +8,6 @@ CAnimator::CAnimator(CGameObject* owner, const wstring & wstrObjectKey, wstring 
 	m_wstrStateKey = wstrState;
 	m_wstrDir = wstrdir;
 
-	//string str = enumToString(m_eNextState);
-	//m_wstrStateKey.assign(str.begin(), str.end());
-
-	//str = enumToString(m_eDir);
-	//wstring wstr;
-	//wstr.assign(str.begin(), str.end());
-
 	m_wstrStateKey += L"_" + m_wstrDir;
 
 	m_fFrame = 0;
@@ -38,7 +31,6 @@ void CAnimator::LateUpdate_Component()
 
 void CAnimator::Render_Component()
 {
-	// wstrState += wstr;
 	const TEXINFO* pTexInfo = TEXTUREMGR->GetTexture(m_wstrObjectKey, m_wstrStateKey, DWORD(m_fFrame));
 	if (nullptr == pTexInfo)
 		return;
@@ -53,7 +45,7 @@ void CAnimator::Release_Component()
 
 void CAnimator::Update_Animation()
 {
-	m_fFrame += m_fEndFrame*0.05f;
+	m_fFrame += m_fEndFrame * TIMEMGR->Get_DeltaTime() * 5;
 	if (m_fFrame >= m_fEndFrame)
 		m_fFrame = 0;
 }
@@ -65,19 +57,17 @@ void CAnimator::SetAniState(const wstring& wstrState, wstring wstrdir,float fEnd
 		m_wstrStateKey = wstrState;
 		m_fEndFrame = fEndFrame;
 	}
-	if(!wstrdir.empty())
+	if (!wstrdir.empty()) 
+	{
+		size_t index = m_wstrStateKey.rfind('_');
+		m_wstrStateKey = m_wstrStateKey.substr(0, index);
+
 		m_wstrDir = wstrdir;
+	}
 
 	m_wstrStateKey += L"_" + m_wstrDir;
-
-	/*wstring wstrState;
-	wstrState.assign(m_wstrStateKey.begin(), m_wstrStateKey.end());
-	wstrState.append(L"_");
-	wstring wstr;
-	wstr.assign(m_wstrDir.begin(), m_wstrDir.end());*/
-
 	m_fFrame = 0;
-	//m_eCurState = m_eNextState;
+
 }
 
 

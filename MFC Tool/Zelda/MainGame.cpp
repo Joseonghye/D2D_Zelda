@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "MainGame.h"
 
-
 CMainGame::CMainGame()
 {
 }
@@ -16,11 +15,15 @@ HRESULT CMainGame::Initialized()
 	if (FAILED(GRAPHICDEVICE->Initialized()))
 		return E_FAIL;
 
-	//Insert Texture
+	if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::SINGLE, L"../Texture/Player/Sword.png", L"Sword")))
+		return E_FAIL;
+
+	//Insert Tile Texture
 	if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Tile/tile0%d.png", L"Terrain", L"Tile", 9)))
 		return E_FAIL;
 	//Insert Player Texture
 	{
+		//Walk
 		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Player/Walk/Link_Walk0%d.png", L"Player", L"WALK_FRONT", 2)))
 			return E_FAIL;
 		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Player/Walk/Link_Walk_Back0%d.png", L"Player", L"WALK_BACK", 2)))
@@ -37,14 +40,21 @@ HRESULT CMainGame::Initialized()
 			return E_FAIL;
 		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Player/Walk/Link_Walk_Right00.png", L"Player", L"IDLE_RIGHT", 1)))
 			return E_FAIL;
+		//Attack
+		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Player/Attak/Link_Attack0%d.png", L"Player", L"ATTACK_FRONT", 3)))
+			return E_FAIL;
 	}
-
+	//Insert Monster Texture
 	{
 		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Monster/HardHat/HardHat0%d.png", L"HardHat", L"IDLE_FRONT", 2)))
 			return E_FAIL;
 	}
+
 	//Set Scene
 	if (FAILED(SCENEMGR->Change_SceneMgr(SCENE::GAME)))
+		return E_FAIL;
+	
+	if (FAILED(TIMEMGR->Initialized_TimeMgr()))
 		return E_FAIL;
 
 	return S_OK;
@@ -53,17 +63,18 @@ HRESULT CMainGame::Initialized()
 void CMainGame::Update()
 {
 	KEYMGR->Update_KeyMgr();
+	TIMEMGR->Update_TimeMgr();
 
 	SCENEMGR->Update_SceneMgr();
 	SCENEMGR->LateUpdateSceneMgr();
 }
 
-void CMainGame::Render()
+void CMainGame::Render(CFrameMgr& rFrameMgr)
 {
 	GRAPHICDEVICE->BeginDraw();
 
 	SCENEMGR->Render_SceneMgr();
-
+//	rFrameMgr.Render_FrameMgr();
 	GRAPHICDEVICE->EndDraw();
 }
 
@@ -74,6 +85,7 @@ void CMainGame::Release()
 	TEXTUREMGR->DestoryInstacne();
 	GRAPHICDEVICE->DestoryInstacne();
 	KEYMGR->DestoryInstacne();
+	TIMEMGR->DestoryInstacne();
 }
 
 CMainGame * CMainGame::Create()

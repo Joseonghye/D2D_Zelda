@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "Zelda.h"
 #include "MainGame.h"
+#include "FrameMgr.h"
 
 #define MAX_LOADSTRING 100
 
@@ -45,6 +46,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     MSG msg;
 	msg.message = WM_NULL;
+	CFrameMgr tFrameMgr;
+	tFrameMgr.Initialize_FrameMgr(1000.f);
 
 	CMainGame* pMainGame = CMainGame::Create();
 
@@ -58,9 +61,11 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 				DispatchMessage(&msg);
 			}
 
-		pMainGame->Update();
-		pMainGame->Render();
-
+	//	if (tFrameMgr.FrameLock()) 
+	//	{
+			pMainGame->Update();
+			pMainGame->Render(tFrameMgr);
+	//	}
 	}
 	Safe_Delete(pMainGame);
 

@@ -80,6 +80,12 @@
     <Filter Include="01. Game Object\Player\Sword">
       <UniqueIdentifier>{cfd2b134-bedf-451e-aff7-845e49ed1953}</UniqueIdentifier>
     </Filter>
+    <Filter Include="98. Manager\TimeMgr">
+      <UniqueIdentifier>{2ac4af10-2269-42bf-8e47-10089a85ce71}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="98. Manager\FrameMgr">
+      <UniqueIdentifier>{ed858fc6-bb9c-4c25-887a-8121cb0d60f0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Zelda.h">
@@ -149,7 +155,15 @@
     <ClInclude Include="HardHat.h">
       <Filter>01. Game Object\Monster\HardHat</Filter>
     </ClInclude>
-    <ClInclude Include="Sword.h" />
+    <ClInclude Include="Sword.h">
+      <Filter>01. Game Object\Player\Sword</Filter>
+    </ClInclude>
+    <ClInclude Include="TimeMgr.h">
+      <Filter>98. Manager\TimeMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="FrameMgr.h">
+      <Filter>98. Manager\FrameMgr</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -210,7 +224,15 @@
     <ClCompile Include="HardHat.cpp">
       <Filter>01. Game Object\Monster\HardHat</Filter>
     </ClCompile>
-    <ClCompile Include="Sword.cpp" />
+    <ClCompile Include="Sword.cpp">
+      <Filter>01. Game Object\Player\Sword</Filter>
+    </ClCompile>
+    <ClCompile Include="TimeMgr.cpp">
+      <Filter>98. Manager\TimeMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="FrameMgr.cpp">
+      <Filter>98. Manager\FrameMgr</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Zelda.rc">

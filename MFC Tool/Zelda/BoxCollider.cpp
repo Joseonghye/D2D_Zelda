@@ -39,10 +39,17 @@ bool CBoxCollider::CheckCollision(CBoxCollider * pDst)
 
 void CBoxCollider::Update_Rect()
 {
-	D3DXVECTOR3 pos = m_pObject->GetPos();
+	D3DXVECTOR3 pos = m_pObject->GetPos(); //m_pObject->GetWorldMat();
+	D3DXVECTOR4 pOut;
+	D3DXVec3Transform(&pOut, &pos, &m_pObject->GetWorldMat());
 
-	m_rcBound.left =(LONG)( pos.x - (m_iWidth*0.5f));
-	m_rcBound.top = (LONG)(pos.y - (m_iHeight*0.5f));
-	m_rcBound.right = (LONG)(pos.x + (m_iWidth*0.5f));
-	m_rcBound.bottom = (LONG)(pos.y + (m_iHeight*0.5f));
+	//m_rcBound.left =(LONG)(pos.x - (m_iWidth*0.5f));
+	//m_rcBound.top = (LONG)(pos.y - (m_iHeight*0.5f));
+	//m_rcBound.right = (LONG)(pos.x + (m_iWidth*0.5f));
+	//m_rcBound.bottom = (LONG)(pos.y + (m_iHeight*0.5f));
+
+	m_rcBound.left = (LONG)(pOut.x - (m_iWidth*0.5f));
+	m_rcBound.top = (LONG)(pOut.y - (m_iHeight*0.5f));
+	m_rcBound.right = (LONG)(pOut.x + (m_iWidth*0.5f));
+	m_rcBound.bottom = (LONG)(pOut.y + (m_iHeight*0.5f));
 }

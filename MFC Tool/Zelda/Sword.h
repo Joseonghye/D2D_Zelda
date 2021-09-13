@@ -16,7 +16,13 @@ public:
 	virtual void Render_GameObject() override;
 	virtual void Release_GameObject() override;
 
+	void SetPlayer(CGameObject* player) { m_pPlayer = player; }
+	void Attack();
 private:
 	CBoxCollider* m_Collider;
+//	D3DXMATRIX m_matRot;
+	CGameObject* m_pPlayer;
+	float m_fAngle;
+	bool m_bAttack;
 };
 

@@ -58,6 +58,7 @@ HRESULT CTextureMgr::InsertTexture(TEXTYPE etype, const wstring& wstrFilePath, c
 			}
 		}
 	}
+
 	return S_OK;
 }
 

@@ -151,6 +151,7 @@
     <ClInclude Include="Animator.h" />
     <ClInclude Include="BaseComponent.h" />
     <ClInclude Include="BoxCollider.h" />
+    <ClInclude Include="FrameMgr.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameObjectMgr.h" />
     <ClInclude Include="GameScene.h" />
@@ -170,12 +171,14 @@
     <ClInclude Include="Terrain.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TextureMgr.h" />
+    <ClInclude Include="TimeMgr.h" />
     <ClInclude Include="Wall.h" />
     <ClInclude Include="Zelda.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animator.cpp" />
     <ClCompile Include="BoxCollider.cpp" />
+    <ClCompile Include="FrameMgr.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameObjectMgr.cpp" />
     <ClCompile Include="GameScene.cpp" />
@@ -198,6 +201,7 @@
     <ClCompile Include="Terrain.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TextureMgr.cpp" />
+    <ClCompile Include="TimeMgr.cpp" />
     <ClCompile Include="Wall.cpp" />
     <ClCompile Include="Zelda.cpp" />
   </ItemGroup>

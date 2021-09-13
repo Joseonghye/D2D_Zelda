@@ -3,7 +3,8 @@
 
 //IMPLEMENT_SINGLETON(CGraphicDevice)
 
-CGraphicDevice::CGraphicDevice() : m_pSDK(nullptr), m_pDevice(nullptr), m_pSprite(nullptr)
+CGraphicDevice::CGraphicDevice() : m_pSDK(nullptr), m_pDevice(nullptr),
+								m_pSprite(nullptr), m_pFont(nullptr)
 {
 }
 
@@ -46,6 +47,16 @@ HRESULT CGraphicDevice::Initialized()
 		MSG_BOX(L"Create Sprite Fail")
 	}
 
+	//D3DXFONT_DESCW tDesc;
+	//ZeroMemory(&tDesc, sizeof(D3DXFONT_DESCW));
+	//tDesc.Height = 20;
+	//tDesc.Width = 15;
+	//tDesc.Weight = FW_HEAVY;
+	//tDesc.CharSet = HANGUL_CHARSET;
+	//lstrcpy(tDesc.FaceName, L"CookieRunOTF Black");
+	//if (FAILED(D3DXCreateFontIndirectW(m_pDevice, &tDesc,&m_pFont)))
+	//	MSG_BOX(L"Create Font Fail")
+
 	return S_OK;
 }
 
@@ -72,6 +83,7 @@ void CGraphicDevice::Release()
 	Safe_Release(m_pSprite);
 	Safe_Release(m_pDevice);
 	Safe_Release(m_pSDK);
+	Safe_Release(m_pFont);
 }
 
 void CGraphicDevice::SetParmeter(D3DPRESENT_PARAMETERS& d3pp)

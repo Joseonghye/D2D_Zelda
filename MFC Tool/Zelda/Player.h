@@ -30,7 +30,7 @@ private:
 	CBoxCollider* m_Collider;
 	CAnimator* m_Animator;
 
-	CGameObject* m_ObjItem;
+	CGameObject* m_pItem;
 
 	DIR m_eCurDir;
 	DIR m_eNextDir;

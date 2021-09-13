@@ -7,11 +7,6 @@ class CGraphicDevice : public CSingleTon<CGraphicDevice>
 {
 friend CSingleTon;
 private:
-	LPDIRECT3D9 m_pSDK;
-	LPDIRECT3DDEVICE9 m_pDevice;
-	LPD3DXSPRITE m_pSprite;
-
-private:
 	explicit CGraphicDevice();
 	virtual ~CGraphicDevice();
 public:
@@ -19,11 +14,19 @@ public:
 	void BeginDraw();
 	void EndDraw(HWND _hWnd=g_hWnd);
 	void Release();
-private:
-	void SetParmeter(D3DPRESENT_PARAMETERS& d3pp);
+
 public:
 	const LPDIRECT3DDEVICE9& const GetDevice() { return m_pDevice; }
 	const LPD3DXSPRITE& const GetSprite() { return m_pSprite; }
+	const LPD3DXFONT& const GetFont() { return m_pFont; }
+private:
+	void SetParmeter(D3DPRESENT_PARAMETERS& d3pp);
+
+private:
+	LPDIRECT3D9 m_pSDK;
+	LPDIRECT3DDEVICE9 m_pDevice;
+	LPD3DXSPRITE m_pSprite;
+	LPD3DXFONT m_pFont;
 };
 #endif
 

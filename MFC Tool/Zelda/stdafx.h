@@ -39,9 +39,11 @@ using namespace std;
 #include "GraphicDevice.h"
 #include "SceneMgr.h"
 #include "KeyMgr.h"
+#include "TimeMgr.h"
 
 #define TEXTUREMGR		CTextureMgr::GetInstance()
 #define GAMEOBJECTMGR	CGameObjectMgr::GetInstance()
 #define GRAPHICDEVICE	CGraphicDevice::GetInstance()
 #define SCENEMGR		CSceneMgr::GetInstance()
 #define KEYMGR			CKeyMgr::GetInstance()
+#define TIMEMGR			CTimeMgr::GetInstance()
