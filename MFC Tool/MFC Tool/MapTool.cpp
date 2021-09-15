@@ -131,7 +131,7 @@ void CMapTool::OnBnClickedSave()
 		DWORD dwByte = 0;
 
 		for (int y = 0; y < TOTAL_TILEY; ++y)
-		{s
+		{
 			for (int x = 0; x < TOTAL_TILEX; ++x)
 			{
 				for (int j = 0; j < ROOM_TILEY; ++j) {
@@ -180,8 +180,17 @@ void CMapTool::OnBnClickedLoad()
 
 		DWORD dwByte = 0;
 		TILE* pTile = nullptr;
+
+		int i = 0;
+
+		int totalX = 0;
+		int totalY = 0;
+		int x = 0;
+		int y = 0;
+
 		while (true)
 		{
+			++i;
 			pTile = new TILE;
 			ReadFile(hFile, pTile, sizeof(TILE), &dwByte, nullptr);
 
@@ -190,8 +199,22 @@ void CMapTool::OnBnClickedLoad()
 				Safe_Delete(pTile);
 				break;
 			}
+			int index;
 
-			pView->m_Terrain->AddTileData(pTile);
+			if (i == ROOM_TILEX)
+			{
+				y++;
+				i = 0;
+
+				if (y == ROOM_TILEY)
+				{
+					totalX++;
+					y = 0;
+				}
+
+			}
+
+			pView->m_Terrain->AddTileData(pTile,);
 		}
 		CloseHandle(hFile);
 

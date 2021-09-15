@@ -20,7 +20,7 @@ public:
 public:
 	void Set_View(CMFCToolView* pView) { m_pView = pView; }
 
-	void AddTileData(TILE* pTile);
+	void AddTileData(TILE* pTile, int index);
 	HRESULT ReadyTerrain();
 	void RenderTerrain();
 	void MiniRenderTerrain();

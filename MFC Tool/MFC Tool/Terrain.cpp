@@ -13,9 +13,10 @@ Terrain::~Terrain()
 	ReleaseColl();
 }
 
-void Terrain::AddTileData(TILE * pTile)
+void Terrain::AddTileData(TILE * pTile,int index)
 {
-	m_vecTile.emplace_back(pTile);
+	m_vecTile[index] = pTile;
+	//m_vecTile.emplace_back(pTile);
 }
 
 HRESULT Terrain::ReadyTerrain()
