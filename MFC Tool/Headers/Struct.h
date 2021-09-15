@@ -18,8 +18,10 @@ typedef struct tagTile {
 
 typedef struct tagInfo
 {
+	DIR eDir;
+
 	D3DXVECTOR3 vPos;
-	D3DXVECTOR3 vDir;
+	//D3DXVECTOR3 vDir;
 	D3DXVECTOR3 vSize;
 	D3DXVECTOR3 vScale;
 
@@ -31,7 +33,7 @@ typedef struct tagInfo
 	tagInfo()
 	{
 		ZeroMemory(&vPos, sizeof(D3DXVECTOR3));
-		ZeroMemory(&vDir, sizeof(D3DXVECTOR3));
+//		ZeroMemory(&vDir, sizeof(D3DXVECTOR3));
 		ZeroMemory(&vSize, sizeof(D3DXVECTOR3));
 		ZeroMemory(&vScale, sizeof(D3DXVECTOR3));
 

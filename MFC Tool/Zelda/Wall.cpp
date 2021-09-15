@@ -11,7 +11,12 @@ CWall::~CWall()
 
 HRESULT CWall::Initialized_GameObject()
 {
-	m_tInfo.vSize = { 16.f,16.f,0 };
+	m_bMove = false;
+	m_bVisible = false;
+
+	m_tInfo.vSize = { 32.f,32.f,0 };
+	D3DXMatrixScaling(&m_tInfo.matScale, 1.f, 1.f, 1.f);
+
 	AddComponent(new CBoxCollider(this, m_tInfo.vSize.x, m_tInfo.vSize.y));
 
 	return S_OK;

@@ -62,9 +62,6 @@
     <Filter Include="97.Componet\BoxCollider">
       <UniqueIdentifier>{cf373cd9-8ece-4d05-9f50-655dc9dd5aba}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. Game Object\Wall">
-      <UniqueIdentifier>{7b6d960e-1ae0-4665-b4b5-9274516c68da}</UniqueIdentifier>
-    </Filter>
     <Filter Include="97.Componet\Animator">
       <UniqueIdentifier>{4b3c66d6-525c-460c-b3f0-594f8479385d}</UniqueIdentifier>
     </Filter>
@@ -77,14 +74,32 @@
     <Filter Include="01. Game Object\UI">
       <UniqueIdentifier>{c3ef2b89-81ea-4788-800a-e5a23033f06c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. Game Object\Player\Sword">
-      <UniqueIdentifier>{cfd2b134-bedf-451e-aff7-845e49ed1953}</UniqueIdentifier>
-    </Filter>
     <Filter Include="98. Manager\TimeMgr">
       <UniqueIdentifier>{2ac4af10-2269-42bf-8e47-10089a85ce71}</UniqueIdentifier>
     </Filter>
     <Filter Include="98. Manager\FrameMgr">
       <UniqueIdentifier>{ed858fc6-bb9c-4c25-887a-8121cb0d60f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="98. Manager\CollisionMgr">
+      <UniqueIdentifier>{951f8116-2429-4460-8fad-d4a9186f3069}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Game Object\Interaction">
+      <UniqueIdentifier>{5b0481c3-eaf7-439c-befb-f0478f4bf2f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Game Object\Terrain\Wall">
+      <UniqueIdentifier>{7b6d960e-1ae0-4665-b4b5-9274516c68da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Game Object\Equipment">
+      <UniqueIdentifier>{b1e72f59-1e0d-419a-b37b-eb9ea8404bea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Game Object\Equipment\Sword">
+      <UniqueIdentifier>{cfd2b134-bedf-451e-aff7-845e49ed1953}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Game Object\Interaction\Weed">
+      <UniqueIdentifier>{493a3b2b-5515-454a-8c16-bf3c694b488a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Game Object\Interaction\BlackStone">
+      <UniqueIdentifier>{0c75b9f2-72ce-4cf6-a6b2-08d5bd7fffe8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -103,9 +118,6 @@
     </ClInclude>
     <ClInclude Include="Scene.h">
       <Filter>04. Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject.h">
-      <Filter>01. Game Object</Filter>
     </ClInclude>
     <ClInclude Include="GraphicDevice.h">
       <Filter>03. GraphicDevice</Filter>
@@ -147,7 +159,7 @@
       <Filter>97.Componet\BoxCollider</Filter>
     </ClInclude>
     <ClInclude Include="Wall.h">
-      <Filter>01. Game Object\Wall</Filter>
+      <Filter>01. Game Object\Terrain\Wall</Filter>
     </ClInclude>
     <ClInclude Include="Animator.h">
       <Filter>97.Componet\Animator</Filter>
@@ -156,13 +168,31 @@
       <Filter>01. Game Object\Monster\HardHat</Filter>
     </ClInclude>
     <ClInclude Include="Sword.h">
-      <Filter>01. Game Object\Player\Sword</Filter>
+      <Filter>01. Game Object\Equipment\Sword</Filter>
     </ClInclude>
     <ClInclude Include="TimeMgr.h">
       <Filter>98. Manager\TimeMgr</Filter>
     </ClInclude>
     <ClInclude Include="FrameMgr.h">
       <Filter>98. Manager\FrameMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionMgr.h">
+      <Filter>98. Manager\CollisionMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="InteractionObj.h">
+      <Filter>01. Game Object\Interaction</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>01. Game Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Equipment.h">
+      <Filter>01. Game Object\Equipment</Filter>
+    </ClInclude>
+    <ClInclude Include="Weed.h">
+      <Filter>01. Game Object\Interaction\Weed</Filter>
+    </ClInclude>
+    <ClInclude Include="BlackStone.h">
+      <Filter>01. Game Object\Interaction\BlackStone</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -216,7 +246,7 @@
       <Filter>97.Componet\BoxCollider</Filter>
     </ClCompile>
     <ClCompile Include="Wall.cpp">
-      <Filter>01. Game Object\Wall</Filter>
+      <Filter>01. Game Object\Terrain\Wall</Filter>
     </ClCompile>
     <ClCompile Include="Animator.cpp">
       <Filter>97.Componet\Animator</Filter>
@@ -225,13 +255,28 @@
       <Filter>01. Game Object\Monster\HardHat</Filter>
     </ClCompile>
     <ClCompile Include="Sword.cpp">
-      <Filter>01. Game Object\Player\Sword</Filter>
+      <Filter>01. Game Object\Equipment\Sword</Filter>
     </ClCompile>
     <ClCompile Include="TimeMgr.cpp">
       <Filter>98. Manager\TimeMgr</Filter>
     </ClCompile>
     <ClCompile Include="FrameMgr.cpp">
       <Filter>98. Manager\FrameMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionMgr.cpp">
+      <Filter>98. Manager\CollisionMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="Equipment.cpp">
+      <Filter>01. Game Object\Equipment</Filter>
+    </ClCompile>
+    <ClCompile Include="Weed.cpp">
+      <Filter>01. Game Object\Interaction\Weed</Filter>
+    </ClCompile>
+    <ClCompile Include="InteractionObj.cpp">
+      <Filter>01. Game Object\Interaction</Filter>
+    </ClCompile>
+    <ClCompile Include="BlackStone.cpp">
+      <Filter>01. Game Object\Interaction\BlackStone</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

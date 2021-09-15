@@ -21,13 +21,13 @@
 
 // CMFCToolView
 
-IMPLEMENT_DYNCREATE(CMFCToolView, CView)
+IMPLEMENT_DYNCREATE(CMFCToolView, CScrollView)
 
-BEGIN_MESSAGE_MAP(CMFCToolView, CView)
+BEGIN_MESSAGE_MAP(CMFCToolView, CScrollView)
 	// 표준 인쇄 명령입니다.
-	ON_COMMAND(ID_FILE_PRINT, &CView::OnFilePrint)
-	ON_COMMAND(ID_FILE_PRINT_DIRECT, &CView::OnFilePrint)
-	ON_COMMAND(ID_FILE_PRINT_PREVIEW, &CView::OnFilePrintPreview)
+	ON_COMMAND(ID_FILE_PRINT, &CScrollView::OnFilePrint)
+	ON_COMMAND(ID_FILE_PRINT_DIRECT, &CScrollView::OnFilePrint)
+	ON_COMMAND(ID_FILE_PRINT_PREVIEW, &CScrollView::OnFilePrintPreview)
 	ON_WM_DROPFILES()
 	ON_WM_LBUTTONDOWN()
 	ON_WM_RBUTTONDOWN()
@@ -53,7 +53,7 @@ BOOL CMFCToolView::PreCreateWindow(CREATESTRUCT& cs)
 	// TODO: CREATESTRUCT cs를 수정하여 여기에서
 	//  Window 클래스 또는 스타일을 수정합니다.
 
-	return CView::PreCreateWindow(cs);
+	return CScrollView::PreCreateWindow(cs);
 }
 
 // CMFCToolView 그리기
@@ -110,12 +110,12 @@ void CMFCToolView::OnEndPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
 #ifdef _DEBUG
 void CMFCToolView::AssertValid() const
 {
-	CView::AssertValid();
+	CScrollView::AssertValid();
 }
 
 void CMFCToolView::Dump(CDumpContext& dc) const
 {
-	CView::Dump(dc);
+	CScrollView::Dump(dc);
 }
 
 CMFCToolDoc* CMFCToolView::GetDocument() const // 디버그되지 않은 버전은 인라인으로 지정됩니다.
@@ -129,7 +129,9 @@ CMFCToolDoc* CMFCToolView::GetDocument() const // 디버그되지 않은 버전은 인라인�
 // CMFCToolView 메시지 처리기
 void CMFCToolView::OnInitialUpdate()
 {
-	CView::OnInitialUpdate();
+	CScrollView::OnInitialUpdate();
+	SetScrollSizes(MM_TEXT, CSize((TOTAL_TILEX *ROOM_TILEX)* TILECX, (TILECY >> 1) * (TOTAL_TILEY*ROOM_TILEY)));
+
 	CMainFrame* pFrame = dynamic_cast<CMainFrame*>(AfxGetMainWnd());
 	RECT rcFrameWindow;
 	pFrame->GetWindowRect(&rcFrameWindow);
@@ -140,26 +142,29 @@ void CMFCToolView::OnInitialUpdate()
 	int iRow = rcFrameWindow.right - rcView.right;
 	int iCol = rcFrameWindow.bottom - rcView.bottom;
 
-	pFrame->SetWindowPos(nullptr, 0, 0, WINCX + iRow, WINCY + iCol, SWP_NOZORDER);
+	pFrame->SetWindowPos(nullptr, 0, 0, WINCX + iRow, WINCY + iCol, SWP_NOMOVE);
 	g_hWnd = m_hWnd;
 	if (FAILED(CGraphicDevice::GetInstance()->Initialize()))
 		AfxMessageBox(L"CDevice Create Fail");
 
 	m_pDevice = CGraphicDevice::GetInstance();
 	m_Terrain = Terrain::Create();
+	m_Terrain->Set_View(this);
 
 	//텍스쳐추가
 	{
-		CTexturMgr::GetInstance()->InsertTexture(TEXTYPE::MULTI, L"../Texture/Tile/tile0%d.png", L"Terrain", L"Tile", 9);
+		CTexturMgr::GetInstance()->InsertTexture(TEXTYPE::MULTI, L"../Texture/Tile/tile%d.png", L"Terrain", L"Tile", 28);
 
 		CTexturMgr::GetInstance()->InsertTexture(TEXTYPE::MULTI, L"../Texture/Monster/Octo/Walk/Octo0%d.png", L"Octo",L"Walk",2);
 		CTexturMgr::GetInstance()->InsertTexture(TEXTYPE::SINGLE, L"../Texture/Monster/Goomba/Goomba.png", L"Goomba");
+		CTexturMgr::GetInstance()->InsertTexture(TEXTYPE::MULTI, L"../Texture/Monster/HardHat/HardHat0%d.png", L"HardHat", L"Walk", 2);
+		CTexturMgr::GetInstance()->InsertTexture(TEXTYPE::SINGLE, L"../Texture/Object/weed.png", L"Weed");
+		CTexturMgr::GetInstance()->InsertTexture(TEXTYPE::SINGLE, L"../Texture/Object/Black.png", L"BlackStone");
 	}
 }
 
 void CMFCToolView::OnLButtonDown(UINT nFlags, CPoint point)
 {
-	//CView::OnLButtonDown(nFlags, point);
 	CMainFrame* pMain = dynamic_cast<CMainFrame*>(AfxGetApp()->GetMainWnd());
 	Form* pForm = dynamic_cast<Form*>(pMain->m_SecSplitter.GetPane(1, 0));
 
@@ -180,6 +185,8 @@ void CMFCToolView::OnLButtonDown(UINT nFlags, CPoint point)
 		if (pForm->m_tCollTool.IsWindowVisible())
 			m_Terrain->AddCollision(vMouse);
 
+
+	CScrollView::OnLButtonDown(nFlags, point);
 	/*
 	//오브젝트 배치?
 	CString str;
@@ -218,4 +225,6 @@ void CMFCToolView::OnRButtonDown(UINT nFlags, CPoint point)
 	if (pForm->m_tCollTool.GetSafeHwnd())
 		if (pForm->m_tCollTool.IsWindowVisible())
 			m_Terrain->DeleteColl(vMouse);
+
+	CScrollView::OnRButtonDown(nFlags, point);
 }

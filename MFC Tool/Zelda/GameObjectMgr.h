@@ -2,6 +2,7 @@
 #ifndef __GAMEOBJMGR_H__
 #define __GAMEOBJMGR_H__
 #include "SingleTon.h"
+#include "CollisionMgr.h"
 
 class CGameObject;
 class CGameObjectMgr :public CSingleTon<CGameObjectMgr>
@@ -24,6 +25,7 @@ public:
 
 private:
 	vector<CGameObject*> m_ObjList[OBJID::OBJID_END];
+	CCollisionMgr CollisionMgr;
 };
 
 #endif //__GAMEOBJMGR_H__

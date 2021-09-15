@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "Terrain.h"
-
+#include "MFC ToolView.h"
 
 Terrain::Terrain()
 {
@@ -21,15 +21,15 @@ void Terrain::AddTileData(TILE * pTile)
 HRESULT Terrain::ReadyTerrain()
 {
 	//맵 크기만큼 할당 
-	m_vecTile.reserve(TILEX * TILEY);
+	m_vecTile.reserve((TOTAL_TILEX*ROOM_TILEX) * (TOTAL_TILEY*ROOM_TILEY));
 	TILE* pTile = nullptr;
 
 	float halfX = (TILECX *0.5f);
 	float halfY = (TILECY *0.5f);
 
-	for (int i = 0; i < TILEY; i++) 
+	for (int i = 0; i < (TOTAL_TILEY*ROOM_TILEY); i++)
 	{
-		for (int j = 0; j < TILEX; j++) 
+		for (int j = 0; j < (TOTAL_TILEX*ROOM_TILEX); j++)
 		{
 			pTile = new TILE;
 
@@ -49,6 +49,7 @@ HRESULT Terrain::ReadyTerrain()
 void Terrain::RenderTerrain()
 {
 	int iSize = m_vecTile.size();
+	TCHAR szIndex[MAX_PATH] = L"";
 
 	for (int i = 0; i < iSize; ++i)
 	{
@@ -59,12 +60,17 @@ void Terrain::RenderTerrain()
 		D3DXMATRIX matScale, matTrans, matWorld;
 
 		D3DXMatrixScaling(&matScale, m_vecTile[i]->vSize.x, m_vecTile[i]->vSize.y, 0.f);
-		D3DXMatrixTranslation(&matTrans, m_vecTile[i]->vPos.x, m_vecTile[i]->vPos.y, 0.f);
+		D3DXMatrixTranslation(&matTrans, m_vecTile[i]->vPos.x - m_pView->GetScrollPos(SB_HORZ), m_vecTile[i]->vPos.y - m_pView->GetScrollPos(SB_VERT), 0.f);
 		matWorld = matScale * matTrans;
 
 		CGraphicDevice::GetInstance()->GetSprite()->SetTransform(&matWorld);
 		CGraphicDevice::GetInstance()->GetSprite()->Draw(pTexInfo->pTexture, nullptr, &pTexInfo->tCenter, nullptr, D3DCOLOR_ARGB(255, 255, 255, 255));
+		
+		CGraphicDevice::GetInstance()->GetSprite()->SetTransform(&matWorld);
+		swprintf_s(szIndex, L"%d", i);
+		CGraphicDevice::GetInstance()->GetFont()->DrawTextW(CGraphicDevice::GetInstance()->GetSprite(), szIndex, lstrlen(szIndex), nullptr, 0, D3DCOLOR_ARGB(255, 255, 255, 255));
 	}
+
 
 //	CGraphicDevice::GetInstance()->GetSprite()->End();
 
@@ -85,6 +91,33 @@ void Terrain::RenderTerrain()
 
 //		CGraphicDevice::GetInstance()->getLine()->Draw(vLine, 4, D3DCOLOR_ARGB(255, 255, 255, 255));
 	}*/
+}
+
+void Terrain::MiniRenderTerrain()
+{
+	int iSize = m_vecTile.size();
+	TCHAR szIndex[MAX_PATH] = L"";
+
+	for (int i = 0; i < iSize; ++i)
+	{
+		const TEXINFO* pTexInfo = CTexturMgr::GetInstance()->getTexture(L"Terrain", L"Tile", m_vecTile[i]->dwDrawID);
+		if (nullptr == pTexInfo)
+			return;
+
+		D3DXMATRIX matScale, matTrans, matWorld;
+
+		D3DXMatrixScaling(&matScale, m_vecTile[i]->vSize.x, m_vecTile[i]->vSize.y, 0.f);
+		D3DXMatrixTranslation(&matTrans, m_vecTile[i]->vPos.x - m_pView->GetScrollPos(SB_HORZ), m_vecTile[i]->vPos.y - m_pView->GetScrollPos(SB_VERT), 0.f);
+		matWorld = matScale * matTrans;
+
+		CGraphicDevice::GetInstance()->GetSprite()->SetTransform(&matWorld);
+		CGraphicDevice::GetInstance()->GetSprite()->Draw(pTexInfo->pTexture, nullptr, &pTexInfo->tCenter, nullptr, D3DCOLOR_ARGB(255, 255, 255, 255));
+
+		CGraphicDevice::GetInstance()->GetSprite()->SetTransform(&matWorld);
+		swprintf_s(szIndex, L"%d", i);
+		CGraphicDevice::GetInstance()->GetFont()->DrawTextW(CGraphicDevice::GetInstance()->GetSprite(), szIndex, lstrlen(szIndex), nullptr, 0, D3DCOLOR_ARGB(255, 255, 255, 255));
+	}
+
 }
 
 void Terrain::ReleaseTerrain()
@@ -224,7 +257,7 @@ int Terrain::GetTileIndex(const D3DXVECTOR3 & vMouse)
 	int iY = vMouse.y / TILECY;
 	int iX = vMouse.x / TILECX;
 
-	int iIndex = iX + (iY * TILEX);
+	int iIndex = iX + (iY * (TOTAL_TILEX* ROOM_TILEX));
 
 	if (iIndex >= m_vecTile.size())
 		return -1;

@@ -4,8 +4,10 @@
 
 const DWORD TILECX = 32;
 const DWORD TILECY = 32;
-const DWORD TILEX = 25;
-const DWORD TILEY = 30;
+const DWORD TOTAL_TILEX = 7;//10; //25
+const DWORD TOTAL_TILEY = 6; //8; //30
+const DWORD ROOM_TILEX = 10;
+const DWORD ROOM_TILEY = 8;
 extern HWND g_hWnd;
 
 #endif

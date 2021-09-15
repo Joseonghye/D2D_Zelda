@@ -50,6 +50,18 @@ HRESULT CGraphicDevice::Initialize()
 		MSG_BOX(L"Create Line Fail")
 	}
 	
+	D3DXFONT_DESCW tDesc;
+	ZeroMemory(&tDesc, sizeof(D3DXFONT_DESCW));
+	tDesc.Height = 10;
+	tDesc.Width = 10;
+	tDesc.Weight = FW_HEAVY;
+	tDesc.CharSet = HANGUL_CHARSET;
+	lstrcpy(tDesc.FaceName, L"CookieRunOTF Black");
+	
+	if (FAILED(D3DXCreateFontIndirectW(m_pDevice, &tDesc, &m_pFont)))
+		MSG_BOX(L"Create Font Fail")
+
+	
 	return S_OK;
 }
 
@@ -69,6 +81,7 @@ void CGraphicDevice::EndDraw(HWND _hWnd)
 
 void CGraphicDevice::Release()
 {
+	Safe_Release(m_pFont);
 	Safe_Release(m_pLine);
 	Safe_Release(m_pSprite);
 	Safe_Release(m_pDevice);

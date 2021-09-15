@@ -23,6 +23,7 @@ public:
 private:
 	void LoadGameObjInfo(const wstring & wstrFilePath);
 	void CreateMonster(string strName, INFO* pInfo);
+	void CreateInteractionObj(string strName, INFO* pInfo, bool bMove);
 protected:
 	void LoadGameObject(const wstring & wstrFilePath);
 

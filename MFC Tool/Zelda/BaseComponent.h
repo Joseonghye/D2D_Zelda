@@ -18,6 +18,7 @@ public:
 	virtual void Release_Component() = 0;
 
 	COMPONENTID	GetType() const noexcept { return m_identification; }
+	CGameObject* GetParent() { return m_pObject; }
 protected:	
 	CGameObject* m_pObject;
 private:

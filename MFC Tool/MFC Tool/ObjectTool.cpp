@@ -134,9 +134,10 @@ BOOL CObjectTool::OnInitDialog()
 	CDialog::OnInitDialog();
 
 	// TODO:  여기에 추가 초기화 작업을 추가합니다.
+	m_tComboBox.AddString(L"---");
 	m_tComboBox.AddString(L"Player");
 	m_tComboBox.AddString(L"Monster");
-	m_tComboBox.AddString(L"Obstacle");
+	m_tComboBox.AddString(L"Interaction");
 	m_tComboBox.AddString(L"Potal");
 	return TRUE;  // return TRUE unless you set the focus to a control
 				  // 예외: OCX 속성 페이지는 FALSE를 반환해야 합니다.
@@ -222,18 +223,20 @@ void CObjectTool::OnBnClickedListSave()
 		for (auto& rPair : m_ObjInfoMap)
 		{
 			//objkey값 저장
-			dwStrByte = (rPair.second->strObjKey.GetLength() + 1) * sizeof(wchar_t);
+		/*	dwStrByte = (rPair.second->strObjKey.GetLength() + 1) * sizeof(wchar_t);
 			WriteFile(hFile, &dwStrByte, sizeof(DWORD), &dwByte, nullptr);
-			WriteFile(hFile, rPair.second->strObjKey.GetString(), dwStrByte, &dwByte, nullptr);
+			WriteFile(hFile, rPair.second->strObjKey.GetString(), dwStrByte, &dwByte, nullptr);*/
 			
 			//objName저장
 			dwStrByte = (rPair.second->strName.GetLength() + 1) * sizeof(wchar_t);
 			WriteFile(hFile, &dwStrByte, sizeof(DWORD), &dwByte, nullptr);
 			WriteFile(hFile, rPair.second->strName.GetString(), dwStrByte, &dwByte, nullptr);
 
+			WriteFile(hFile, &rPair.second->eID, sizeof(OBJID), &dwByte, nullptr);
+
 			WriteFile(hFile, &rPair.second->bMove, sizeof(bool), &dwByte, nullptr);
 			WriteFile(hFile, &rPair.second->bDestroy, sizeof(bool), &dwByte, nullptr);
-			WriteFile(hFile, &rPair.second->eID, sizeof(OBJID), &dwByte, nullptr);
+	
 		}
 		CloseHandle(hFile);
 	}
@@ -276,13 +279,13 @@ void CObjectTool::OnBnClickedListLoad()
 		{
 			pInfo = new OBJINFO;
 
-			ReadFile(hFile, &dwStrByte, sizeof(DWORD), &dwByte, nullptr);
+	/*		ReadFile(hFile, &dwStrByte, sizeof(DWORD), &dwByte, nullptr);
 			pStr = new TCHAR[dwStrByte];
 			ReadFile(hFile, pStr, dwStrByte, &dwByte, nullptr);
 			pInfo->strObjKey = pStr;
 
 			delete[] pStr;
-			pStr = nullptr;
+			pStr = nullptr;*/
 
 
 			ReadFile(hFile, &dwStrByte, sizeof(DWORD), &dwByte, nullptr);
@@ -293,9 +296,11 @@ void CObjectTool::OnBnClickedListLoad()
 			delete[] pStr;
 			pStr = nullptr;
 
+			ReadFile(hFile, &pInfo->eID, sizeof(OBJID), &dwByte, nullptr);
+
 			ReadFile(hFile, &pInfo->bMove, sizeof(bool), &dwByte, nullptr);
 			ReadFile(hFile, &pInfo->bDestroy, sizeof(bool), &dwByte, nullptr);
-			ReadFile(hFile, &pInfo->eID, sizeof(OBJID), &dwByte, nullptr);
+		
 
 			if (0 == dwByte)
 			{

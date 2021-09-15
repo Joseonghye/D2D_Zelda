@@ -21,6 +21,8 @@ public:
 public:
 	static CPlayer* Create();
 
+	void SetState(STATE eState) { m_eNextState = eState; ChangeState(); }
+
 private:
 	void Attack();
 	void ChangeState();

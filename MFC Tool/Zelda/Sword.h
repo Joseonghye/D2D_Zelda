@@ -1,9 +1,7 @@
 #pragma once
-#include "GameObject.h"
+#include "Equipment.h"
 
-class CBoxCollider;
-class CSword :
-	public CGameObject
+class CSword : public CEquipment
 {
 public:
 	CSword();
@@ -16,13 +14,16 @@ public:
 	virtual void Render_GameObject() override;
 	virtual void Release_GameObject() override;
 
-	void SetPlayer(CGameObject* player) { m_pPlayer = player; }
-	void Attack();
+	// CEquipment을(를) 통해 상속됨
+	virtual void StartUsing(DIR _dir) override;
+
 private:
-	CBoxCollider* m_Collider;
-//	D3DXMATRIX m_matRot;
-	CGameObject* m_pPlayer;
+	virtual void Using() override;
+	void SetAngle(DIR _dir);
+
+private:
 	float m_fAngle;
-	bool m_bAttack;
+	float m_fStartAngle;
+
 };
 

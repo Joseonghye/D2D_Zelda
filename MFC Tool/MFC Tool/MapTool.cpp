@@ -129,6 +129,21 @@ void CMapTool::OnBnClickedSave()
 		vector<TILE*>& vecTiles = pView->m_Terrain->GetTile();
 
 		DWORD dwByte = 0;
+
+		for (int y = 0; y < TOTAL_TILEY; ++y)
+		{s
+			for (int x = 0; x < TOTAL_TILEX; ++x)
+			{
+				for (int j = 0; j < ROOM_TILEY; ++j) {
+					for (int i = 0; i < ROOM_TILEX; ++i)
+					{
+						int index = (((ROOM_TILEX*ROOM_TILEY)*TOTAL_TILEX)* y) +((ROOM_TILEX * x) + i) +  (TOTAL_TILEX * ROOM_TILEX * j);
+						WriteFile(hFile, vecTiles[index], sizeof(TILE), &dwByte, nullptr);
+					}
+				}
+			}
+		}
+
 		for (auto& pTile : vecTiles)
 			WriteFile(hFile, pTile, sizeof(TILE), &dwByte, nullptr);
 

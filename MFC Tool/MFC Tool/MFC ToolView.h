@@ -6,8 +6,7 @@
 #include "Terrain.h"
 
 class CMFCToolDoc;
-class Mouse;
-class CMFCToolView : public CView
+class CMFCToolView : public CScrollView
 {
 protected: // serialization에서만 만들어집니다.
 	CMFCToolView();

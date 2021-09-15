@@ -18,13 +18,13 @@
 
 // CMFCToolApp
 
-BEGIN_MESSAGE_MAP(CMFCToolApp, CWinAppEx)
+BEGIN_MESSAGE_MAP(CMFCToolApp, CWinApp)
 	ON_COMMAND(ID_APP_ABOUT, &CMFCToolApp::OnAppAbout)
 	// 표준 파일을 기초로 하는 문서 명령입니다.
-	ON_COMMAND(ID_FILE_NEW, &CWinAppEx::OnFileNew)
-	ON_COMMAND(ID_FILE_OPEN, &CWinAppEx::OnFileOpen)
+	ON_COMMAND(ID_FILE_NEW, &CWinApp::OnFileNew)
+	ON_COMMAND(ID_FILE_OPEN, &CWinApp::OnFileOpen)
 	// 표준 인쇄 설정 명령입니다.
-	ON_COMMAND(ID_FILE_PRINT_SETUP, &CWinAppEx::OnFilePrintSetup)
+	ON_COMMAND(ID_FILE_PRINT_SETUP, &CWinApp::OnFilePrintSetup)
 END_MESSAGE_MAP()
 
 
@@ -68,7 +68,7 @@ BOOL CMFCToolApp::InitInstance()
 	InitCtrls.dwICC = ICC_WIN95_CLASSES;
 	InitCommonControlsEx(&InitCtrls);
 
-	CWinAppEx::InitInstance();
+	CWinApp::InitInstance();
 
 
 	// OLE 라이브러리를 초기화합니다.
@@ -131,7 +131,7 @@ int CMFCToolApp::ExitInstance()
 	//TODO: 추가한 추가 리소스를 처리합니다.
 	AfxOleTerm(FALSE);
 
-	return CWinAppEx::ExitInstance();
+	return CWinApp::ExitInstance();
 }
 
 // CMFCToolApp 메시지 처리기

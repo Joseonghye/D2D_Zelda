@@ -15,6 +15,9 @@ void CGameObjectMgr::Update_GameObjectMgr()
 {
 	for (int i = 0; i < OBJID::OBJID_END; ++i)
 	{
+		if(i > OBJID::PLAYER)
+			CollisionMgr.PlayerCollision(m_ObjList[OBJID::PLAYER].front(), m_ObjList[i],(OBJID)i );
+
 		for (auto iter = m_ObjList[i].begin(); iter != m_ObjList[i].end();)
 		{
 			(*iter)->Update_Components();
@@ -23,7 +26,8 @@ void CGameObjectMgr::Update_GameObjectMgr()
 			{
 				//이벤트 값에 따른 처리 
 				SAFE_DELETE(*iter);
-				m_ObjList[i].erase(iter);
+				iter = m_ObjList[i].erase(iter);
+				if (iter == m_ObjList[i].end()) break;
 			}
 			iter++;
 		}
@@ -50,9 +54,11 @@ void CGameObjectMgr::Render_GameObjectMgr()
 	{
 		for (auto iter = m_ObjList[i].begin(); iter != m_ObjList[i].end();)
 		{
-			(*iter)->Render_Components();
-			(*iter)->Render_GameObject();
-
+			if ((*iter)->GetVisible()) 
+			{
+				(*iter)->Render_Components();
+				(*iter)->Render_GameObject();
+			}
 			iter++;
 		}
 	}

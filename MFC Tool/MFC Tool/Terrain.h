@@ -8,6 +8,8 @@ typedef struct tagData
 	INFO	m_tInfo;
 }OBJDATA;
 
+
+class CMFCToolView;
 class Terrain final
 {
 private:
@@ -16,9 +18,12 @@ public:
 	~Terrain();
 
 public:
+	void Set_View(CMFCToolView* pView) { m_pView = pView; }
+
 	void AddTileData(TILE* pTile);
 	HRESULT ReadyTerrain();
 	void RenderTerrain();
+	void MiniRenderTerrain();
 	void ReleaseTerrain();
 
 	static Terrain* Create();
@@ -49,6 +54,8 @@ private:
 	int GetTileIndex(const D3DXVECTOR3& vMouse);
 
 private:
+	CMFCToolView* m_pView;
+
 	vector<TILE*> m_vecTile;
 	list<OBJDATA*> m_ObjList;
 	map<int,D3DXVECTOR3>m_CollList;

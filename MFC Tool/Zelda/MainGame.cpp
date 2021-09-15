@@ -43,10 +43,29 @@ HRESULT CMainGame::Initialized()
 		//Attack
 		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Player/Attak/Link_Attack0%d.png", L"Player", L"ATTACK_FRONT", 3)))
 			return E_FAIL;
+		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Player/Attak/Link_Attack_Back0%d.png", L"Player", L"ATTACK_BACK", 3)))
+			return E_FAIL;
+		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Player/Attak/Link_Attack_Left0%d.png", L"Player", L"ATTACK_LEFT", 3)))
+			return E_FAIL;
+
+		//Push
+		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Player/Push/Link_Push0%d.png", L"Player", L"PUSH_FRONT", 2)))
+			return E_FAIL;
+		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Player/Push/Link_Push_Back0%d.png", L"Player", L"PUSH_BACK", 2)))
+			return E_FAIL;
+		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Player/Push/Link_Push_Left0%d.png", L"Player", L"PUSH_LEFT", 2)))
+			return E_FAIL;
+		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Player/Push/Link_Push_Right0%d.png", L"Player", L"PUSH_RIGHT", 2)))
+			return E_FAIL;
+
 	}
 	//Insert Monster Texture
 	{
 		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Monster/HardHat/HardHat0%d.png", L"HardHat", L"IDLE_FRONT", 2)))
+			return E_FAIL;
+		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::SINGLE, L"../Texture/Object/weed.png", L"Weed")))
+			return E_FAIL;
+		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::SINGLE, L"../Texture/Object/Black.png", L"BALCKSTONE")))
 			return E_FAIL;
 	}
 
@@ -72,9 +91,11 @@ void CMainGame::Update()
 void CMainGame::Render(CFrameMgr& rFrameMgr)
 {
 	GRAPHICDEVICE->BeginDraw();
+	GRAPHICDEVICE->GetLine()->Begin();
 
 	SCENEMGR->Render_SceneMgr();
 //	rFrameMgr.Render_FrameMgr();
+	GRAPHICDEVICE->GetLine()->End();
 	GRAPHICDEVICE->EndDraw();
 }
 

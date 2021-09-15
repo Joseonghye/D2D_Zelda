@@ -13,13 +13,13 @@ CHardHat::~CHardHat()
 
 HRESULT CHardHat::Initialized_GameObject()
 {
-	m_fSpeed = 1.0f;
-	m_tInfo.vSize = D3DXVECTOR3(16, 16, 0);
+	m_fSpeed = 20.0f;
+	m_tInfo.vSize = D3DXVECTOR3(32.f,32.f, 0);
 
 	D3DXMatrixScaling(&m_tInfo.matScale, 1.f, 1.f, 1.f);
 	m_pTarget = GAMEOBJECTMGR->GetPlayer();
 
-	AddComponent(new CBoxCollider(this, 16.f, 16.f));
+	AddComponent(new CBoxCollider(this, m_tInfo.vSize.x, m_tInfo.vSize.y));
 	AddComponent(new CAnimator(this, L"HardHat", L"IDLE",L"FRONT",2));
 
 	return S_OK;
@@ -32,7 +32,7 @@ int CHardHat::Update_GameObject()
 	D3DXVECTOR3 dir = (m_pTarget->GetPos() - m_tInfo.vPos);
 	D3DXVec3Normalize(&dir, &dir);
 
-	m_tInfo.vPos += (dir * m_fSpeed);
+	m_tInfo.vPos += (dir * m_fSpeed * TIMEMGR->Get_DeltaTime());
 	D3DXMatrixTranslation(&m_tInfo.matTrans, m_tInfo.vPos.x, m_tInfo.vPos.y, m_tInfo.vPos.z);
 
 	m_tInfo.matWorld = m_tInfo.matScale * m_tInfo.matTrans;

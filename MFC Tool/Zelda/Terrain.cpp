@@ -23,7 +23,8 @@ Terrain * Terrain::Create()
 HRESULT Terrain::Initialized_GameObject()
 {
 	//맵 크기만큼 할당 
-	m_vecTile.reserve(TILEX * TILEY);
+	m_vecTile.reserve(ROOM_TILEX * ROOM_TILEY);
+	m_vecRoom.reserve(TOTAL_TILEX*TOTAL_TILEY);
 	
 	Release_GameObject();
 	if(FAILED(LoadTileFile(L"../Data/Tile/Tile.dat")))
@@ -70,6 +71,10 @@ void Terrain::Release_GameObject()
 	for_each(m_vecTile.begin(), m_vecTile.end(), Safe_Delete<TILE*>);
 	m_vecTile.clear();
 	m_vecTile.swap(vector<TILE*>());
+
+	for_each(m_vecRoom.begin(), m_vecRoom.end(), Safe_Delete<Room>);
+	m_vecRoom.clear();
+	m_vecRoom.swap(vector<Room>());
 }
 
 HRESULT Terrain::LoadTileFile(const wstring & wstrFilePath)
@@ -120,6 +125,9 @@ HRESULT Terrain::LoadColliderFile(const wstring & wstrFilePath)
 
 		CGameObject* pGameObject = CWall::Create();
 		pGameObject->SetPos(vPos);
+		pGameObject->SetTransMat();
+		pGameObject->SetWorldMat();
+
 		GAMEOBJECTMGR->Add_GameObject(OBJID::WALL, pGameObject);
 
 	//	m_mapCollider.emplace(iIndex, vPos);

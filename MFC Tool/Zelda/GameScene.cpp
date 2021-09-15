@@ -21,7 +21,6 @@ HRESULT CGameScene::Initialized_Scene()
 	pGameObject = CPlayer::Create();
 	GAMEOBJECTMGR->Add_GameObject(PLAYER, pGameObject);
 
-
 	LoadGameObject(L"../Data/Obj/ObjData.dat");
 
 	return S_OK;

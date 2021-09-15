@@ -11,6 +11,7 @@ private:
 	LPDIRECT3DDEVICE9 m_pDevice;
 	LPD3DXSPRITE m_pSprite;
 	LPD3DXLINE m_pLine;
+	LPD3DXFONT m_pFont;
 
 private:
 	explicit CGraphicDevice();
@@ -26,6 +27,7 @@ public:
 	const LPDIRECT3DDEVICE9& const GetDevice() { return m_pDevice; }
 	const LPD3DXSPRITE& const GetSprite() { return m_pSprite; }
 	const LPD3DXLINE& const getLine() { return m_pLine; }
+	LPD3DXFONT GetFont() { return m_pFont; }
 };
 #endif
 

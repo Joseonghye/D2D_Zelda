@@ -1,18 +1,16 @@
 #pragma once
 #ifndef __COLLISIONMGR_H__
 #define __COLLISIONMGR_H__
-#include "SingleTon.h"
 
 class CGameObject;
-class CCollisionMgr: public CSingleTon<CCollisionMgr>
+class CCollisionMgr
 {
-	friend CSingleTon;
-private:
+public:
 	CCollisionMgr();
 	~CCollisionMgr();
 
 public:
-	bool CollisionRect(CGameObject* pSrc, CGameObject* pDst);
+	bool PlayerCollision(CGameObject* pPlayer, vector<CGameObject*> pSrc,OBJID _id);
 };
 
 #endif // !__COLLISIONMGR_H__

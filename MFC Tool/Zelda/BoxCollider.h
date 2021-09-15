@@ -13,13 +13,19 @@ public:
 	virtual void Release_Component();
 
 public:
+	void WallCollision();
+public:
 	bool CheckCollision(CBoxCollider* pDst);
+	bool PointCollision(CBoxCollider* pDst);
+
 	RECT GetBound() { return m_rcBound; }
 private:
 	void Update_Rect();
 
 private:
 	RECT m_rcBound;
+	RECT m_rcCollision;
+
 	float m_iWidth;
 	float m_iHeight;
 };

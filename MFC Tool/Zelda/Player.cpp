@@ -4,7 +4,7 @@
 #include "Animator.h"
 #include "Sword.h"
 
-CPlayer::CPlayer() :m_fSpeed(5.f), m_eCurState(IDLE), m_eNextState(STATE_END), m_eCurDir(FRONT), m_eNextDir(FRONT)
+CPlayer::CPlayer() :m_eCurState(IDLE), m_eNextState(STATE_END), m_eCurDir(FRONT), m_eNextDir(FRONT)
 {
 }
 
@@ -15,9 +15,12 @@ CPlayer::~CPlayer()
 
 HRESULT CPlayer::Initialized_GameObject()
 {
+	m_fSpeed = 100.f;
+
 	m_tInfo.vPos = { 400.f , 10.f, 0.f };
-	m_tInfo.vSize = { 16.f, 16.f, 0.f };
-	m_tInfo.vDir = { 0.f, 1.f, 0.f };
+	m_tInfo.vSize = { 32.f, 32.f, 0.f };
+//	m_tInfo.vDir = { 0.f, 1.f, 0.f };
+	m_tInfo.eDir = FRONT;
 
 	D3DXMatrixScaling(&m_tInfo.matScale, 1.f, 1.f, 1.f);
 	D3DXMatrixTranslation(&m_tInfo.matTrans, m_tInfo.vPos.x, m_tInfo.vPos.y, m_tInfo.vPos.z);
@@ -41,44 +44,43 @@ int CPlayer::Update_GameObject()
 
 	if (KEYMGR->Key_Pressing(KEY_LEFT)) 
 	{
-		m_tInfo.vPos.x -= m_fSpeed;
-		m_tInfo.vDir.x = -1.f;
+		m_tInfo.vPos.x -= m_fSpeed * TIMEMGR->Get_DeltaTime();
+	//	m_tInfo.vDir.x = -1.f;
 		m_eNextDir = LEFT;
 		m_eNextState = WALK;
 	}
 	else if (KEYMGR->Key_Pressing(KEY_RIGHT)) 
 	{
-		m_tInfo.vPos.x += m_fSpeed;
-		m_tInfo.vDir.x = 1.f;
+		m_tInfo.vPos.x += m_fSpeed* TIMEMGR->Get_DeltaTime();
+		//m_tInfo.vDir.x = 1.f;
 		m_eNextDir = RIGHT;
 		m_eNextState = WALK;
 	}
 
 	if (KEYMGR->Key_Pressing(KEY_UP))
 	{
-		m_tInfo.vPos.y -= m_fSpeed;
-		m_tInfo.vDir.y = -1.f;
+		m_tInfo.vPos.y -= m_fSpeed* TIMEMGR->Get_DeltaTime();
+	//	m_tInfo.vDir.y = -1.f;
 		m_eNextDir = BACK;
 		m_eNextState = WALK;
 	}
 	else if (KEYMGR->Key_Pressing(KEY_DOWN)) 
 	{
-		m_tInfo.vPos.y += m_fSpeed;
-		m_tInfo.vDir.y = 1.f;
+		m_tInfo.vPos.y += m_fSpeed* TIMEMGR->Get_DeltaTime();
+	//	m_tInfo.vDir.y = 1.f;
 		m_eNextDir = FRONT;
 		m_eNextState = WALK;
 	}
 	if (KEYMGR->Key_Pressing(KEY_RETURN))
 	{
 		m_eNextState = ATTACK;
-		Attack();
 	}
 
 	ChangeState();
 
 	D3DXMatrixTranslation(&m_tInfo.matTrans, m_tInfo.vPos.x, m_tInfo.vPos.y, m_tInfo.vPos.z);
 
-
+	/*
 	if (m_Collider != nullptr)
 	{
 		vector<CGameObject*> vecObj = GAMEOBJECTMGR->GetObjList(WALL);
@@ -96,7 +98,7 @@ int CPlayer::Update_GameObject()
 			}
 		}
 	}
-
+	*/
 	m_tInfo.matWorld = m_tInfo.matScale * m_tInfo.matTrans;
 
 	return NO_EVENT;
@@ -108,7 +110,7 @@ void CPlayer::LateUpdate_GameObject()
 
 void CPlayer::Render_GameObject()
 {
-	if (m_pItem != nullptr)
+	if (m_pItem != nullptr && m_pItem->GetVisible())
 		m_pItem->Render_GameObject();
 }
 
@@ -127,7 +129,7 @@ CPlayer * CPlayer::Create()
 
 void CPlayer::Attack()
 {
-	static_cast<CSword*>(m_pItem)->Attack();
+	static_cast<CSword*>(m_pItem)->StartUsing(m_eCurDir);
 }
 
 void CPlayer::ChangeState()
@@ -153,6 +155,11 @@ void CPlayer::ChangeState()
 		case ATTACK:
 			wstrStateKey = L"ATTACK";
 			fEndFrame = 3;
+			Attack();
+			break;
+		case PUSH:
+			wstrStateKey = L"PUSH";
+			fEndFrame = 2;
 			break;
 		}
 		m_eCurState = m_eNextState;
@@ -176,6 +183,7 @@ void CPlayer::ChangeState()
 			break;
 		}
 		m_eCurDir = m_eNextDir;
+		m_tInfo.eDir = m_eNextDir;
 	}
 
 

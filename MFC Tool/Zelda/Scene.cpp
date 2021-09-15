@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "Scene.h"
 #include "HardHat.h"
+#include "Weed.h"
+#include "BlackStone.h"
 
 CScene::CScene()
 {
@@ -32,8 +34,6 @@ void CScene::LoadGameObjInfo(const wstring & wstrFilePath)
 		pStr = new TCHAR[dwStrByte];
 		ReadFile(hFile, pStr, dwStrByte, &dwByte, nullptr);
 	
-
-
 		ReadFile(hFile, &tInfo.m_eID, sizeof(OBJID), &dwByte, nullptr);
 
 		ReadFile(hFile, &tInfo.m_bMove, sizeof(bool), &dwByte, nullptr);
@@ -61,11 +61,35 @@ void CScene::LoadGameObjInfo(const wstring & wstrFilePath)
 
 void CScene::CreateMonster(string strName,INFO* pInfo)
 {
-	CGameObject* pGameObj;
-	if ("HardHat" == strName) {
+	CGameObject* pGameObj = nullptr;
+	if ("HardHat" == strName) 
+	{
 		pGameObj = CHardHat::Create();
+	}
+	
+	if (pGameObj != nullptr) 
+	{
 		pGameObj->SetInfo(*pInfo);
 		GAMEOBJECTMGR->Add_GameObject(MONSTER, pGameObj);
+	}
+}
+
+void CScene::CreateInteractionObj(string strName, INFO * pInfo, bool bMove)
+{
+	CGameObject* pGameObj = nullptr;
+	if ("Weed" == strName)
+	{
+		pGameObj = CWeed::Create();
+	}
+	else if ("BlackStone" == strName)
+	{
+		pGameObj = CBlackStone::Create();
+	}
+
+	if (pGameObj != nullptr) 
+	{
+		pGameObj->SetInfo(*pInfo);
+		GAMEOBJECTMGR->Add_GameObject(INTERACTION, pGameObj);
 	}
 }
 
@@ -113,11 +137,12 @@ void CScene::LoadGameObject(const wstring & wstrFilePath)
 			else
 			{
 				//몬스터가 아닌 오브젝트 
+				CreateInteractionObj(str, pInfo,false);
 			}
 		}
 		else
 		{
-
+			//오브젝트 인포가 없어!!
 		}
 
 		delete[] szName;

@@ -2,7 +2,7 @@
 #include "GameObject.h"
 #include "BaseComponent.h"
 
-CGameObject::CGameObject() :m_bDestory(false)
+CGameObject::CGameObject() :m_bDestory(false), m_bVisible(true)
 {
 }
 
