@@ -41,31 +41,32 @@ int CSword::Update_GameObject()
 		//몬스터와 충돌체크 
 		if (m_Collider != nullptr)
 		{
-			vector<CGameObject*> vecObj = GAMEOBJECTMGR->GetObjList(MONSTER);
+			map<int,CGameObject*> mapObj = GAMEOBJECTMGR->GetObjList(MONSTER);
+			//vector<CGameObject*> vecObj = GAMEOBJECTMGR->GetObjList(MONSTER);
 
-			for (size_t i = 0; i < vecObj.size(); ++i)
+			for (size_t i = 0; i < mapObj.size(); ++i)
 			{
-				CBoxCollider* another = static_cast<CBoxCollider*>(vecObj[i]->GetComponent(COMPONENTID::COLLISION));
+				CBoxCollider* another = static_cast<CBoxCollider*>(mapObj[i]->GetComponent(COMPONENTID::COLLISION));
 
 				if (another != nullptr && m_Collider->CheckCollision(another))
 				{
 					//충돌
 					//몬스터 사망 
-					vecObj[i]->SetDestory();
+					mapObj[i]->SetDestory();
 				}
 			}
 
-			vecObj = GAMEOBJECTMGR->GetObjList(INTERACTION);
+			mapObj = GAMEOBJECTMGR->GetObjList(INTERACTION);
 
-			for (size_t i = 0; i < vecObj.size(); ++i)
+			for (size_t i = 0; i < mapObj.size(); ++i)
 			{
-				CBoxCollider* another = static_cast<CBoxCollider*>(vecObj[i]->GetComponent(COMPONENTID::COLLISION));
+				CBoxCollider* another = static_cast<CBoxCollider*>(mapObj[i]->GetComponent(COMPONENTID::COLLISION));
 
 				if (another != nullptr && m_Collider->CheckCollision(another))
 				{
 					//충돌
 					//오브젝트 파괴
-					static_cast<CInteractionObj*>(vecObj[i])->Damaged();
+					static_cast<CInteractionObj*>(mapObj[i])->Damaged();
 				}
 			}
 		}

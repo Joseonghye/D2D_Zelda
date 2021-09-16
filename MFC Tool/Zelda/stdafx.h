@@ -40,6 +40,7 @@ using namespace std;
 #include "SceneMgr.h"
 #include "KeyMgr.h"
 #include "TimeMgr.h"
+#include "ScrollMgr.h"
 
 #define TEXTUREMGR		CTextureMgr::GetInstance()
 #define GAMEOBJECTMGR	CGameObjectMgr::GetInstance()
@@ -47,3 +48,4 @@ using namespace std;
 #define SCENEMGR		CSceneMgr::GetInstance()
 #define KEYMGR			CKeyMgr::GetInstance()
 #define TIMEMGR			CTimeMgr::GetInstance()
+#define SCROLLMGR		CScrollMgr::GetInstance()

@@ -18,13 +18,13 @@ public:
 	void Render_GameObjectMgr();
 	void Release_GameObjectMgr();
 
-	void Add_GameObject(OBJID eID, CGameObject* pGameObject);
+	void Add_GameObject(OBJID eID, int index, CGameObject* pGameObject);
 
-	CGameObject* GetPlayer() { return m_ObjList[PLAYER].front(); }
-	vector<CGameObject*> GetObjList(int objID) { return m_ObjList[objID]; }
+	CGameObject* GetPlayer() { return m_ObjList[PLAYER].begin()->second; }
+	map<int,CGameObject*> GetObjList(int objID) { return m_ObjList[objID]; }
 
 private:
-	vector<CGameObject*> m_ObjList[OBJID::OBJID_END];
+	map<int,CGameObject*> m_ObjList[OBJID::OBJID_END];
 	CCollisionMgr CollisionMgr;
 };
 

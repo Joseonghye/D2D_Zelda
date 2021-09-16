@@ -65,6 +65,10 @@ void CMFCToolView::OnDraw(CDC* /*pDC*/)
 	if (!pDoc)
 		return;
 
+	m_pDevice->getLine()->Begin();
+	m_Terrain->RenderColl();
+	m_pDevice->getLine()->End();
+
 	m_pDevice->BeginDraw();
 	m_pDevice->GetSprite()->Begin(D3DXSPRITE_ALPHABLEND);
 
@@ -75,9 +79,7 @@ void CMFCToolView::OnDraw(CDC* /*pDC*/)
 
 	m_pDevice->GetSprite()->End();
 
-	m_pDevice->getLine()->Begin();
-	m_Terrain->RenderColl();
-	m_pDevice->getLine()->End();
+
 
 	m_pDevice->EndDraw();
 
@@ -130,7 +132,7 @@ CMFCToolDoc* CMFCToolView::GetDocument() const // 디버그되지 않은 버전은 인라인�
 void CMFCToolView::OnInitialUpdate()
 {
 	CScrollView::OnInitialUpdate();
-	SetScrollSizes(MM_TEXT, CSize((TOTAL_TILEX *ROOM_TILEX)* TILECX, (TILECY >> 1) * (TOTAL_TILEY*ROOM_TILEY)));
+	SetScrollSizes(MM_TEXT, CSize((TOTAL_TILEX *ROOM_TILEX)* TILECX, TILECY* (TOTAL_TILEY*ROOM_TILEY)));
 
 	CMainFrame* pFrame = dynamic_cast<CMainFrame*>(AfxGetMainWnd());
 	RECT rcFrameWindow;
@@ -172,9 +174,15 @@ void CMFCToolView::OnLButtonDown(UINT nFlags, CPoint point)
 
 	//타일 변경
 	if(pForm->m_tMapTool.GetSafeHwnd())
-		if(pForm->m_tMapTool.IsWindowVisible())
-			m_Terrain->ChangeTile(vMouse, pForm->m_tMapTool.GetDrawID());
-
+		if (pForm->m_tMapTool.IsWindowVisible()) {
+			if (pForm->m_tMapTool.GetStart()) 
+			{
+				pForm->m_tMapTool.SetStartFalse();
+				m_Terrain->SetStartPos(vMouse);
+			}
+			else
+				m_Terrain->ChangeTile(vMouse, pForm->m_tMapTool.GetDrawID());
+		}
 	//오브젝트 배치 
 	if(pForm->m_tObjectTool.GetSafeHwnd())
 		if(pForm->m_tObjectTool.IsWindowVisible())

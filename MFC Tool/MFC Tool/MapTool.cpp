@@ -34,6 +34,7 @@ BEGIN_MESSAGE_MAP(CMapTool, CDialog)
 	ON_LBN_SELCHANGE(IDC_LIST1, &CMapTool::OnLbnSelchangeMapTexture)
 	ON_BN_CLICKED(IDC_BUTTON1, &CMapTool::OnBnClickedSave)
 	ON_BN_CLICKED(IDC_BUTTON5, &CMapTool::OnBnClickedLoad)
+	ON_BN_CLICKED(IDC_BUTTON9, &CMapTool::OnBnClickedSetStart)
 END_MESSAGE_MAP()
 
 
@@ -130,19 +131,25 @@ void CMapTool::OnBnClickedSave()
 
 		DWORD dwByte = 0;
 
-		for (int y = 0; y < TOTAL_TILEY; ++y)
-		{
-			for (int x = 0; x < TOTAL_TILEX; ++x)
-			{
-				for (int j = 0; j < ROOM_TILEY; ++j) {
-					for (int i = 0; i < ROOM_TILEX; ++i)
-					{
-						int index = (((ROOM_TILEX*ROOM_TILEY)*TOTAL_TILEX)* y) +((ROOM_TILEX * x) + i) +  (TOTAL_TILEX * ROOM_TILEX * j);
-						WriteFile(hFile, vecTiles[index], sizeof(TILE), &dwByte, nullptr);
-					}
-				}
-			}
-		}
+		//전체타일 3360
+		//int RoomTile = (ROOM_TILEX*ROOM_TILEY); //80
+
+		//for (int totalY = 0; totalY < TOTAL_TILEY; ++totalY) //6
+		//{
+		//	for (int totalX = 0; totalX < TOTAL_TILEX; ++totalX) //7
+		//	{
+		//		for (int j = 0; j < ROOM_TILEY; ++j) //8 
+		//		{
+		//			for (int i = 0; i < ROOM_TILEX; ++i) //10
+		//			{
+		//				int index = ((RoomTile*TOTAL_TILEX)* totalY) + (ROOM_TILEX * totalX) + i + (TOTAL_TILEX * ROOM_TILEX * j);
+		//				TILE tile = *vecTiles[index];
+		//				
+		//				WriteFile(hFile,&tile, sizeof(TILE), &dwByte, nullptr);
+		//			}
+		//		}
+		//	}
+		//}
 
 		for (auto& pTile : vecTiles)
 			WriteFile(hFile, pTile, sizeof(TILE), &dwByte, nullptr);
@@ -181,7 +188,7 @@ void CMapTool::OnBnClickedLoad()
 		DWORD dwByte = 0;
 		TILE* pTile = nullptr;
 
-		int i = 0;
+	//	int i = 0;
 
 		int totalX = 0;
 		int totalY = 0;
@@ -190,7 +197,7 @@ void CMapTool::OnBnClickedLoad()
 
 		while (true)
 		{
-			++i;
+			
 			pTile = new TILE;
 			ReadFile(hFile, pTile, sizeof(TILE), &dwByte, nullptr);
 
@@ -199,25 +206,39 @@ void CMapTool::OnBnClickedLoad()
 				Safe_Delete(pTile);
 				break;
 			}
-			int index;
 
-			if (i == ROOM_TILEX)
+		/*	++x;
+			if (x == ROOM_TILEX)
 			{
 				y++;
-				i = 0;
+				x = 0;
 
 				if (y == ROOM_TILEY)
 				{
 					totalX++;
 					y = 0;
-				}
 
+					if (totalX == TOTAL_TILEX)
+					{
+						totalY++;
+						totalX = 0;
+					}
+
+				}
 			}
 
-			pView->m_Terrain->AddTileData(pTile,);
+			int index = (((ROOM_TILEX*ROOM_TILEY)*TOTAL_TILEX)* totalY) + ((ROOM_TILEX * totalX) + x) + (TOTAL_TILEX * ROOM_TILEX * y);
+*/
+			pView->m_Terrain->AddTileData(pTile);
 		}
 		CloseHandle(hFile);
 
 		pView->Invalidate();
 	}
+}
+
+
+void CMapTool::OnBnClickedSetStart()
+{
+	m_bStart = true;
 }

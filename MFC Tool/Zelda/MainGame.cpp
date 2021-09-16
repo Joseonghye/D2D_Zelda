@@ -19,7 +19,7 @@ HRESULT CMainGame::Initialized()
 		return E_FAIL;
 
 	//Insert Tile Texture
-	if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Tile/tile0%d.png", L"Terrain", L"Tile", 9)))
+	if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Tile/tile%d.png", L"Terrain", L"Tile", 28)))
 		return E_FAIL;
 	//Insert Player Texture
 	{
@@ -107,6 +107,7 @@ void CMainGame::Release()
 	GRAPHICDEVICE->DestoryInstacne();
 	KEYMGR->DestoryInstacne();
 	TIMEMGR->DestoryInstacne();
+	SCROLLMGR->DestoryInstacne();
 }
 
 CMainGame * CMainGame::Create()

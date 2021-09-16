@@ -22,12 +22,11 @@ public:
 
 private:
 	void LoadGameObjInfo(const wstring & wstrFilePath);
-	void CreateMonster(string strName, INFO* pInfo);
-	void CreateInteractionObj(string strName, INFO* pInfo, bool bMove);
+	void CreateMonster(string strName, int index, INFO* pInfo);
+	void CreateInteractionObj(string strName, int index, INFO* pInfo, bool bMove);
 protected:
 	void LoadGameObject(const wstring & wstrFilePath);
 
 private:
 	map<string,OBJINFO> m_mapObjOption;
 };
-

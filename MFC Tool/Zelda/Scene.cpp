@@ -59,7 +59,7 @@ void CScene::LoadGameObjInfo(const wstring & wstrFilePath)
 	CloseHandle(hFile);
 }
 
-void CScene::CreateMonster(string strName,INFO* pInfo)
+void CScene::CreateMonster(string strName,int index, INFO* pInfo)
 {
 	CGameObject* pGameObj = nullptr;
 	if ("HardHat" == strName) 
@@ -70,11 +70,11 @@ void CScene::CreateMonster(string strName,INFO* pInfo)
 	if (pGameObj != nullptr) 
 	{
 		pGameObj->SetInfo(*pInfo);
-		GAMEOBJECTMGR->Add_GameObject(MONSTER, pGameObj);
+		GAMEOBJECTMGR->Add_GameObject(MONSTER, index, pGameObj);
 	}
 }
 
-void CScene::CreateInteractionObj(string strName, INFO * pInfo, bool bMove)
+void CScene::CreateInteractionObj(string strName,int index, INFO * pInfo, bool bMove)
 {
 	CGameObject* pGameObj = nullptr;
 	if ("Weed" == strName)
@@ -89,7 +89,7 @@ void CScene::CreateInteractionObj(string strName, INFO * pInfo, bool bMove)
 	if (pGameObj != nullptr) 
 	{
 		pGameObj->SetInfo(*pInfo);
-		GAMEOBJECTMGR->Add_GameObject(INTERACTION, pGameObj);
+		GAMEOBJECTMGR->Add_GameObject(INTERACTION, index, pGameObj);
 	}
 }
 
@@ -105,9 +105,11 @@ void CScene::LoadGameObject(const wstring & wstrFilePath)
 
 	TCHAR* pStr = nullptr;
 	INFO* pInfo = nullptr;
-
+	int index = 0;
 	while (true)
 	{
+		ReadFile(hFile, &index, sizeof(int), &dwByte, nullptr);
+
 		ReadFile(hFile, &dwStrByte, sizeof(DWORD), &dwByte, nullptr);
 		pStr = new TCHAR[dwStrByte];
 		ReadFile(hFile, pStr, dwStrByte, &dwByte, nullptr);
@@ -132,16 +134,17 @@ void CScene::LoadGameObject(const wstring & wstrFilePath)
 		if (iter != m_mapObjOption.end()) {
 			if (iter->second.m_eID == MONSTER)
 			{
-				CreateMonster(str, pInfo);
+				CreateMonster(str, index, pInfo);
 			}
 			else
 			{
 				//몬스터가 아닌 오브젝트 
-				CreateInteractionObj(str, pInfo,false);
+				CreateInteractionObj(str, index,pInfo,false);
 			}
 		}
 		else
 		{
+			MessageBox(NULL, L"ERR:: Scene::NO OBJ INFO", L"System message", MB_OK);
 			//오브젝트 인포가 없어!!
 		}
 

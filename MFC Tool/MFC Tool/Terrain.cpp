@@ -13,15 +13,19 @@ Terrain::~Terrain()
 	ReleaseColl();
 }
 
-void Terrain::AddTileData(TILE * pTile,int index)
+void Terrain::AddTileData(TILE * pTile)
 {
-	m_vecTile[index] = pTile;
-	//m_vecTile.emplace_back(pTile);
+	//auto& iter = m_vecTile.begin();
+	//iter += (index - 1);
+	//m_vecTile.insert(iter, pTile);
+	//m_vecTile[index] = pTile;
+	m_vecTile.emplace_back(pTile);
 }
 
 HRESULT Terrain::ReadyTerrain()
 {
 	//맵 크기만큼 할당 
+//	m_vecTile.resize((TOTAL_TILEX*ROOM_TILEX) * (TOTAL_TILEY*ROOM_TILEY),nullptr);
 	m_vecTile.reserve((TOTAL_TILEX*ROOM_TILEX) * (TOTAL_TILEY*ROOM_TILEY));
 	TILE* pTile = nullptr;
 
@@ -40,6 +44,9 @@ HRESULT Terrain::ReadyTerrain()
 
 			pTile->vSize = { 1.f , 1.f , 1.f };
 			pTile->dwDrawID = 4;
+
+			int index = j + (i*(TOTAL_TILEX*ROOM_TILEX));
+		//	m_vecTile[index] = pTile;
 
 			m_vecTile.emplace_back(pTile);
 		}
@@ -137,22 +144,22 @@ Terrain * Terrain::Create() /*LPVOID pArg = nullptr   >> 이게 뭐지? nullptr을 넣
 	return pInstance;
 }
 
-void Terrain::AddObjData(OBJDATA* data)
+void Terrain::AddObjData(int index,OBJDATA* data)
 {
-	m_ObjList.emplace_back(data);
+	m_ObjMap.emplace(index,data);
 }
 
 void Terrain::RenderObject()
 {
-	if (m_ObjList.empty()) return;
+	if (m_ObjMap.empty()) return;
 
-	for (auto& iter : m_ObjList)
+	for (auto& iter : m_ObjMap)
 	{
-		const TEXINFO* pTexInfo = CTexturMgr::GetInstance()->getTexture(iter->szName, L"Walk");
+		const TEXINFO* pTexInfo = CTexturMgr::GetInstance()->getTexture(iter.second->szName, L"Walk");
 		if (nullptr == pTexInfo)
 			return;
 
-		CGraphicDevice::GetInstance()->GetSprite()->SetTransform(&iter->m_tInfo.matWorld);
+		CGraphicDevice::GetInstance()->GetSprite()->SetTransform(&iter.second->m_tInfo.matWorld);
 		CGraphicDevice::GetInstance()->GetSprite()->Draw(pTexInfo->pTexture, nullptr, &pTexInfo->tCenter, nullptr, D3DCOLOR_ARGB(255, 255, 255, 255));
 	}
 //	CGraphicDevice::GetInstance()->GetSprite()->End();
@@ -161,31 +168,31 @@ void Terrain::RenderObject()
 
 void Terrain::ReleaseObject()
 {
-	for_each(m_ObjList.begin(), m_ObjList.end(), Safe_Delete<OBJDATA*>);
-	m_ObjList.clear();
+//	for_each(m_ObjMap.begin(), m_ObjMap.end(), Safe_Delete<OBJDATA*>);
+	m_ObjMap.clear();
 }
 
 void Terrain::AddCollData(int index,D3DXVECTOR3 vPos)
 {
-	m_CollList.emplace(index,vPos);
+	m_CollMap.emplace(index,vPos);
 }
 
 void Terrain::RenderColl()
 {
-	if (m_CollList.empty()) return;
+	if (m_CollMap.empty()) return;
 
 	float fX = (TILECX*0.5f);
 	float fY = (TILECY *0.5f);
 
-	for (auto& iter : m_CollList)
+	for (auto& iter : m_CollMap)
 	{
 		float left = iter.second.x - fX;
 		float right = iter.second.x + fX;
 
 		float top = iter.second.y - fY;
 		float bottom = iter.second.y + fY;
-	/*	RECT rc{ iter.second.x - (TILECX*0.5f),iter.second.y - (TILECY *0.5f),iter.second.x + (TILECX*0.5f),iter.second.y + (TILECY *0.5f) };
-		_dc->Rectangle((int)rc.left, (int)rc.top, (int)rc.right, (int)rc.bottom);*/
+		/*	RECT rc{ iter.second.x - (TILECX*0.5f),iter.second.y - (TILECY *0.5f),iter.second.x + (TILECX*0.5f),iter.second.y + (TILECY *0.5f) };
+			_dc->Rectangle((int)rc.left, (int)rc.top, (int)rc.right, (int)rc.bottom);*/
 
 		D3DXVECTOR2 vLine[4] = {
 			{ left,top },
@@ -194,13 +201,14 @@ void Terrain::RenderColl()
 			{ left,bottom}
 		};
 
-	CGraphicDevice::GetInstance()->getLine()->Draw(vLine, 4, D3DCOLOR_ARGB(255, 255, 0, 0));
+		CGraphicDevice::GetInstance()->getLine()->SetWidth(20.f);
+		CGraphicDevice::GetInstance()->getLine()->Draw(vLine, 4, D3DCOLOR_ARGB(255, 255, 0, 0));
 	}
 }
 
 void Terrain::ReleaseColl()
 {
-	m_CollList.clear();
+	m_CollMap.clear();
 }
 
 void Terrain::ChangeTile(const D3DXVECTOR3 & vMouse, const int & iDrawID, const int & iOption)
@@ -212,19 +220,33 @@ void Terrain::ChangeTile(const D3DXVECTOR3 & vMouse, const int & iDrawID, const 
 	m_vecTile[iIndex]->dwOption = iOption;
 }
 
+void Terrain::SetStartPos(const D3DXVECTOR3 & vMouse)
+{
+	int iIndex = GetTileIndex(vMouse);
+	if (iIndex == -1) return;
+
+	m_vecTile[iIndex]->dwOption = 1;
+}
+
 void Terrain::AddObj(const D3DXVECTOR3 & vMouse, const CString & objName)
 {
+
+	int iIndex = GetTileIndex(vMouse);
+	if (iIndex == -1) return;
+
 	OBJDATA* pInfo = new OBJDATA;
 	lstrcpy(pInfo->szName,objName.GetString());
 
-	pInfo->m_tInfo.vPos = vMouse;
+	pInfo->m_tInfo.vPos = m_vecTile[iIndex]->vPos;
+	//pInfo->m_tInfo.vPos = vMouse;
 	pInfo->m_tInfo.vSize = D3DXVECTOR3(1.f, 1.f, 0.f);
 
 	D3DXMatrixScaling(&pInfo->m_tInfo.matScale, pInfo->m_tInfo.vSize.x, pInfo->m_tInfo.vSize.y, 0.0f);
 	D3DXMatrixTranslation(&pInfo->m_tInfo.matTrans, vMouse.x, vMouse.y, 0.f);
 	pInfo->m_tInfo.matWorld = pInfo->m_tInfo.matScale * pInfo->m_tInfo.matTrans;
 
-	m_ObjList.emplace_back(pInfo);
+	m_ObjMap.emplace(iIndex, pInfo);
+	//m_ObjMap.emplace_back(pInfo);
 }
 
 void Terrain::DeleteObject(D3DXVECTOR3 vMouse)
@@ -236,7 +258,7 @@ void Terrain::AddCollision(const D3DXVECTOR3 & vMouse)
 	int iIndex = GetTileIndex(vMouse);
 	if (iIndex == -1) return;
 
-	m_CollList.emplace(iIndex,m_vecTile[iIndex]->vPos);
+	m_CollMap.emplace(iIndex,m_vecTile[iIndex]->vPos);
 }
 
 void Terrain::DeleteColl(D3DXVECTOR3 vMouse)
@@ -244,10 +266,10 @@ void Terrain::DeleteColl(D3DXVECTOR3 vMouse)
 	int iIndex = GetTileIndex(vMouse);
 	if (iIndex == -1) return;
 
-	auto& iter = m_CollList.find(iIndex);
-	if (iter == m_CollList.end()) return;
+	auto& iter = m_CollMap.find(iIndex);
+	if (iter == m_CollMap.end()) return;
 
-	m_CollList.erase(iter);
+	m_CollMap.erase(iter);
 }
 
 int Terrain::GetTileIndex(const D3DXVECTOR3 & vMouse)

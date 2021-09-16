@@ -27,13 +27,19 @@ public:
 	afx_msg void OnLbnSelchangeMapTexture();
 	afx_msg void OnBnClickedSave();
 	afx_msg void OnBnClickedLoad();
+	afx_msg void OnBnClickedSetStart();
+
+	void SetStartFalse() { m_bStart = false; }
 
 	const DWORD GetDrawID() const { return m_dwDrawID; }
-
+	const BOOL GetStart() const { return m_bStart; }
 private:
 	CListBox m_ListBox;
 	CStatic m_MapPicture;
 
 	DWORD m_dwDrawID;
+	bool m_bStart;
+	
+public:
 	
 };

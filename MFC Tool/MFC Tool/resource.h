@@ -1,6 +1,6 @@
 //{{NO_DEPENDENCIES}}
-// Microsoft Visual C++에서 생성한 포함 파일입니다.
-// MFC Tool.rc에서 사용되고 있습니다.
+// Microsoft Visual C++ generated include file.
+// Used by MFC Tool.rc
 //
 #define IDD_ABOUTBOX                    100
 #define IDP_OLE_INIT_FAILED             100
@@ -17,6 +17,7 @@
 #define IDC_PICTURE                     1002
 #define IDC_BUTTON5                     1002
 #define IDC_EDIT1                       1003
+#define IDC_BUTTON9                     1003
 #define IDC_COMBO1                      1004
 #define IDC_RADIO1                      1005
 #define IDC_RADIO2                      1006

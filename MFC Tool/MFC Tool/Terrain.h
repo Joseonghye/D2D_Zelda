@@ -20,7 +20,7 @@ public:
 public:
 	void Set_View(CMFCToolView* pView) { m_pView = pView; }
 
-	void AddTileData(TILE* pTile, int index);
+	void AddTileData(TILE* pTile);
 	HRESULT ReadyTerrain();
 	void RenderTerrain();
 	void MiniRenderTerrain();
@@ -29,7 +29,7 @@ public:
 	static Terrain* Create();
 
 public:
-	void AddObjData(OBJDATA* data);
+	void AddObjData(int index,OBJDATA* data);
 	void RenderObject();
 	void ReleaseObject();
 
@@ -41,12 +41,13 @@ public:
 public:
 	vector<TILE*>& GetTile() { return m_vecTile; }
 	void ChangeTile(const D3DXVECTOR3 & vMouse, const int & iDrawID, const int & iOption = 0);
+	void SetStartPos(const D3DXVECTOR3 & vMouse);
 
-	list<OBJDATA*>& GetObj() { return m_ObjList; }
+	map<int,OBJDATA*>& GetObj() { return m_ObjMap; }
 	void AddObj(const D3DXVECTOR3 & vMouse, const CString & objName);
 	void DeleteObject(D3DXVECTOR3 vMouse);
 
-	map<int,D3DXVECTOR3>& GetColl() { return m_CollList; }
+	map<int,D3DXVECTOR3>& GetColl() { return m_CollMap; }
 	void AddCollision(const D3DXVECTOR3 & vMouse);
 	void DeleteColl(D3DXVECTOR3 vMouse);
 
@@ -57,8 +58,9 @@ private:
 	CMFCToolView* m_pView;
 
 	vector<TILE*> m_vecTile;
-	list<OBJDATA*> m_ObjList;
-	map<int,D3DXVECTOR3>m_CollList;
+	//list<OBJDATA*> m_ObjList;
+	map<int, OBJDATA*> m_ObjMap;
+	map<int,D3DXVECTOR3>m_CollMap;
 
 };
 

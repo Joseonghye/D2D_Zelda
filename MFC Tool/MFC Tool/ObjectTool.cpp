@@ -340,17 +340,20 @@ void CObjectTool::OnBnClickedObjSave()
 
 		CMainFrame* pMain = dynamic_cast<CMainFrame*>(AfxGetApp()->GetMainWnd());
 		CMFCToolView* pView = dynamic_cast<CMFCToolView*>(pMain->m_MainSplitter.GetPane(0, 1));
-		list<OBJDATA*>& objList = pView->m_Terrain->GetObj();
+		map<int,OBJDATA*>& objList = pView->m_Terrain->GetObj();
+
 
 		DWORD dwByte = 0;
 		DWORD dwStrByte = 0;
 		for (auto& pObj : objList) 
 		{
-			dwStrByte = (lstrlen(pObj->szName) + 1) * sizeof(wchar_t);
-			WriteFile(hFile, &dwStrByte, sizeof(DWORD), &dwByte, nullptr);
-			WriteFile(hFile, pObj->szName, dwStrByte, &dwByte, nullptr);
+			WriteFile(hFile, &pObj.first, sizeof(int), &dwByte, nullptr);
 
-			WriteFile(hFile, &pObj->m_tInfo, sizeof(INFO), &dwByte, nullptr);
+			dwStrByte = (lstrlen(pObj.second->szName) + 1) * sizeof(wchar_t);
+			WriteFile(hFile, &dwStrByte, sizeof(DWORD), &dwByte, nullptr);
+			WriteFile(hFile, pObj.second->szName, dwStrByte, &dwByte, nullptr);
+
+			WriteFile(hFile, &pObj.second->m_tInfo, sizeof(INFO), &dwByte, nullptr);
 		}
 		CloseHandle(hFile);
 	}
@@ -384,10 +387,13 @@ void CObjectTool::OnBnClickedObjLoad()
 		DWORD dwByte = 0;
 		DWORD dwStrByte = 0;
 
+		int index = 0;
 		TCHAR* pStr = nullptr;
 		INFO* pInfo = nullptr;
 		while (true)
 		{
+			ReadFile(hFile, &index, sizeof(int), &dwByte, nullptr);
+
 			ReadFile(hFile, &dwStrByte, sizeof(DWORD), &dwByte, nullptr);
 			pStr = new TCHAR[dwStrByte];
 			ReadFile(hFile, pStr, dwStrByte, &dwByte, nullptr);
@@ -405,7 +411,7 @@ void CObjectTool::OnBnClickedObjLoad()
 
 			data->m_tInfo = *pInfo;
 
-			pView->m_Terrain->AddObjData(data);
+			pView->m_Terrain->AddObjData(index,data);
 
 			delete[] pStr;
 			pStr = nullptr;

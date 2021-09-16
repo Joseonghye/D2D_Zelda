@@ -21,6 +21,7 @@ public:
 public:
 	static CPlayer* Create();
 
+	void SetStartPos(D3DXVECTOR3 vPos) { m_tInfo.vPos = vPos; }
 	void SetState(STATE eState) { m_eNextState = eState; ChangeState(); }
 
 private:

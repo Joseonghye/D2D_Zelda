@@ -101,6 +101,9 @@
     <Filter Include="01. Game Object\Interaction\BlackStone">
       <UniqueIdentifier>{0c75b9f2-72ce-4cf6-a6b2-08d5bd7fffe8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="98. Manager\ScrollMgr">
+      <UniqueIdentifier>{9b823732-e9f1-41b6-ad11-18c0c5a50d6e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Zelda.h">
@@ -194,6 +197,9 @@
     <ClInclude Include="BlackStone.h">
       <Filter>01. Game Object\Interaction\BlackStone</Filter>
     </ClInclude>
+    <ClInclude Include="ScrollMgr.h">
+      <Filter>98. Manager\ScrollMgr</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -277,6 +283,9 @@
     </ClCompile>
     <ClCompile Include="BlackStone.cpp">
       <Filter>01. Game Object\Interaction\BlackStone</Filter>
+    </ClCompile>
+    <ClCompile Include="ScrollMgr.cpp">
+      <Filter>98. Manager\ScrollMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

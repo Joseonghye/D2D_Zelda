@@ -17,7 +17,7 @@ HRESULT CPlayer::Initialized_GameObject()
 {
 	m_fSpeed = 100.f;
 
-	m_tInfo.vPos = { 400.f , 10.f, 0.f };
+//	m_tInfo.vPos = { 400.f , 10.f, 0.f };
 	m_tInfo.vSize = { 32.f, 32.f, 0.f };
 //	m_tInfo.vDir = { 0.f, 1.f, 0.f };
 	m_tInfo.eDir = FRONT;
@@ -78,7 +78,10 @@ int CPlayer::Update_GameObject()
 
 	ChangeState();
 
-	D3DXMatrixTranslation(&m_tInfo.matTrans, m_tInfo.vPos.x, m_tInfo.vPos.y, m_tInfo.vPos.z);
+	float fX = m_tInfo.vPos.x + SCROLLMGR->GetScrollVec().x;
+	float fY = m_tInfo.vPos.y + SCROLLMGR->GetScrollVec().y;
+
+	D3DXMatrixTranslation(&m_tInfo.matTrans, fX, fY, m_tInfo.vPos.z);
 
 	/*
 	if (m_Collider != nullptr)

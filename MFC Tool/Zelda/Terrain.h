@@ -26,7 +26,8 @@ private:
 	HRESULT LoadColliderFile(const wstring & wstrFilePath);
 
 private:
-	vector<TILE*> m_vecTile; //현재 방의 타일 정보 
+	int m_RoomIndex;
+//	vector<TILE*> m_vecTile; //현재 방의 타일 정보 
 	vector<Room> m_vecRoom; //던전 방의 정보?
 //	map<int, D3DXVECTOR3> m_mapCollider;
 };
