@@ -34,6 +34,11 @@ public:
 	void ReleaseObject();
 
 public:
+	void AddEventData(int index, EVENTINFO* data);
+	void RenderEvent();
+	void ReleaseEvent();
+
+public:
 	void AddCollData(int index,D3DXVECTOR3 vPos);
 	void RenderColl();
 	void ReleaseColl();
@@ -46,6 +51,10 @@ public:
 	map<int,OBJDATA*>& GetObj() { return m_ObjMap; }
 	void AddObj(const D3DXVECTOR3 & vMouse, const CString & objName);
 	void DeleteObject(D3DXVECTOR3 vMouse);
+
+	map<int, EVENTINFO*>& GetEvent() { return m_EventMap; }
+	void AddEvent(const D3DXVECTOR3 & vMouse, EVENTINFO* _Event);
+	void DeleteEvent(D3DXVECTOR3 vMouse);
 
 	map<int,D3DXVECTOR3>& GetColl() { return m_CollMap; }
 	void AddCollision(const D3DXVECTOR3 & vMouse);
@@ -61,6 +70,8 @@ private:
 	//list<OBJDATA*> m_ObjList;
 	map<int, OBJDATA*> m_ObjMap;
 	map<int,D3DXVECTOR3>m_CollMap;
+
+	map<int, EVENTINFO*>m_EventMap;
 
 };
 

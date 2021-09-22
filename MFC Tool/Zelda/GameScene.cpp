@@ -15,15 +15,17 @@ CGameScene::~CGameScene()
 HRESULT CGameScene::Initialized_Scene()
 {
 	CGameObject* pGameObject = Terrain::Create();
-	GAMEOBJECTMGR->Add_GameObject(BACKGROUND,0, pGameObject);
+	GAMEOBJECTMGR->Add_GameObject(BACKGROUND, pGameObject);
 	
-	D3DXVECTOR3 vStart = pGameObject->GetPos();
+	D3DXVECTOR3 vStart = pGameObject->GetPos();// +SCROLLMGR->GetScrollVec();
 
 	pGameObject = CPlayer::Create();
 	pGameObject->SetPos(vStart);
-	GAMEOBJECTMGR->Add_GameObject(PLAYER,0, pGameObject);
+	pGameObject->SetTransMat();
+	pGameObject->SetWorldMat();
+	GAMEOBJECTMGR->Add_GameObject(PLAYER,pGameObject);
 
-//	LoadGameObject(L"../Data/Obj/ObjData.dat");
+	LoadGameObject(L"../Data/Obj/ObjData.dat");
 
 	return S_OK;
 }

@@ -104,6 +104,9 @@
     <Filter Include="98. Manager\ScrollMgr">
       <UniqueIdentifier>{9b823732-e9f1-41b6-ad11-18c0c5a50d6e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Game Object\Enter">
+      <UniqueIdentifier>{f007389e-8a82-4e08-b1a9-7920e30ec6ca}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Zelda.h">
@@ -200,6 +203,9 @@
     <ClInclude Include="ScrollMgr.h">
       <Filter>98. Manager\ScrollMgr</Filter>
     </ClInclude>
+    <ClInclude Include="Enter.h">
+      <Filter>01. Game Object\Enter</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -286,6 +292,9 @@
     </ClCompile>
     <ClCompile Include="ScrollMgr.cpp">
       <Filter>98. Manager\ScrollMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="Enter.cpp">
+      <Filter>01. Game Object\Enter</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

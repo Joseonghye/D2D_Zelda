@@ -5,10 +5,9 @@
 CBlackStone::CBlackStone()
 {
 }
-
-
 CBlackStone::~CBlackStone()
 {
+	Release_GameObject();
 }
 
 HRESULT CBlackStone::Initialized_GameObject()
@@ -30,11 +29,16 @@ int CBlackStone::Update_GameObject()
 	if (m_bColl)
 		m_fCollTime += TIMEMGR->Get_DeltaTime();
 
+	if (GAMEOBJECTMGR->isChanging()) 
+	{
+		D3DXMatrixTranslation(&m_tInfo.matTrans, m_tInfo.vPos.x + SCROLLMGR->GetScrollVec().x, m_tInfo.vPos.y + SCROLLMGR->GetScrollVec().y, m_tInfo.vPos.z);
+		m_tInfo.matWorld = m_tInfo.matScale * m_tInfo.matTrans;
+	}
 	if (m_bMoving)
 	{
 		m_fMoving += (32 *TIMEMGR->Get_DeltaTime());
 		m_tInfo.vPos += (vMove *TIMEMGR->Get_DeltaTime());
-		D3DXMatrixTranslation(&m_tInfo.matTrans, m_tInfo.vPos.x, m_tInfo.vPos.y, m_tInfo.vPos.z);
+		D3DXMatrixTranslation(&m_tInfo.matTrans, m_tInfo.vPos.x + SCROLLMGR->GetScrollVec().x, m_tInfo.vPos.y + SCROLLMGR->GetScrollVec().y, m_tInfo.vPos.z);
 		m_tInfo.matWorld = m_tInfo.matScale * m_tInfo.matTrans;
 
 		if (m_fMoving >= 32) {
@@ -67,6 +71,8 @@ void CBlackStone::Render_GameObject()
 
 void CBlackStone::Release_GameObject()
 {
+	for_each(m_vecComponet.begin(), m_vecComponet.end(), Safe_Delete<CBaseComponent*>);
+	m_vecComponet.clear();
 }
 
 void CBlackStone::Damaged()

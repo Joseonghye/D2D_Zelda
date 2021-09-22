@@ -31,6 +31,7 @@ void CCollisionTool::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(CCollisionTool, CDialog)
 	ON_BN_CLICKED(IDC_BUTTON1, &CCollisionTool::OnBnClickedSave)
 	ON_BN_CLICKED(IDC_BUTTON8, &CCollisionTool::OnBnClickedLoad)
+	ON_BN_CLICKED(IDC_BUTTON10, &CCollisionTool::OnBnClickedReset)
 END_MESSAGE_MAP()
 
 
@@ -118,4 +119,14 @@ void CCollisionTool::OnBnClickedLoad()
 
 		pView->Invalidate();
 	}
+}
+
+
+void CCollisionTool::OnBnClickedReset()
+{
+
+	CMainFrame* pMain = dynamic_cast<CMainFrame*>(AfxGetApp()->GetMainWnd());
+	CMFCToolView* pView = dynamic_cast<CMFCToolView*>(pMain->m_MainSplitter.GetPane(0, 1));
+	pView->m_Terrain->ReleaseColl();
+
 }

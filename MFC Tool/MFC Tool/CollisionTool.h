@@ -24,4 +24,5 @@ public:
 	afx_msg void OnBnClickedSave();
 	afx_msg void OnBnClickedLoad();
 
+	afx_msg void OnBnClickedReset();
 };

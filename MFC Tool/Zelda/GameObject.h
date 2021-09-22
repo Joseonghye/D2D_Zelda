@@ -33,21 +33,23 @@ public:
 
 	void SetInfo(const INFO _info) { m_tInfo = _info; }
 
-	void SetTransMat() { D3DXMatrixTranslation(&m_tInfo.matTrans, m_tInfo.vPos.x, m_tInfo.vPos.y, m_tInfo.vPos.z); }
+	void SetTransMat() { D3DXMatrixTranslation(&m_tInfo.matTrans, 
+							m_tInfo.vPos.x + SCROLLMGR->GetScrollVec().x, m_tInfo.vPos.y + SCROLLMGR->GetScrollVec().y, m_tInfo.vPos.z);}
 	void SetWorldMat() { m_tInfo.matWorld = m_tInfo.matScale * m_tInfo.matTrans; }
 
 	void SetDestory() { m_bDestory = true; }
 	void SetVisible(bool _visible) { m_bVisible = _visible; }
 
 	void SetMove(bool _b) { m_bMove = _b; }
-
-
+	void SetRoomIndex(int index) { m_iRoomIndex = index; }
+	
 public:
 	CBaseComponent* GetComponent(COMPONENTID _id);
 
 	const D3DXVECTOR3& GetPos() { return m_tInfo.vPos; }
 	const D3DXMATRIX& GetWorldMat() { return m_tInfo.matWorld; }
 	//const D3DXVECTOR3& GetDir() { return m_tInfo.vDir; }
+	const int const GetRoomIndex() { return m_iRoomIndex; }
 	DIR GetDir() { return m_tInfo.eDir; }
 
 	const bool& const GetVisible() { return m_bVisible; }
@@ -55,6 +57,8 @@ public:
 protected:
 	vector<CBaseComponent*> m_vecComponet;
 	INFO m_tInfo;
+
+	int m_iRoomIndex;
 	bool m_bDestory;
 	bool m_bVisible;
 	bool m_bMove;

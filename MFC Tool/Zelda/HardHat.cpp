@@ -6,9 +6,9 @@ CHardHat::CHardHat()
 {
 }
 
-
 CHardHat::~CHardHat()
 {
+	Release_GameObject();
 }
 
 HRESULT CHardHat::Initialized_GameObject()
@@ -33,7 +33,7 @@ int CHardHat::Update_GameObject()
 	D3DXVec3Normalize(&dir, &dir);
 
 	m_tInfo.vPos += (dir * m_fSpeed * TIMEMGR->Get_DeltaTime());
-	D3DXMatrixTranslation(&m_tInfo.matTrans, m_tInfo.vPos.x, m_tInfo.vPos.y, m_tInfo.vPos.z);
+	D3DXMatrixTranslation(&m_tInfo.matTrans, m_tInfo.vPos.x + SCROLLMGR->GetScrollVec().x , m_tInfo.vPos.y + SCROLLMGR->GetScrollVec().y, m_tInfo.vPos.z);
 
 	m_tInfo.matWorld = m_tInfo.matScale * m_tInfo.matTrans;
 
@@ -50,6 +50,8 @@ void CHardHat::Render_GameObject()
 
 void CHardHat::Release_GameObject()
 {
+	for_each(m_vecComponet.begin(), m_vecComponet.end(), Safe_Delete<CBaseComponent*>);
+	m_vecComponet.clear();
 }
 
 CHardHat * CHardHat::Create()

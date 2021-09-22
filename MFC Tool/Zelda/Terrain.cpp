@@ -22,6 +22,8 @@ Terrain * Terrain::Create()
 
 HRESULT Terrain::Initialized_GameObject()
 {
+	m_iRoomIndex = -1;
+	m_bVisible = true;
 	//맵 크기만큼 할당 
 //	m_vecTile.reserve(ROOM_TILEX * ROOM_TILEY);
 	m_vecRoom.resize(TOTAL_TILEX*TOTAL_TILEY);
@@ -36,10 +38,8 @@ HRESULT Terrain::Initialized_GameObject()
 	if(FAILED(LoadTileFile(L"../Data/Tile/Tile.dat")))
 		return E_FAIL;
 
-	//if(FAILED(LoadColliderFile(L"../Data/Collider/Collider.dat")))
-	//	return E_FAIL;
-
-	//SCROLLMGR->SetScroll(1, 0);
+	if(FAILED(LoadColliderFile(L"../Data/Collider/Collider.dat")))
+		return E_FAIL;
 
 	return S_OK;
 }
@@ -55,10 +55,31 @@ void Terrain::LateUpdate_GameObject()
 
 void Terrain::Render_GameObject()
 {
-	//int iSize = m_vecTile.size();
+	m_RoomIndex = GAMEOBJECTMGR->GetRoomIndex();
+
 	int iSize = m_vecRoom[m_RoomIndex].size();
 
 	D3DXVECTOR3 vScroll = SCROLLMGR->GetScrollVec();
+
+	if (GAMEOBJECTMGR->isChanging())
+	{
+		int next = GAMEOBJECTMGR->GetNextRoom();
+		for (int i = 0; i < iSize; ++i)
+		{
+			const TEXINFO* pTexInfo = TEXTUREMGR->GetTexture(L"Terrain", L"Tile", m_vecRoom[next][i]->dwDrawID);
+			if (nullptr == pTexInfo)
+				return;
+
+			D3DXMATRIX matScale, matTrans, matWorld;
+
+			D3DXMatrixScaling(&matScale, m_vecRoom[next][i]->vSize.x, m_vecRoom[next][i]->vSize.y, 0.f);
+			D3DXMatrixTranslation(&matTrans, m_vecRoom[next][i]->vPos.x + vScroll.x, m_vecRoom[next][i]->vPos.y + vScroll.y, 0.f);
+			matWorld = matScale * matTrans;
+
+			GRAPHICDEVICE->GetSprite()->SetTransform(&matWorld);
+			GRAPHICDEVICE->GetSprite()->Draw(pTexInfo->pTexture, nullptr, &pTexInfo->tCenter, nullptr, D3DCOLOR_ARGB(255, 255, 255, 255));
+		}
+	}
 
 	for (int i = 0; i < iSize; ++i)
 	{
@@ -70,10 +91,6 @@ void Terrain::Render_GameObject()
 
 		D3DXMatrixScaling(&matScale, m_vecRoom[m_RoomIndex][i]->vSize.x, m_vecRoom[m_RoomIndex][i]->vSize.y, 0.f);
 		D3DXMatrixTranslation(&matTrans, m_vecRoom[m_RoomIndex][i]->vPos.x + vScroll.x , m_vecRoom[m_RoomIndex][i]->vPos.y+ vScroll.y, 0.f);
-
-
-		//D3DXMatrixScaling(&matScale, m_vecTile[i]->vSize.x, m_vecTile[i]->vSize.y, 0.f);
-		//D3DXMatrixTranslation(&matTrans, m_vecTile[i]->vPos.x, m_vecTile[i]->vPos.y, 0.f);
 		matWorld = matScale * matTrans;
 
 		GRAPHICDEVICE->GetSprite()->SetTransform(&matWorld);
@@ -127,6 +144,7 @@ HRESULT Terrain::LoadTileFile(const wstring & wstrFilePath)
 		if (pTile->dwOption == 1)
 		{
 			SCROLLMGR->SetScroll(totalX, totalY);
+			GAMEOBJECTMGR->SetCurRoomIndex(totalX, totalY);
 			m_RoomIndex = RoomIndex;
 
 			m_tInfo.vPos = pTile->vPos;
@@ -149,9 +167,8 @@ HRESULT Terrain::LoadTileFile(const wstring & wstrFilePath)
 				}
 			}
 		}
-
-	//	m_vecTile.emplace_back(pTile);
 	}
+
 	CloseHandle(hFile);
 
 	return S_OK;
@@ -177,14 +194,22 @@ HRESULT Terrain::LoadColliderFile(const wstring & wstrFilePath)
 			break;
 		}
 
+		int y = iIndex / (TOTAL_TILEX*ROOM_TILEX);
+		int x = iIndex - ((TOTAL_TILEX*ROOM_TILEX)*y);
+
+		int totalY = y / ROOM_TILEY;
+		int totalX = x / ROOM_TILEX;
+		int iRoomIndex = totalX + (TOTAL_TILEX *totalY);
+
 		CGameObject* pGameObject = CWall::Create();
+		pGameObject->SetRoomIndex(iRoomIndex);
 		pGameObject->SetPos(vPos);
 		pGameObject->SetTransMat();
 		pGameObject->SetWorldMat();
 
-		GAMEOBJECTMGR->Add_GameObject(OBJID::WALL, iIndex, pGameObject);
+		GAMEOBJECTMGR->Add_GameObject(OBJID::WALL, pGameObject);
 
-	//	m_mapCollider.emplace(iIndex, vPos);
+		//	m_mapCollider.emplace(iIndex, vPos);
 	}
 	CloseHandle(hFile);
 

@@ -7,9 +7,9 @@ CSword::CSword() :m_fAngle(0.f)
 {
 }
 
-
 CSword::~CSword()
 {
+	Release_GameObject();
 }
 
 HRESULT CSword::Initialized_GameObject()
@@ -41,32 +41,32 @@ int CSword::Update_GameObject()
 		//몬스터와 충돌체크 
 		if (m_Collider != nullptr)
 		{
-			map<int,CGameObject*> mapObj = GAMEOBJECTMGR->GetObjList(MONSTER);
-			//vector<CGameObject*> vecObj = GAMEOBJECTMGR->GetObjList(MONSTER);
+//			map<int,CGameObject*> mapObj = GAMEOBJECTMGR->GetObjList(MONSTER);
+			vector<CGameObject*> vecObj = GAMEOBJECTMGR->GetObjList(MONSTER);
 
-			for (size_t i = 0; i < mapObj.size(); ++i)
+			for (size_t i = 0; i < vecObj.size(); ++i)
 			{
-				CBoxCollider* another = static_cast<CBoxCollider*>(mapObj[i]->GetComponent(COMPONENTID::COLLISION));
+				CBoxCollider* another = static_cast<CBoxCollider*>(vecObj[i]->GetComponent(COMPONENTID::COLLISION));
 
 				if (another != nullptr && m_Collider->CheckCollision(another))
 				{
 					//충돌
 					//몬스터 사망 
-					mapObj[i]->SetDestory();
+					vecObj[i]->SetDestory();
 				}
 			}
 
-			mapObj = GAMEOBJECTMGR->GetObjList(INTERACTION);
+			vecObj = GAMEOBJECTMGR->GetObjList(INTERACTION);
 
-			for (size_t i = 0; i < mapObj.size(); ++i)
+			for (size_t i = 0; i < vecObj.size(); ++i)
 			{
-				CBoxCollider* another = static_cast<CBoxCollider*>(mapObj[i]->GetComponent(COMPONENTID::COLLISION));
+				CBoxCollider* another = static_cast<CBoxCollider*>(vecObj[i]->GetComponent(COMPONENTID::COLLISION));
 
 				if (another != nullptr && m_Collider->CheckCollision(another))
 				{
 					//충돌
 					//오브젝트 파괴
-					static_cast<CInteractionObj*>(mapObj[i])->Damaged();
+					static_cast<CInteractionObj*>(vecObj[i])->Damaged();
 				}
 			}
 		}
@@ -92,6 +92,8 @@ void CSword::Render_GameObject()
 
 void CSword::Release_GameObject()
 {
+	for_each(m_vecComponet.begin(), m_vecComponet.end(), Safe_Delete<CBaseComponent*>);
+	m_vecComponet.clear();
 }
 
 void CSword::StartUsing(DIR _dir)

@@ -11,12 +11,16 @@ private:
 	~CScrollMgr();
 
 public:
+	bool ChangeScroll();
+public:
 	void SetScroll(int x, int y);
+	void SetScroll(int index);
 	D3DXVECTOR3 GetScrollVec() { return m_vScroll; }
 
 private:
-	int m_iIndex;
+//	int m_iIndex;
 	D3DXVECTOR3 m_vScroll;
+	D3DXVECTOR3 m_vNext;
 };
 
 #endif // !__SCROLLMGR_H__

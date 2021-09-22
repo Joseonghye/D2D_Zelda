@@ -39,6 +39,7 @@ BEGIN_MESSAGE_MAP(Form, CFormView)
 //	ON_LBN_SELCHANGE(IDC_LIST1, &Form::OnLbnSelchangePickObejct)
 //	ON_BN_CLICKED(IDC_BUTTON2, &Form::OnBnClickedLoad)
 ON_BN_CLICKED(IDC_BUTTON8, &Form::OnBnClickedCollisionTool)
+ON_BN_CLICKED(IDC_BUTTON10, &Form::OnBnClickedEventTool)
 END_MESSAGE_MAP()
 
 
@@ -186,4 +187,12 @@ void Form::OnBnClickedCollisionTool()
 	if (nullptr == m_tCollTool.GetSafeHwnd())
 		m_tCollTool.Create(IDD_COLLISIONTOOL);
 	m_tCollTool.ShowWindow(SW_SHOW);
+}
+
+
+void Form::OnBnClickedEventTool()
+{
+	if (nullptr == m_tEventTool.GetSafeHwnd())
+		m_tEventTool.Create(IDD_EVENTTOOL);
+	m_tEventTool.ShowWindow(SW_SHOW);
 }

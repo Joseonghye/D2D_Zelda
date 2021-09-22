@@ -3,6 +3,7 @@
 #include "HardHat.h"
 #include "Weed.h"
 #include "BlackStone.h"
+#include "Enter.h"
 
 CScene::CScene()
 {
@@ -69,12 +70,15 @@ void CScene::CreateMonster(string strName,int index, INFO* pInfo)
 	
 	if (pGameObj != nullptr) 
 	{
+		pGameObj->SetRoomIndex(index);
 		pGameObj->SetInfo(*pInfo);
-		GAMEOBJECTMGR->Add_GameObject(MONSTER, index, pGameObj);
+		pGameObj->SetTransMat();
+		pGameObj->SetWorldMat();
+		GAMEOBJECTMGR->Add_GameObject(MONSTER, pGameObj);
 	}
 }
 
-void CScene::CreateInteractionObj(string strName,int index, INFO * pInfo, bool bMove)
+void CScene::CreateInteractionObj(string strName,int index, INFO * pInfo)
 {
 	CGameObject* pGameObj = nullptr;
 	if ("Weed" == strName)
@@ -88,9 +92,38 @@ void CScene::CreateInteractionObj(string strName,int index, INFO * pInfo, bool b
 
 	if (pGameObj != nullptr) 
 	{
+		pGameObj->SetRoomIndex(index);
 		pGameObj->SetInfo(*pInfo);
-		GAMEOBJECTMGR->Add_GameObject(INTERACTION, index, pGameObj);
+		pGameObj->SetTransMat();
+		pGameObj->SetWorldMat();
+		GAMEOBJECTMGR->Add_GameObject(INTERACTION, pGameObj);
 	}
+}
+
+void CScene::CreateEnter(string strName, int index, INFO * pInfo)
+{
+	CGameObject* pGameObj = CEnter::Create();
+
+	if ("Up" == strName) {
+		pInfo->eDir = DIR::BACK;
+		pInfo->vPos.y -= 8.f;
+	}
+	else if ("Down" == strName) {
+		pInfo->eDir = DIR::FRONT;
+		pInfo->vPos.y += 8.f;
+	}else if ("Left" == strName){
+		pInfo->eDir = DIR::LEFT;
+		pInfo->vPos.x -= 8.f;
+	}else if ("Right" == strName) {
+		pInfo->eDir = DIR::RIGHT;
+		pInfo->vPos.x += 8.f;
+	}
+	pGameObj->SetRoomIndex(index);
+	pGameObj->SetInfo(*pInfo);
+	pGameObj->SetTransMat();
+	pGameObj->SetWorldMat();
+
+	GAMEOBJECTMGR->Add_GameObject(ENTER, pGameObj);
 }
 
 void CScene::LoadGameObject(const wstring & wstrFilePath)
@@ -125,21 +158,37 @@ void CScene::LoadGameObject(const wstring & wstrFilePath)
 
 		int len = wcslen((wchar_t*)pStr);
 		char* szName = new char[2 * len + 1];
-	//	wcstombs(szName, (wchar_t*)pStr, 2 * len + 1);
+
 		size_t tcnt;
 		wcstombs_s(&tcnt, szName, 2 * len + 1 *sizeof(char), (wchar_t*)pStr, 100);
+
+		int iRoomIndex = -1;
+		if (index != -1)
+		{
+			int y = index / (TOTAL_TILEX*ROOM_TILEX);
+			int x = index - ((TOTAL_TILEX*ROOM_TILEX)*y);
+
+			int totalY = y / ROOM_TILEY;
+			int totalX = x / ROOM_TILEX;
+			iRoomIndex = totalX + (TOTAL_TILEX *totalY);
+		}
+
+	//	pInfo->vPos += SCROLLMGR->GetScrollVec();
 
 		string str = szName;
 		auto& iter = m_mapObjOption.find(str);
 		if (iter != m_mapObjOption.end()) {
-			if (iter->second.m_eID == MONSTER)
+			switch (iter->second.m_eID)
 			{
-				CreateMonster(str, index, pInfo);
-			}
-			else
-			{
-				//몬스터가 아닌 오브젝트 
-				CreateInteractionObj(str, index,pInfo,false);
+			case MONSTER:
+				CreateMonster(str, iRoomIndex, pInfo);
+				break;
+			case INTERACTION:
+				CreateInteractionObj(str, iRoomIndex, pInfo);
+				break;
+			case ENTER:
+				CreateEnter(str, iRoomIndex, pInfo);
+				break;
 			}
 		}
 		else
@@ -149,6 +198,48 @@ void CScene::LoadGameObject(const wstring & wstrFilePath)
 		}
 
 		delete[] szName;
+		delete[] pStr;
+		pStr = nullptr;
+	}
+	CloseHandle(hFile);
+
+}
+
+void CScene::LoadEvent(const wstring & wstrFilePath)
+{
+	HANDLE hFile = CreateFile(wstrFilePath.c_str(), GENERIC_READ, 0, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);;
+	if (INVALID_HANDLE_VALUE == hFile)
+		return;
+
+	DWORD dwByte = 0;
+	DWORD dwStrByte = 0;
+
+	TCHAR* pStr = nullptr;
+	EVENTINFO* pInfo = nullptr;
+	int index = 0;
+
+	while (true)
+	{
+		ReadFile(hFile, &index, sizeof(int), &dwByte, nullptr);
+
+		EVENTINFO* pInfo = new EVENTINFO;
+		ReadFile(hFile, &pInfo->iEventID, sizeof(int), &dwByte, nullptr);
+
+		ReadFile(hFile, &dwStrByte, sizeof(DWORD), &dwByte, nullptr);
+		pStr = new TCHAR[dwStrByte];
+		ReadFile(hFile, pStr, dwStrByte, &dwByte, nullptr);
+
+
+		ReadFile(hFile, pInfo->vPos, sizeof(D3DXVECTOR3), &dwByte, nullptr);
+
+		if (0 == dwByte)
+		{
+			Safe_Delete(pInfo);
+			break;
+		}
+		pInfo->strValue = pStr;
+		pView->m_Terrain->AddEventData(index, pInfo);
+
 		delete[] pStr;
 		pStr = nullptr;
 	}

@@ -111,6 +111,9 @@
     <ClInclude Include="CollisionTool.h">
       <Filter>01.ToolView\02.Form\CollisionTool</Filter>
     </ClInclude>
+    <ClInclude Include="EventTool.h">
+      <Filter>01.ToolView\02.Form</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MainFrm.cpp">
@@ -163,6 +166,9 @@
     </ClCompile>
     <ClCompile Include="CollisionTool.cpp">
       <Filter>01.ToolView\02.Form\CollisionTool</Filter>
+    </ClCompile>
+    <ClCompile Include="EventTool.cpp">
+      <Filter>01.ToolView\02.Form</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

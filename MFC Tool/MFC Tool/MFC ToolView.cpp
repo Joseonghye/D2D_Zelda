@@ -65,21 +65,20 @@ void CMFCToolView::OnDraw(CDC* /*pDC*/)
 	if (!pDoc)
 		return;
 
-	m_pDevice->getLine()->Begin();
-	m_Terrain->RenderColl();
-	m_pDevice->getLine()->End();
+	
 
 	m_pDevice->BeginDraw();
-	m_pDevice->GetSprite()->Begin(D3DXSPRITE_ALPHABLEND);
 
-	m_pDevice->GetSprite()->End();
 	m_pDevice->GetSprite()->Begin(D3DXSPRITE_ALPHABLEND);
 	m_Terrain->RenderTerrain();
 	m_Terrain->RenderObject();
+	m_Terrain->RenderEvent();
 
 	m_pDevice->GetSprite()->End();
 
-
+	m_pDevice->getLine()->Begin();
+	m_Terrain->RenderColl();
+	m_pDevice->getLine()->End();
 
 	m_pDevice->EndDraw();
 
@@ -160,8 +159,19 @@ void CMFCToolView::OnInitialUpdate()
 		CTexturMgr::GetInstance()->InsertTexture(TEXTYPE::MULTI, L"../Texture/Monster/Octo/Walk/Octo0%d.png", L"Octo",L"Walk",2);
 		CTexturMgr::GetInstance()->InsertTexture(TEXTYPE::SINGLE, L"../Texture/Monster/Goomba/Goomba.png", L"Goomba");
 		CTexturMgr::GetInstance()->InsertTexture(TEXTYPE::MULTI, L"../Texture/Monster/HardHat/HardHat0%d.png", L"HardHat", L"Walk", 2);
+
 		CTexturMgr::GetInstance()->InsertTexture(TEXTYPE::SINGLE, L"../Texture/Object/weed.png", L"Weed");
 		CTexturMgr::GetInstance()->InsertTexture(TEXTYPE::SINGLE, L"../Texture/Object/Black.png", L"BlackStone");
+
+		CTexturMgr::GetInstance()->InsertTexture(TEXTYPE::SINGLE, L"../Texture/Object/Up.png", L"Up");
+		CTexturMgr::GetInstance()->InsertTexture(TEXTYPE::SINGLE, L"../Texture/Object/Down.png", L"Down");
+		CTexturMgr::GetInstance()->InsertTexture(TEXTYPE::SINGLE, L"../Texture/Object/Left.png", L"Left");
+		CTexturMgr::GetInstance()->InsertTexture(TEXTYPE::SINGLE, L"../Texture/Object/Right.png", L"Right");
+
+		CTexturMgr::GetInstance()->InsertTexture(TEXTYPE::SINGLE, L"../Texture/Event/Check.png", L"Check");
+		CTexturMgr::GetInstance()->InsertTexture(TEXTYPE::SINGLE, L"../Texture/Event/Button.png", L"Button");
+		CTexturMgr::GetInstance()->InsertTexture(TEXTYPE::SINGLE, L"../Texture/Event/Open.png", L"Open");
+		CTexturMgr::GetInstance()->InsertTexture(TEXTYPE::SINGLE, L"../Texture/Event/Close.png", L"Close");
 	}
 }
 
@@ -193,27 +203,12 @@ void CMFCToolView::OnLButtonDown(UINT nFlags, CPoint point)
 		if (pForm->m_tCollTool.IsWindowVisible())
 			m_Terrain->AddCollision(vMouse);
 
+	if (pForm->m_tEventTool.GetSafeHwnd())
+		if (pForm->m_tEventTool.IsWindowVisible()) {
+			m_Terrain->AddEvent(vMouse, pForm->m_tEventTool.GetEventInfo());
+		}
 
 	CScrollView::OnLButtonDown(nFlags, point);
-	/*
-	//오브젝트 배치?
-	CString str;
-	int iIndex = pForm->m_ListBox.GetCurSel();
-	pForm->m_ListBox.GetText(iIndex,str);
-
-	auto& iter = pForm->m_InfoMap.find(str);
-
-	m_pDevice->BeginDraw();
-	m_pDevice->GetSprite()->Begin(D3DXSPRITE_ALPHABLEND);
-
-	m_Mouse->RenderObj(m_hWnd, iter->second);
-
-	m_pDevice->GetSprite()->End();
-	m_pDevice->EndDraw();
-
-	Invalidate(false);
-	*/
-
 }
 
 

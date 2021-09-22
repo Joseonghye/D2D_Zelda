@@ -138,6 +138,7 @@ BOOL CObjectTool::OnInitDialog()
 	m_tComboBox.AddString(L"Player");
 	m_tComboBox.AddString(L"Monster");
 	m_tComboBox.AddString(L"Interaction");
+	m_tComboBox.AddString(L"ENTER");
 	m_tComboBox.AddString(L"Potal");
 	return TRUE;  // return TRUE unless you set the focus to a control
 				  // 예외: OCX 속성 페이지는 FALSE를 반환해야 합니다.
@@ -165,8 +166,6 @@ void CObjectTool::OnBnClickedInitialize()
 	m_tObjListBox.AddString(tInfo->strName);
 
 	UpdateData(FALSE);
-
-	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 }
 
 void CObjectTool::OnBnClickedDelete()

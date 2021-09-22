@@ -10,7 +10,7 @@ public:
 	~CCollisionMgr();
 
 public:
-	bool PlayerCollision(CGameObject* pPlayer, map<int, CGameObject*> pSrc, OBJID _id);// vector<CGameObject*> pSrc, OBJID _id);
+	bool PlayerCollision(CGameObject* pPlayer, vector<CGameObject*> pSrc, OBJID _id, int iRoomIndex, int iNextRoom);
 };
 
 #endif // !__COLLISIONMGR_H__

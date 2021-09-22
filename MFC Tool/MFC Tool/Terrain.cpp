@@ -11,21 +11,17 @@ Terrain::~Terrain()
 	ReleaseTerrain();
 	ReleaseObject();
 	ReleaseColl();
+	ReleaseEvent();
 }
 
 void Terrain::AddTileData(TILE * pTile)
 {
-	//auto& iter = m_vecTile.begin();
-	//iter += (index - 1);
-	//m_vecTile.insert(iter, pTile);
-	//m_vecTile[index] = pTile;
 	m_vecTile.emplace_back(pTile);
 }
 
 HRESULT Terrain::ReadyTerrain()
 {
 	//맵 크기만큼 할당 
-//	m_vecTile.resize((TOTAL_TILEX*ROOM_TILEX) * (TOTAL_TILEY*ROOM_TILEY),nullptr);
 	m_vecTile.reserve((TOTAL_TILEX*ROOM_TILEX) * (TOTAL_TILEY*ROOM_TILEY));
 	TILE* pTile = nullptr;
 
@@ -79,26 +75,6 @@ void Terrain::RenderTerrain()
 		CGraphicDevice::GetInstance()->GetFont()->DrawTextW(CGraphicDevice::GetInstance()->GetSprite(), szIndex, lstrlen(szIndex), nullptr, 0, D3DCOLOR_ARGB(255, 255, 255, 255));
 	}
 
-
-//	CGraphicDevice::GetInstance()->GetSprite()->End();
-
-	 //라인 그리기 
-	/*float fY = (TILECY >> 1);
-	float fX = (TILECX >> 1);
-
-	for (int i = 0; i < iSize; i++)
-	{
-		TILE* temp = m_vecTile[i];
-		
-		D3DXVECTOR2 vLine[4] = {
-			{ temp->vPos.x - fX, temp->vPos.y - fY },
-			{ temp->vPos.x + fX, temp->vPos.y - fY },
-			{ temp->vPos.x + fX, temp->vPos.y + fY },
-			{ temp->vPos.x - fX, temp->vPos.y + fY } 
-		};
-
-//		CGraphicDevice::GetInstance()->getLine()->Draw(vLine, 4, D3DCOLOR_ARGB(255, 255, 255, 255));
-	}*/
 }
 
 void Terrain::MiniRenderTerrain()
@@ -159,6 +135,12 @@ void Terrain::RenderObject()
 		if (nullptr == pTexInfo)
 			return;
 
+		D3DXMatrixScaling(&iter.second->m_tInfo.matScale, iter.second->m_tInfo.vSize.x, iter.second->m_tInfo.vSize.y, 0.f);
+		D3DXMatrixTranslation(&iter.second->m_tInfo.matTrans, iter.second->m_tInfo.vPos.x - m_pView->GetScrollPos(SB_HORZ),
+			iter.second->m_tInfo.vPos.y - m_pView->GetScrollPos(SB_VERT), 0.f);
+		iter.second->m_tInfo.matWorld = iter.second->m_tInfo.matScale * iter.second->m_tInfo.matTrans;
+
+
 		CGraphicDevice::GetInstance()->GetSprite()->SetTransform(&iter.second->m_tInfo.matWorld);
 		CGraphicDevice::GetInstance()->GetSprite()->Draw(pTexInfo->pTexture, nullptr, &pTexInfo->tCenter, nullptr, D3DCOLOR_ARGB(255, 255, 255, 255));
 	}
@@ -170,6 +152,54 @@ void Terrain::ReleaseObject()
 {
 //	for_each(m_ObjMap.begin(), m_ObjMap.end(), Safe_Delete<OBJDATA*>);
 	m_ObjMap.clear();
+}
+
+void Terrain::AddEventData(int index, EVENTINFO * data)
+{
+	m_EventMap.emplace(index, data);
+}
+
+void Terrain::RenderEvent()
+{
+	if (m_EventMap.empty()) return;
+
+	for (auto& iter : m_EventMap)
+	{
+		wstring name;
+		switch (iter.second->iEventID)
+		{
+		case EVENT::BUTTON:
+			name = L"Button";
+			break;
+		case EVENT::CHECK:
+			name = L"Check";
+			break; 
+		case EVENT:: OPEN:
+			name = L"Open";
+			break;
+		case EVENT::CLOSE:
+			name = L"Close";
+			break;
+		}
+		const TEXINFO* pTexInfo = CTexturMgr::GetInstance()->getTexture(name);
+		if (nullptr == pTexInfo)
+			return;
+
+		D3DXMATRIX matScale, matTrans, matWorld;
+		D3DXMatrixScaling(&matScale, 1, 1, 0.f);
+		D3DXMatrixTranslation(&matTrans, iter.second->vPos.x - m_pView->GetScrollPos(SB_HORZ),
+			iter.second->vPos.y - m_pView->GetScrollPos(SB_VERT), 0.f);
+		matWorld = matScale * matTrans;
+
+
+		CGraphicDevice::GetInstance()->GetSprite()->SetTransform(&matWorld);
+		CGraphicDevice::GetInstance()->GetSprite()->Draw(pTexInfo->pTexture, nullptr, &pTexInfo->tCenter, nullptr, D3DCOLOR_ARGB(255, 255, 255, 255));
+	}
+}
+
+void Terrain::ReleaseEvent()
+{
+	m_EventMap.clear();
 }
 
 void Terrain::AddCollData(int index,D3DXVECTOR3 vPos)
@@ -186,11 +216,12 @@ void Terrain::RenderColl()
 
 	for (auto& iter : m_CollMap)
 	{
-		float left = iter.second.x - fX;
-		float right = iter.second.x + fX;
 
-		float top = iter.second.y - fY;
-		float bottom = iter.second.y + fY;
+		float left = iter.second.x - fX - m_pView->GetScrollPos(SB_HORZ);
+		float right = iter.second.x + fX - m_pView->GetScrollPos(SB_HORZ);
+
+		float top = iter.second.y - fY - m_pView->GetScrollPos(SB_VERT);
+		float bottom = iter.second.y + fY - m_pView->GetScrollPos(SB_VERT);
 		/*	RECT rc{ iter.second.x - (TILECX*0.5f),iter.second.y - (TILECY *0.5f),iter.second.x + (TILECX*0.5f),iter.second.y + (TILECY *0.5f) };
 			_dc->Rectangle((int)rc.left, (int)rc.top, (int)rc.right, (int)rc.bottom);*/
 
@@ -230,7 +261,6 @@ void Terrain::SetStartPos(const D3DXVECTOR3 & vMouse)
 
 void Terrain::AddObj(const D3DXVECTOR3 & vMouse, const CString & objName)
 {
-
 	int iIndex = GetTileIndex(vMouse);
 	if (iIndex == -1) return;
 
@@ -238,19 +268,48 @@ void Terrain::AddObj(const D3DXVECTOR3 & vMouse, const CString & objName)
 	lstrcpy(pInfo->szName,objName.GetString());
 
 	pInfo->m_tInfo.vPos = m_vecTile[iIndex]->vPos;
-	//pInfo->m_tInfo.vPos = vMouse;
 	pInfo->m_tInfo.vSize = D3DXVECTOR3(1.f, 1.f, 0.f);
 
 	D3DXMatrixScaling(&pInfo->m_tInfo.matScale, pInfo->m_tInfo.vSize.x, pInfo->m_tInfo.vSize.y, 0.0f);
-	D3DXMatrixTranslation(&pInfo->m_tInfo.matTrans, vMouse.x, vMouse.y, 0.f);
+	D3DXMatrixTranslation(&pInfo->m_tInfo.matTrans, pInfo->m_tInfo.vPos.x, pInfo->m_tInfo.vPos.y, 0.f);
 	pInfo->m_tInfo.matWorld = pInfo->m_tInfo.matScale * pInfo->m_tInfo.matTrans;
 
 	m_ObjMap.emplace(iIndex, pInfo);
-	//m_ObjMap.emplace_back(pInfo);
 }
 
 void Terrain::DeleteObject(D3DXVECTOR3 vMouse)
 {
+	int iIndex = GetTileIndex(vMouse);
+	if (iIndex == -1) return;
+
+	auto& iter = m_ObjMap.find(iIndex);
+	if (iter == m_ObjMap.end()) return;
+
+	m_ObjMap.erase(iter);
+}
+
+void Terrain::AddEvent(const D3DXVECTOR3 & vMouse, EVENTINFO* _Event)
+{
+	int iIndex = GetTileIndex(vMouse);
+	if (iIndex == -1) return;
+
+	EVENTINFO* pInfo = new EVENTINFO;
+
+	pInfo = _Event;
+	pInfo->vPos = m_vecTile[iIndex]->vPos;
+
+	m_EventMap.emplace(iIndex, pInfo);
+}
+
+void Terrain::DeleteEvent(D3DXVECTOR3 vMouse)
+{
+	int iIndex = GetTileIndex(vMouse);
+	if (iIndex == -1) return;
+
+	auto& iter = m_EventMap.find(iIndex);
+	if (iter == m_EventMap.end()) return;
+
+	m_EventMap.erase(iter);
 }
 
 void Terrain::AddCollision(const D3DXVECTOR3 & vMouse)

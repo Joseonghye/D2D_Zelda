@@ -197,6 +197,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CollisionTool.h" />
+    <ClInclude Include="EventTool.h" />
     <ClInclude Include="FileInfo.h" />
     <ClInclude Include="Form.h" />
     <ClInclude Include="GraphicDevice.h" />
@@ -218,6 +219,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CollisionTool.cpp" />
+    <ClCompile Include="EventTool.cpp" />
     <ClCompile Include="FileInfo.cpp" />
     <ClCompile Include="Form.cpp" />
     <ClCompile Include="GraphicDevice.cpp" />

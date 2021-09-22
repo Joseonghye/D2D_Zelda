@@ -23,9 +23,11 @@ public:
 private:
 	void LoadGameObjInfo(const wstring & wstrFilePath);
 	void CreateMonster(string strName, int index, INFO* pInfo);
-	void CreateInteractionObj(string strName, int index, INFO* pInfo, bool bMove);
+	void CreateInteractionObj(string strName, int index, INFO* pInfo);
+	void CreateEnter(string strName, int index, INFO* pInfo);
 protected:
 	void LoadGameObject(const wstring & wstrFilePath);
+	void LoadEvent(const wstring & wstrFilePath);
 
 private:
 	map<string,OBJINFO> m_mapObjOption;

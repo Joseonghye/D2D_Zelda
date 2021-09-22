@@ -26,6 +26,12 @@ int CWeed::Update_GameObject()
 {
 	if (m_bDestory) return DEAD;
 
+	if (GAMEOBJECTMGR->isChanging())
+	{
+		D3DXMatrixTranslation(&m_tInfo.matTrans, m_tInfo.vPos.x + SCROLLMGR->GetScrollVec().x, m_tInfo.vPos.y + SCROLLMGR->GetScrollVec().y, m_tInfo.vPos.z);
+		m_tInfo.matWorld = m_tInfo.matScale * m_tInfo.matTrans;
+	}
+
 	return NO_EVENT;
 }
 
@@ -46,6 +52,8 @@ void CWeed::Render_GameObject()
 
 void CWeed::Release_GameObject()
 {
+	for_each(m_vecComponet.begin(), m_vecComponet.end(), Safe_Delete<CBaseComponent*>);
+	m_vecComponet.clear();
 }
 
 void CWeed::Damaged()
