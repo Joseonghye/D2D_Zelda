@@ -1,4 +1,7 @@
 #pragma once
+#ifndef __GAMEBUTTON_H__
+#define __GAMEBUTTON_H__
+
 #include "GameObject.h"
 class CBoxCollider;
 class CGameButton :
@@ -26,3 +29,4 @@ private:
 	CBoxCollider* m_Collider;
 };
 
+#endif //!__GAMEBUTTON_H__

@@ -6,6 +6,8 @@
 #include "Enter.h"
 #include "GameButton.h"
 #include "Check.h"
+#include "Close.h"
+#include "Door.h"
 
 CScene::CScene()
 {
@@ -94,6 +96,15 @@ void CScene::CreateInteractionObj(string strName,int index, INFO * pInfo)
 	else if ("BlackStone" == strName)
 	{
 		pGameObj = CBlackStone::Create();
+	}
+	else if (int i = strName.find_last_of("Door") >= 0)
+	{
+		pGameObj = CDoor::Create();
+		string str = strName.substr(i + 1, strName.length());
+		wstring wst;
+		wst.assign(str.begin(), str.end());
+
+		static_cast<CDoor*>(pGameObj)->SetDir(wst);
 	}
 
 	if (pGameObj != nullptr) 
@@ -279,10 +290,15 @@ void CScene::LoadEvent(const wstring & wstrFilePath)
 			static_cast<CCheck*>(pGameObj)->SetMonsterCount();
 			pGameObj->SetPos(vPos);
 			break;
-	
 		case EVENT::OPEN:
 			break;
 		case EVENT::CLOSE:
+			pGameObj = CClose::Create();
+			pGameObj->SetRoomIndex(iRoomIndex);
+			pGameObj->SetPos(vPos);
+			pGameObj->SetTransMat();
+			pGameObj->SetWorldMat();
+			static_cast<CClose*>(pGameObj)->CloseDoor();
 			break;
 		}
 

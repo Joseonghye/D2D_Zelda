@@ -39,6 +39,7 @@ bool CCollisionMgr::PlayerCollision(CGameObject * pPlayer, vector<CGameObject*> 
 				case MONSTER:
 					static_cast<CPlayer*>(pPlayer)->SetState(STATE::DAMAGED);
 					// hp ∞®º“ 
+
 					break;
 				case ENTER: // ∏  ¿Ãµø
 				{

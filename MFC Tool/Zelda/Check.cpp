@@ -2,6 +2,7 @@
 #include "Check.h"
 #include "HardHat.h"
 #include "Key.h"
+#include "Door.h"
 
 CCheck::CCheck() :m_pObj(nullptr), m_iMonsterCount(-1){}
 
@@ -23,16 +24,27 @@ int CCheck::Update_GameObject()
 	if (m_iMonsterCount == 0) 
 	{
 		//다 잡혔으면 그에 따른 결과.
-		if (m_strValue == "Key")
+		if (m_strValue == "Key") {
 			m_pObj = CKey::Create();
 
-		m_pObj->SetRoomIndex(m_iRoomIndex);
-		m_pObj->SetPos(m_tInfo.vPos);
-		m_pObj->SetTransMat();
-		m_pObj->SetWorldMat();
+			m_pObj->SetRoomIndex(m_iRoomIndex);
+			m_pObj->SetPos(m_tInfo.vPos);
+			m_pObj->SetTransMat();
+			m_pObj->SetWorldMat();
 
-		GAMEOBJECTMGR->Add_GameObject(ITEM, m_pObj);
-
+			GAMEOBJECTMGR->Add_GameObject(ITEM, m_pObj);
+		}
+		else
+		{
+			vector<CGameObject*> vecInteraction = GAMEOBJECTMGR->GetObjList(INTERACTION);
+			for (auto& iter : vecInteraction)
+			{
+				if (typeid(iter) == typeid(CDoor*) && iter->GetRoomIndex() == m_iRoomIndex)
+				{
+					static_cast<CDoor*>(iter)->MoveDoor(L"OPEN");
+				}
+			}
+		}
 		return DEAD;
 	}
 	return NO_EVENT;
@@ -75,6 +87,5 @@ void CCheck::SetMonsterCount()
 			
 			static_cast<CHardHat*>(iter)->RegisterObserver(this);
 		}
-
 	}
 }

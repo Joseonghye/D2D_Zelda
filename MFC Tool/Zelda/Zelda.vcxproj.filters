@@ -122,6 +122,12 @@
     <Filter Include="96.Observer">
       <UniqueIdentifier>{27a7bd0a-b76f-4ffe-9fe8-bd9cdc8860a3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Game Object\Interaction\Door">
+      <UniqueIdentifier>{8884547c-2c03-44c3-ac8a-8c8391e6a357}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Game Object\Event\Close">
+      <UniqueIdentifier>{3811f412-7f6c-4b95-ba4d-4d0f3f3adac8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Zelda.h">
@@ -236,6 +242,12 @@
     <ClInclude Include="Check.h">
       <Filter>01. Game Object\Event\Check</Filter>
     </ClInclude>
+    <ClInclude Include="Door.h">
+      <Filter>01. Game Object\Interaction\Door</Filter>
+    </ClInclude>
+    <ClInclude Include="Close.h">
+      <Filter>01. Game Object\Event\Close</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -334,6 +346,12 @@
     </ClCompile>
     <ClCompile Include="Check.cpp">
       <Filter>01. Game Object\Event\Check</Filter>
+    </ClCompile>
+    <ClCompile Include="Door.cpp">
+      <Filter>01. Game Object\Interaction\Door</Filter>
+    </ClCompile>
+    <ClCompile Include="Close.cpp">
+      <Filter>01. Game Object\Event\Close</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

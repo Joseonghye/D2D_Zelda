@@ -16,6 +16,7 @@ public:
 	void Update_Animation();
 
 	void SetAniState(const wstring& wstrState, wstring wstrdir, float fEndFrame);
+	void AniPlayOnce(const wstring& wstrState, wstring wstrdir, float fEndFrame);
 //	void ChangeAnimation();
 	//void SetAniSpeed(float fSpeed);
 private:
@@ -23,15 +24,14 @@ private:
 	wstring m_wstrStateKey;
 	wstring m_wstrDir;
 
+	wstring m_wstrOnceStateKey;
+	float m_fOnceEndFrame;
+
 	float m_fFrame;
 	float m_fEndFrame;
 	
+	bool m_bOnce;
+
 	//float m_fAniSpeed;
-
-//	ANISTATE m_eCurState;
-//	ANISTATE m_eNextState;
-//	DIR		 m_eDir;
-
-//	const TEXINFO* m_pTexInfo;
 };
 

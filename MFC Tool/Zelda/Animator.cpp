@@ -5,6 +5,8 @@ CAnimator::CAnimator(CGameObject* owner, const wstring & wstrObjectKey, wstring 
 	:CBaseComponent(owner, COMPONENTID::ANIMATOR),
 	m_wstrObjectKey(wstrObjectKey)
 {
+	m_bOnce = false;
+
 	m_wstrStateKey = wstrState;
 	m_wstrDir = wstrdir;
 
@@ -46,8 +48,16 @@ void CAnimator::Release_Component()
 void CAnimator::Update_Animation()
 {
 	m_fFrame += m_fEndFrame * TIMEMGR->Get_DeltaTime() * 5;
-	if (m_fFrame >= m_fEndFrame)
+	if (m_fFrame >= m_fEndFrame) 
+	{
 		m_fFrame = 0;
+		if (m_bOnce)
+		{
+			m_bOnce = false;
+			m_wstrStateKey = m_wstrOnceStateKey;
+			m_fEndFrame = m_fOnceEndFrame;
+		}
+	}
 }
 
 void CAnimator::SetAniState(const wstring& wstrState, wstring wstrdir,float fEndFrame)
@@ -68,6 +78,28 @@ void CAnimator::SetAniState(const wstring& wstrState, wstring wstrdir,float fEnd
 	m_wstrStateKey += L"_" + m_wstrDir;
 	m_fFrame = 0;
 
+}
+
+void CAnimator::AniPlayOnce(const wstring & wstrState, wstring wstrdir, float fEndFrame)
+{
+	m_bOnce = true;
+	m_wstrOnceStateKey = m_wstrStateKey;
+	m_fOnceEndFrame = m_fEndFrame;
+
+	if (fEndFrame != -1)
+	{
+		m_wstrStateKey = wstrState;
+		m_fEndFrame = fEndFrame;
+	}
+	if (!wstrdir.empty())
+	{
+		size_t index = m_wstrStateKey.rfind('_');
+		m_wstrStateKey = m_wstrStateKey.substr(0, index);
+
+		m_wstrDir = wstrdir;
+	}
+	m_wstrStateKey += L"_" + m_wstrDir;
+	m_fFrame = 0;
 }
 
 
