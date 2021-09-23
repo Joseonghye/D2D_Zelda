@@ -86,10 +86,9 @@ void CEventTool::OnBnClickedEventObjSave()
 
 			WriteFile(hFile, &pObj.second->iEventID, sizeof(int), &dwByte, nullptr);
 
-			dwStrByte = (lstrlen(pObj.second->strValue) + 1) * sizeof(wchar_t);
+			dwStrByte = (pObj.second->strValue.length()+1) * sizeof(wchar_t);
 			WriteFile(hFile, &dwStrByte, sizeof(DWORD), &dwByte, nullptr);
-			WriteFile(hFile, pObj.second->strValue, dwStrByte, &dwByte, nullptr);
-
+			WriteFile(hFile, pObj.second->strValue.c_str(), dwStrByte, &dwByte, nullptr);
 
 			WriteFile(hFile, &pObj.second->vPos, sizeof(D3DXVECTOR3), &dwByte, nullptr);
 		}
@@ -127,28 +126,39 @@ void CEventTool::OnBnClickedEventObjLoad()
 		DWORD dwStrByte = 0;
 
 		int index = 0;
-		TCHAR* pStr = nullptr;
+		char* pStr = nullptr;
 	
 		while (true)
 		{
+
 			ReadFile(hFile, &index, sizeof(int), &dwByte, nullptr);
 
 			EVENTINFO* pInfo = new EVENTINFO;
 			ReadFile(hFile, &pInfo->iEventID, sizeof(int), &dwByte, nullptr);
 
 			ReadFile(hFile, &dwStrByte, sizeof(DWORD), &dwByte, nullptr);
-			pStr = new TCHAR[dwStrByte];
+			pStr = new char[dwStrByte]{};
 			ReadFile(hFile, pStr, dwStrByte, &dwByte, nullptr);
-
 		
 			ReadFile(hFile, pInfo->vPos, sizeof(D3DXVECTOR3), &dwByte, nullptr);
 
 			if (0 == dwByte)
 			{
 				Safe_Delete(pInfo);
+
+				delete[] pStr;
+				pStr = nullptr;
 				break;
 			}
-			pInfo->strValue = pStr;
+
+			int len = wcslen((wchar_t*)pStr);
+			char* szName = new char[2 * len + 1];
+			size_t tcnt;
+			wcstombs_s(&tcnt, szName, 2 * len + 1 * sizeof(char), (wchar_t*)pStr, 100);
+			pInfo->strValue = szName;
+
+		//	lstrcpy(pInfo->strValue, pStr);
+			
 			pView->m_Terrain->AddEventData(index, pInfo);
 
 			delete[] pStr;
@@ -218,7 +228,7 @@ EVENTINFO * CEventTool::GetEventInfo()
 	EVENTINFO* pInfo = new EVENTINFO;
 
 	pInfo->iEventID = int(m_tComboBox.GetCurSel());
-	pInfo->strValue = m_tValue;
+	pInfo->strValue = string(CT2CA(m_tValue));
 
 	UpdateData(FALSE);
 	return pInfo;

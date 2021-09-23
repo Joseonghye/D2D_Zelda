@@ -10,7 +10,5 @@ public:
 	virtual void Damaged() PURE;
 	virtual bool Pushed(DIR _dir) PURE;
 
-
-
 };
 

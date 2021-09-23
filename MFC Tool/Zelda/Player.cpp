@@ -96,6 +96,7 @@ void CPlayer::Release_GameObject()
 
 	for_each(m_vecComponet.begin(), m_vecComponet.end(), Safe_Delete<CBaseComponent*>);
 	m_vecComponet.clear();
+	m_vecComponet.swap(vector<CBaseComponent*>());
 }
 
 CPlayer * CPlayer::Create()
@@ -140,6 +141,10 @@ void CPlayer::ChangeState()
 		case PUSH:
 			wstrStateKey = L"PUSH";
 			fEndFrame = 2;
+			break;
+		case DAMAGED:
+			wstrStateKey = L"DAMAGED";
+			fEndFrame = 4;
 			break;
 		}
 		m_eCurState = m_eNextState;

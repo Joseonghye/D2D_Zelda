@@ -4,6 +4,8 @@
 #include "Weed.h"
 #include "BlackStone.h"
 #include "Enter.h"
+#include "GameButton.h"
+#include "Check.h"
 
 CScene::CScene()
 {
@@ -45,18 +47,22 @@ void CScene::LoadGameObjInfo(const wstring & wstrFilePath)
 
 		int len = wcslen((wchar_t*)pStr);
 		char* szName = new char[2 * len + 1];
-		//	wcstombs(szName, (wchar_t*)pStr, 2 * len + 1);
+	
 		size_t tcnt;
 		wcstombs_s(&tcnt, szName, 2 * len + 1 * sizeof(char), (wchar_t*)pStr, 100);
-
 		string str = szName;
 
-		delete[] szName;
 		delete[] pStr;
 		pStr = nullptr;
+		delete[] szName;
+		szName = nullptr;
 
 		m_mapObjOption.emplace(str,tInfo);
 	}
+
+	delete[] pStr;
+	pStr = nullptr;
+
 	CloseHandle(hFile);
 }
 
@@ -153,6 +159,10 @@ void CScene::LoadGameObject(const wstring & wstrFilePath)
 		if (0 == dwByte)
 		{
 			Safe_Delete(pInfo);
+
+			delete[] pStr;
+			pStr = nullptr;
+
 			break;
 		}
 
@@ -172,8 +182,6 @@ void CScene::LoadGameObject(const wstring & wstrFilePath)
 			int totalX = x / ROOM_TILEX;
 			iRoomIndex = totalX + (TOTAL_TILEX *totalY);
 		}
-
-	//	pInfo->vPos += SCROLLMGR->GetScrollVec();
 
 		string str = szName;
 		auto& iter = m_mapObjOption.find(str);
@@ -200,7 +208,10 @@ void CScene::LoadGameObject(const wstring & wstrFilePath)
 		delete[] szName;
 		delete[] pStr;
 		pStr = nullptr;
+		szName = nullptr;
+		Safe_Delete(pInfo);
 	}
+
 	CloseHandle(hFile);
 
 }
@@ -214,31 +225,68 @@ void CScene::LoadEvent(const wstring & wstrFilePath)
 	DWORD dwByte = 0;
 	DWORD dwStrByte = 0;
 
-	TCHAR* pStr = nullptr;
-	EVENTINFO* pInfo = nullptr;
+	char* pStr = nullptr;
 	int index = 0;
 
 	while (true)
 	{
 		ReadFile(hFile, &index, sizeof(int), &dwByte, nullptr);
 
-		EVENTINFO* pInfo = new EVENTINFO;
-		ReadFile(hFile, &pInfo->iEventID, sizeof(int), &dwByte, nullptr);
+		int iEventID = -1;
+		ReadFile(hFile, &iEventID, sizeof(int), &dwByte, nullptr);
 
 		ReadFile(hFile, &dwStrByte, sizeof(DWORD), &dwByte, nullptr);
-		pStr = new TCHAR[dwStrByte];
+		pStr = new char[dwStrByte];
 		ReadFile(hFile, pStr, dwStrByte, &dwByte, nullptr);
 
-
-		ReadFile(hFile, pInfo->vPos, sizeof(D3DXVECTOR3), &dwByte, nullptr);
-
+		D3DXVECTOR3 vPos;
+		ReadFile(hFile, vPos, sizeof(D3DXVECTOR3), &dwByte, nullptr);
+	
 		if (0 == dwByte)
 		{
-			Safe_Delete(pInfo);
+			delete[] pStr;
+			pStr = nullptr;
 			break;
 		}
-		pInfo->strValue = pStr;
-		pView->m_Terrain->AddEventData(index, pInfo);
+
+		int iRoomIndex = -1;
+		if (index != -1)
+		{
+			int y = index / (TOTAL_TILEX*ROOM_TILEX);
+			int x = index - ((TOTAL_TILEX*ROOM_TILEX)*y);
+
+			int totalY = y / ROOM_TILEY;
+			int totalX = x / ROOM_TILEX;
+			iRoomIndex = totalX + (TOTAL_TILEX *totalY);
+		}
+
+		CGameObject* pGameObj = nullptr;
+		
+		//EVENTID로 어떤 오브젝트인지 
+		switch (iEventID)
+		{
+		case EVENT::BUTTON:
+			pGameObj = CGameButton::Create(pStr);
+			pGameObj->SetRoomIndex(iRoomIndex);
+
+			pGameObj->SetPos(vPos);
+			pGameObj->SetTransMat();
+			pGameObj->SetWorldMat();
+			break;
+		case EVENT::CHECK:
+			pGameObj = CCheck::Create(pStr);
+			pGameObj->SetRoomIndex(iRoomIndex);
+			static_cast<CCheck*>(pGameObj)->SetMonsterCount();
+			pGameObj->SetPos(vPos);
+			break;
+	
+		case EVENT::OPEN:
+			break;
+		case EVENT::CLOSE:
+			break;
+		}
+
+		GAMEOBJECTMGR->Add_GameObject(EVENT, pGameObj);
 
 		delete[] pStr;
 		pStr = nullptr;

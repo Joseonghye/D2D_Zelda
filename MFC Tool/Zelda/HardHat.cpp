@@ -2,6 +2,8 @@
 #include "HardHat.h"
 #include "BoxCollider.h"
 #include "Animator.h"
+#include "Observer.h"
+
 CHardHat::CHardHat()
 {
 }
@@ -27,7 +29,11 @@ HRESULT CHardHat::Initialized_GameObject()
 
 int CHardHat::Update_GameObject()
 {
-	if (m_bDestory) return DEAD;
+	if (m_bDestory)
+	{
+		NotifyObserver();
+		return DEAD;
+	}
 
 	D3DXVECTOR3 dir = (m_pTarget->GetPos() - m_tInfo.vPos);
 	D3DXVec3Normalize(&dir, &dir);
@@ -50,8 +56,10 @@ void CHardHat::Render_GameObject()
 
 void CHardHat::Release_GameObject()
 {
+	RemoveObserver();
 	for_each(m_vecComponet.begin(), m_vecComponet.end(), Safe_Delete<CBaseComponent*>);
 	m_vecComponet.clear();
+	m_vecComponet.swap(vector<CBaseComponent*>());
 }
 
 CHardHat * CHardHat::Create()
@@ -61,4 +69,20 @@ CHardHat * CHardHat::Create()
 		Safe_Delete(pInstance);
 
 	return pInstance;
+}
+
+void CHardHat::RegisterObserver(CObserver * observer)
+{
+	m_pObserver = observer;
+}
+
+void CHardHat::RemoveObserver()
+{
+	m_pObserver = nullptr;
+}
+
+void CHardHat::NotifyObserver()
+{
+	if(m_pObserver)
+		m_pObserver->OnNotify();
 }

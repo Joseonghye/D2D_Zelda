@@ -58,6 +58,12 @@ HRESULT CMainGame::Initialized()
 		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Player/Push/Link_Push_Right0%d.png", L"Player", L"PUSH_RIGHT", 2)))
 			return E_FAIL;
 
+		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Player/Fall/Fall0%d.png", L"Player", L"Fall", 3)))
+			return E_FAIL;
+
+		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Player/Damaged/Damaged0%d.png", L"Player", L"DAMAGED_FRONT",4)))
+			return E_FAIL;
+		
 	}
 	//Insert Monster Texture
 	{
@@ -66,6 +72,10 @@ HRESULT CMainGame::Initialized()
 		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::SINGLE, L"../Texture/Object/weed.png", L"Weed")))
 			return E_FAIL;
 		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::SINGLE, L"../Texture/Object/Black.png", L"BALCKSTONE")))
+			return E_FAIL;
+		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::SINGLE, L"../Texture/Object/Key.png", L"KEY")))
+			return E_FAIL;
+		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::SINGLE, L"../Texture/Event/Button.png", L"Button")))
 			return E_FAIL;
 	}
 

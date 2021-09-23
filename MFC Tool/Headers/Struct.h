@@ -46,7 +46,7 @@ typedef struct tagInfo
 typedef struct tagEventInfo {
 	int iEventID;
 	D3DXVECTOR3 vPos;
-	CString strValue;
+	string strValue;
 }EVENTINFO;
 
 #endif

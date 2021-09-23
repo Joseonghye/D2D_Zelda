@@ -107,6 +107,21 @@
     <Filter Include="01. Game Object\Enter">
       <UniqueIdentifier>{f007389e-8a82-4e08-b1a9-7920e30ec6ca}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Game Object\Equipment\Key">
+      <UniqueIdentifier>{086e1d4f-64ad-4d44-b8f6-1f30f25092f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Game Object\Event">
+      <UniqueIdentifier>{d49fb7ed-5fe5-4a53-9948-8c8b31511616}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Game Object\Event\Button">
+      <UniqueIdentifier>{bab68d66-2101-4ffc-9568-4dc93bd68fad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Game Object\Event\Check">
+      <UniqueIdentifier>{333cdc2b-f63b-484c-b96f-cdd1799d7d8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="96.Observer">
+      <UniqueIdentifier>{27a7bd0a-b76f-4ffe-9fe8-bd9cdc8860a3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Zelda.h">
@@ -206,6 +221,21 @@
     <ClInclude Include="Enter.h">
       <Filter>01. Game Object\Enter</Filter>
     </ClInclude>
+    <ClInclude Include="Key.h">
+      <Filter>01. Game Object\Equipment\Key</Filter>
+    </ClInclude>
+    <ClInclude Include="GameButton.h">
+      <Filter>01. Game Object\Event\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="Observer.h">
+      <Filter>96.Observer</Filter>
+    </ClInclude>
+    <ClInclude Include="Subject.h">
+      <Filter>96.Observer</Filter>
+    </ClInclude>
+    <ClInclude Include="Check.h">
+      <Filter>01. Game Object\Event\Check</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -295,6 +325,15 @@
     </ClCompile>
     <ClCompile Include="Enter.cpp">
       <Filter>01. Game Object\Enter</Filter>
+    </ClCompile>
+    <ClCompile Include="Key.cpp">
+      <Filter>01. Game Object\Equipment\Key</Filter>
+    </ClCompile>
+    <ClCompile Include="GameButton.cpp">
+      <Filter>01. Game Object\Event\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="Check.cpp">
+      <Filter>01. Game Object\Event\Check</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

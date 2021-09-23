@@ -100,10 +100,11 @@ void Terrain::Render_GameObject()
 
 void Terrain::Release_GameObject()
 {
-	for (int i = 0; i < OBJID_END; ++i)
+	for (int i = 0; i <(TOTAL_TILEX*TOTAL_TILEY); ++i)
 	{
 		for_each(m_vecRoom[i].begin(), m_vecRoom[i].end(), Safe_Delete<TILE*>);
 		m_vecRoom[i].clear();
+		m_vecRoom[i].swap(vector<TILE*>());
 	}
 	//for_each(m_vecTile.begin(), m_vecTile.end(), Safe_Delete<TILE*>);
 	//m_vecTile.clear();
@@ -112,6 +113,14 @@ void Terrain::Release_GameObject()
 	/*for_each(m_vecRoom.begin(), m_vecRoom.end(), Safe_Delete<Room>);
 	m_vecRoom.clear();
 	m_vecRoom.swap(vector<Room>());*/
+}
+
+int Terrain::GetTileOption(D3DXVECTOR3 vPos)
+{
+	int iIndex = GetTileIndex(vPos);
+	if (iIndex == -1) return -1;
+
+	return 	m_vecRoom[m_iRoomIndex][iIndex]->dwOption;
 }
 
 HRESULT Terrain::LoadTileFile(const wstring & wstrFilePath)
@@ -129,10 +138,11 @@ HRESULT Terrain::LoadTileFile(const wstring & wstrFilePath)
 	int totalY = 0;
 	while (true)
 	{
+
 		pTile = new TILE;
 		ReadFile(hFile, pTile, sizeof(TILE), &dwByte, nullptr);
 
-		if (0 == dwByte)
+		if (0 == dwByte) 
 		{
 			Safe_Delete(pTile);
 			break;
@@ -167,8 +177,9 @@ HRESULT Terrain::LoadTileFile(const wstring & wstrFilePath)
 				}
 			}
 		}
-	}
 
+		pTile = nullptr;
+	}
 	CloseHandle(hFile);
 
 	return S_OK;
@@ -215,4 +226,26 @@ HRESULT Terrain::LoadColliderFile(const wstring & wstrFilePath)
 
 	return S_OK;
 
+}
+
+int Terrain::GetTileIndex(D3DXVECTOR3 vPos)
+{
+	if (vPos.x < 0 || vPos.y < 0)
+		return -1;
+
+	//int y = (m_iRoomIndex / TOTAL_TILEX) - 1;
+	//int x = m_iRoomIndex % TOTAL_TILEX;
+
+	//vPos.x += x*(ROOM_TILEX*TILECX);
+	//vPos.y += y*(ROOM_TILEY*TILECY);
+
+	int iY = vPos.y / TILECY;
+	int iX = vPos.x / TILECX;
+
+	int iIndex = iX + (iY * ROOM_TILEX);
+
+	if (iIndex >= m_vecRoom[m_iRoomIndex].size())
+		return -1;
+
+	return iIndex;
 }

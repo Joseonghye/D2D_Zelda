@@ -95,6 +95,7 @@ void CGameObjectMgr::Release_GameObjectMgr()
 			SAFE_DELETE(iter->second);
 		*/
 		m_ObjList[i].clear();
+		m_ObjList[i].swap(vector<CGameObject*>());
 	}
 }
 

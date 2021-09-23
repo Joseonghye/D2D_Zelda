@@ -1,14 +1,13 @@
 #pragma once
 #include "GameObject.h"
-
 class CBoxCollider;
-class CEquipment : public CGameObject
+class CGameButton :
+	public CGameObject
 {
 public:
-	CEquipment();
-	~CEquipment();
+	CGameButton();
+	~CGameButton();
 
-public:
 	// CGameObject을(를) 통해 상속됨
 	virtual HRESULT Initialized_GameObject() override;
 	virtual int Update_GameObject() override;
@@ -16,21 +15,14 @@ public:
 	virtual void Render_GameObject() override;
 	virtual void Release_GameObject() override;
 
-public:
-	void SetPlayer(CGameObject* player) { m_pPlayer = player; }
-	virtual void StartUsing(DIR _dir) {};
-	
-protected:
-	virtual void Using() {};
+	void SetStrValue(char* str) { m_strValue= str; }
+	static CGameButton* Create(char* str);
 
-protected:
-	CGameObject* m_pPlayer;
+	void PushButton();
+
+private:
+	CGameObject* m_pObj;
+	string m_strValue;
 	CBoxCollider* m_Collider;
-	bool m_bUse;
-
-
-
-	
-
 };
 

@@ -49,7 +49,7 @@ public:
 	const D3DXVECTOR3& GetPos() { return m_tInfo.vPos; }
 	const D3DXMATRIX& GetWorldMat() { return m_tInfo.matWorld; }
 	//const D3DXVECTOR3& GetDir() { return m_tInfo.vDir; }
-	const int const GetRoomIndex() { return m_iRoomIndex; }
+	const int GetRoomIndex() { return m_iRoomIndex; }
 	DIR GetDir() { return m_tInfo.eDir; }
 
 	const bool& const GetVisible() { return m_bVisible; }

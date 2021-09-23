@@ -4,6 +4,7 @@
 #include "BoxCollider.h"
 #include "InteractionObj.h"
 #include "Player.h"
+#include "GameButton.h"
 
 CCollisionMgr::CCollisionMgr()
 {
@@ -36,6 +37,7 @@ bool CCollisionMgr::PlayerCollision(CGameObject * pPlayer, vector<CGameObject*> 
 				switch (_id)
 				{
 				case MONSTER:
+					static_cast<CPlayer*>(pPlayer)->SetState(STATE::DAMAGED);
 					// hp ∞®º“ 
 					break;
 				case ENTER: // ∏  ¿Ãµø
@@ -80,6 +82,8 @@ bool CCollisionMgr::PlayerCollision(CGameObject * pPlayer, vector<CGameObject*> 
 
 					break;
 				}
+				case EVENT:
+					static_cast<CGameButton*>(another->GetParent())->PushButton();
 				}
 				/*
 				if (_id == WALL || _id == INTERACTION)

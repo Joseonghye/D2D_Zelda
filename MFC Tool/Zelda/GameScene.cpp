@@ -26,6 +26,7 @@ HRESULT CGameScene::Initialized_Scene()
 	GAMEOBJECTMGR->Add_GameObject(PLAYER,pGameObject);
 
 	LoadGameObject(L"../Data/Obj/ObjData.dat");
+	LoadEvent(L"../Data/Event.dat");
 
 	return S_OK;
 }

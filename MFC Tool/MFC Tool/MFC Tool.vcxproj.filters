@@ -52,6 +52,9 @@
     <Filter Include="01.ToolView\02.Form\CollisionTool">
       <UniqueIdentifier>{d094858a-47ae-4c33-8049-b29a3443a85d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01.ToolView\02.Form\EventTool">
+      <UniqueIdentifier>{4923c2d4-6064-4ac9-ab3e-7263bc6f90ba}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainFrm.h">
@@ -112,7 +115,7 @@
       <Filter>01.ToolView\02.Form\CollisionTool</Filter>
     </ClInclude>
     <ClInclude Include="EventTool.h">
-      <Filter>01.ToolView\02.Form</Filter>
+      <Filter>01.ToolView\02.Form\EventTool</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -168,7 +171,7 @@
       <Filter>01.ToolView\02.Form\CollisionTool</Filter>
     </ClCompile>
     <ClCompile Include="EventTool.cpp">
-      <Filter>01.ToolView\02.Form</Filter>
+      <Filter>01.ToolView\02.Form\EventTool</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
