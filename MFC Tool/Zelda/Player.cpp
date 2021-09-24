@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "BoxCollider.h"
 #include "Animator.h"
+#include "Equipment.h"
 #include "Sword.h"
 
 CPlayer::CPlayer() :m_eCurState(IDLE), m_eNextState(STATE_END), m_eCurDir(FRONT), m_eNextDir(FRONT)
@@ -19,6 +20,7 @@ HRESULT CPlayer::Initialized_GameObject()
 	m_fSpeed = 100.f;
 	m_bVisible = true;
 
+	m_tInfo.vDir = { 0.f,1.f,0.f };
 	m_tInfo.vSize = { 32.f, 32.f, 0.f };
 	m_tInfo.eDir = FRONT;
 
@@ -44,12 +46,14 @@ int CPlayer::Update_GameObject()
 	if (KEYMGR->Key_Pressing(KEY_LEFT)) 
 	{
 		m_tInfo.vPos.x -= m_fSpeed * TIMEMGR->Get_DeltaTime();
+		m_tInfo.vDir.x = -1.f;
 		m_eNextDir = LEFT;
 		m_eNextState = WALK;
 	}
 	else if (KEYMGR->Key_Pressing(KEY_RIGHT)) 
 	{
 		m_tInfo.vPos.x += m_fSpeed* TIMEMGR->Get_DeltaTime();
+		m_tInfo.vDir.x = 1.f;
 		m_eNextDir = RIGHT;
 		m_eNextState = WALK;
 	}
@@ -57,15 +61,18 @@ int CPlayer::Update_GameObject()
 	if (KEYMGR->Key_Pressing(KEY_UP))
 	{
 		m_tInfo.vPos.y -= m_fSpeed* TIMEMGR->Get_DeltaTime();
+		m_tInfo.vDir.y = -1.f;
 		m_eNextDir = BACK;
 		m_eNextState = WALK;
 	}
 	else if (KEYMGR->Key_Pressing(KEY_DOWN)) 
 	{
 		m_tInfo.vPos.y += m_fSpeed* TIMEMGR->Get_DeltaTime();
+		m_tInfo.vDir.y = 1.f;
 		m_eNextDir = FRONT;
 		m_eNextState = WALK;
 	}
+
 	if (KEYMGR->Key_Pressing(KEY_RETURN))
 	{
 		m_eNextState = ATTACK;
@@ -110,16 +117,25 @@ CPlayer * CPlayer::Create()
 
 void CPlayer::Attack()
 {
-	static_cast<CSword*>(m_pItem)->StartUsing(m_eCurDir);
+	static_cast<CEquipment*>(m_pItem)->StartUsing(m_eCurDir);
+}
+
+void CPlayer::Defense()
+{
+	static_cast<CEquipment*>(m_pItem)->StartUsing(m_eCurDir);
+	//젤다 뒤로 밀림
+	// 적도 뒤로 밀림 
 }
 
 void CPlayer::ChangeState()
 {
+	if (m_Animator->GatPlayOnce()) return;
 	if (m_eCurState == m_eNextState && m_eCurDir == m_eNextDir) return;
 
 	wstring wstrStateKey;
 	wstring wstrDir;
 	float fEndFrame = -1;
+	float fSpeed = 5;
 
 	if (m_eCurState != m_eNextState)
 	{
@@ -145,6 +161,12 @@ void CPlayer::ChangeState()
 		case DAMAGED:
 			wstrStateKey = L"DAMAGED";
 			fEndFrame = 4;
+			fSpeed = 7;
+			break;
+		case FALL:
+			wstrStateKey = L"FALL";
+			fEndFrame = 3;
+			fSpeed = 1;
 			break;
 		}
 		m_eCurState = m_eNextState;
@@ -171,7 +193,9 @@ void CPlayer::ChangeState()
 		m_tInfo.eDir = m_eNextDir;
 	}
 
-
-	m_Animator->SetAniState(wstrStateKey, wstrDir, fEndFrame);
+	if (m_eCurState == FALL)
+		m_Animator->AniPlayOnce(wstrStateKey, wstrDir, fEndFrame, fSpeed);
+	else
+		m_Animator->SetAniState(wstrStateKey, wstrDir, fEndFrame, fSpeed);
 
 }

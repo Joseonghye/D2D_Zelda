@@ -35,10 +35,10 @@ int CHardHat::Update_GameObject()
 		return DEAD;
 	}
 
-	D3DXVECTOR3 dir = (m_pTarget->GetPos() - m_tInfo.vPos);
-	D3DXVec3Normalize(&dir, &dir);
+	m_tInfo.vDir = (m_pTarget->GetPos() - m_tInfo.vPos);
+	D3DXVec3Normalize(&m_tInfo.vDir, &m_tInfo.vDir);
 
-	m_tInfo.vPos += (dir * m_fSpeed * TIMEMGR->Get_DeltaTime());
+	m_tInfo.vPos += (m_tInfo.vDir * m_fSpeed * TIMEMGR->Get_DeltaTime());
 	D3DXMatrixTranslation(&m_tInfo.matTrans, m_tInfo.vPos.x + SCROLLMGR->GetScrollVec().x , m_tInfo.vPos.y + SCROLLMGR->GetScrollVec().y, m_tInfo.vPos.z);
 
 	m_tInfo.matWorld = m_tInfo.matScale * m_tInfo.matTrans;

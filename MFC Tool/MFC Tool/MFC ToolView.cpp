@@ -172,6 +172,10 @@ void CMFCToolView::OnInitialUpdate()
 		CTexturMgr::GetInstance()->InsertTexture(TEXTYPE::SINGLE, L"../Texture/Event/Button.png", L"Button");
 		CTexturMgr::GetInstance()->InsertTexture(TEXTYPE::SINGLE, L"../Texture/Event/Open.png", L"Open");
 		CTexturMgr::GetInstance()->InsertTexture(TEXTYPE::SINGLE, L"../Texture/Event/Close.png", L"Close");
+
+		CTexturMgr::GetInstance()->InsertTexture(TEXTYPE::SINGLE, L"../Texture/Object/Door/Door00.png", L"Door_FORNT");
+		CTexturMgr::GetInstance()->InsertTexture(TEXTYPE::SINGLE, L"../Texture/Object/Door/Door_Left00.png", L"Door_LEFT");
+		CTexturMgr::GetInstance()->InsertTexture(TEXTYPE::SINGLE, L"../Texture/Object/Door/Door_Right00.png", L"Door_RIGHT");
 	}
 }
 
@@ -219,15 +223,20 @@ void CMFCToolView::OnRButtonDown(UINT nFlags, CPoint point)
 
 	D3DXVECTOR3 vMouse = { float(point.x + GetScrollPos(SB_HORZ)), float(point.y + GetScrollPos(SB_VERT)) , 0.f };
 
-	//오브젝트 삭제 : 미구현
-	//if (pForm->m_tObjectTool.GetSafeHwnd())
-	//	if (pForm->m_tObjectTool.IsWindowVisible())
-	//		m_Terrain->DeleteObject()
+	//오브젝트 삭제
+	if (pForm->m_tObjectTool.GetSafeHwnd())
+		if (pForm->m_tObjectTool.IsWindowVisible())
+			m_Terrain->DeleteObject(vMouse);
 
 	//충돌박스 삭제  
 	if (pForm->m_tCollTool.GetSafeHwnd())
 		if (pForm->m_tCollTool.IsWindowVisible())
 			m_Terrain->DeleteColl(vMouse);
+
+	//이벤트 삭제
+	if (pForm->m_tEventTool.GetSafeHwnd())
+		if (pForm->m_tEventTool.IsWindowVisible())
+			m_Terrain->DeleteEvent(vMouse);
 
 	CScrollView::OnRButtonDown(nFlags, point);
 }

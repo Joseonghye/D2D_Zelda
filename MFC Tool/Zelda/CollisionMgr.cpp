@@ -5,6 +5,8 @@
 #include "InteractionObj.h"
 #include "Player.h"
 #include "GameButton.h"
+#include "GameEvent.h"
+#include "Close.h"
 
 CCollisionMgr::CCollisionMgr()
 {
@@ -32,7 +34,10 @@ bool CCollisionMgr::PlayerCollision(CGameObject * pPlayer, vector<CGameObject*> 
 
 			CBoxCollider* another = static_cast<CBoxCollider*>((*iter)->GetComponent(COMPONENTID::COLLISION));
 			
-			if (another != nullptr && playerCollider->CheckCollision(another)) 
+			if (another == nullptr || !another->GetActive())
+				continue;
+
+			if (playerCollider->CheckCollision(another))
 			{
 				switch (_id)
 				{
@@ -41,31 +46,6 @@ bool CCollisionMgr::PlayerCollision(CGameObject * pPlayer, vector<CGameObject*> 
 					// hp 감소 
 
 					break;
-				case ENTER: // 맵 이동
-				{
-					if (pPlayer->GetDir() != another->GetParent()->GetDir()) break;
-					int index = 0;
-					switch (pPlayer->GetDir())
-					{
-					case FRONT:
-						index = GAMEOBJECTMGR->SetNextIndex((int)TOTAL_TILEX);
-						SCROLLMGR->SetScroll(index);
-						break;
-					case BACK:
-						index = GAMEOBJECTMGR->SetNextIndex(-((int) TOTAL_TILEX));
-						SCROLLMGR->SetScroll(index);
-						break;
-					case LEFT:
-						index = GAMEOBJECTMGR->SetNextIndex(-1);
-						SCROLLMGR->SetScroll(index);
-						break;
-					case RIGHT:
-						index = GAMEOBJECTMGR->SetNextIndex(1);
-						SCROLLMGR->SetScroll(index);
-						break;
-					}
-					break;
-				}
 				case POTAL:
 					break;
 				case INTERACTION:
@@ -83,45 +63,22 @@ bool CCollisionMgr::PlayerCollision(CGameObject * pPlayer, vector<CGameObject*> 
 
 					break;
 				}
+				case HOLE:
+					static_cast<CPlayer*>(pPlayer)->SetState(STATE::FALL);
+					//데미지
+					// 재위치
+					break;
 				case EVENT:
-					static_cast<CGameButton*>(another->GetParent())->PushButton();
-				}
-				/*
-				if (_id == WALL || _id == INTERACTION)
 				{
-					static_cast<CPlayer*>(pPlayer)->SetState(STATE::PUSH);
+					if (static_cast<CGameEvent*>(another->GetParent())->GetEventID() == (int)ENTER)
+						if (another->GetParent()->GetDir() != pPlayer->GetDir()) continue;
 
-					if (another->GetParent()->GetMove())
-					{
-						if (!static_cast<CInteractionObj*>(another->GetParent())->Pushed(pPlayer->GetDir()))
-							playerCollider->WallCollision();
-					}
-					else
-						playerCollider->WallCollision();
+					static_cast<CGameEvent*>(another->GetParent())->Using();
+					break;
 				}
-				*/
+				}
 			}
 		}
-		/*
-		for (int i = 0; i < (int)pSrc.size(); ++i)
-		{
-			CBoxCollider* another = static_cast<CBoxCollider*>(pSrc[i]->GetComponent(COMPONENTID::COLLISION));
-
-			if (another != nullptr && playerCollider->CheckCollision(another))
-			{
-				if (_id == WALL || _id == INTERACTION) 
-				{
-					static_cast<CPlayer*>(pPlayer)->SetState(STATE::PUSH);
-					if (another->GetParent()->GetMove())
-					{
-						if (!static_cast<CInteractionObj*>(another->GetParent())->Pushed(pPlayer->GetDir()))
-							playerCollider->WallCollision();
-					}
-					else
-						playerCollider->WallCollision();
-				}
-			}
-		}*/
 	}
 	return false;
 }

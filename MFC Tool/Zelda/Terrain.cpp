@@ -115,14 +115,6 @@ void Terrain::Release_GameObject()
 	m_vecRoom.swap(vector<Room>());*/
 }
 
-int Terrain::GetTileOption(D3DXVECTOR3 vPos)
-{
-	int iIndex = GetTileIndex(vPos);
-	if (iIndex == -1) return -1;
-
-	return 	m_vecRoom[m_iRoomIndex][iIndex]->dwOption;
-}
-
 HRESULT Terrain::LoadTileFile(const wstring & wstrFilePath)
 {
 	HANDLE hFile = CreateFile(wstrFilePath.c_str(), GENERIC_READ, 0, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);;
@@ -158,6 +150,16 @@ HRESULT Terrain::LoadTileFile(const wstring & wstrFilePath)
 			m_RoomIndex = RoomIndex;
 
 			m_tInfo.vPos = pTile->vPos;
+		}
+		else if (pTile->dwOption == 2)
+		{
+			CGameObject* pGameObject = CWall::Create();
+			pGameObject->SetRoomIndex(RoomIndex);
+			pGameObject->SetPos(pTile->vPos);
+			pGameObject->SetTransMat();
+			pGameObject->SetWorldMat();
+
+			GAMEOBJECTMGR->Add_GameObject(OBJID::HOLE, pGameObject);
 		}
 
 		++x;
@@ -226,26 +228,4 @@ HRESULT Terrain::LoadColliderFile(const wstring & wstrFilePath)
 
 	return S_OK;
 
-}
-
-int Terrain::GetTileIndex(D3DXVECTOR3 vPos)
-{
-	if (vPos.x < 0 || vPos.y < 0)
-		return -1;
-
-	//int y = (m_iRoomIndex / TOTAL_TILEX) - 1;
-	//int x = m_iRoomIndex % TOTAL_TILEX;
-
-	//vPos.x += x*(ROOM_TILEX*TILECX);
-	//vPos.y += y*(ROOM_TILEY*TILECY);
-
-	int iY = vPos.y / TILECY;
-	int iX = vPos.x / TILECX;
-
-	int iIndex = iX + (iY * ROOM_TILEX);
-
-	if (iIndex >= m_vecRoom[m_iRoomIndex].size())
-		return -1;
-
-	return iIndex;
 }

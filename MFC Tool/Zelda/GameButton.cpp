@@ -29,6 +29,11 @@ HRESULT CGameButton::Initialized_GameObject()
 
 int CGameButton::Update_GameObject()
 {
+	if (GAMEOBJECTMGR->isChanging())
+	{
+		D3DXMatrixTranslation(&m_tInfo.matTrans, m_tInfo.vPos.x + SCROLLMGR->GetScrollVec().x, m_tInfo.vPos.y + SCROLLMGR->GetScrollVec().y, m_tInfo.vPos.z);
+		m_tInfo.matWorld = m_tInfo.matScale * m_tInfo.matTrans;
+	}
 	return 0;
 }
 
@@ -53,21 +58,22 @@ void CGameButton::Release_GameObject()
 	m_vecComponet.swap(vector<CBaseComponent*>());
 }
 
-CGameButton * CGameButton::Create(char* str)
+CGameButton * CGameButton::Create(char* str, int id)
 {
 	CGameButton* pInstance = new CGameButton;
 	if (FAILED(pInstance->Initialized_GameObject()))
 		Safe_Delete(pInstance);
 
 	pInstance->SetStrValue(str);
+	pInstance->SetEventID(id);
 	return pInstance;
 }
 
-void CGameButton::PushButton()
+void CGameButton::Using()
 {
 	if (m_pObj) return;
 
-	if (m_strValue=="Key")
+	if (m_strValue == "Key")
 		m_pObj = CKey::Create();
 
 	m_pObj->SetRoomIndex(m_iRoomIndex);

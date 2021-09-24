@@ -3,6 +3,7 @@
 #include "HardHat.h"
 #include "Key.h"
 #include "Door.h"
+#include "Animator.h"
 
 CCheck::CCheck() :m_pObj(nullptr), m_iMonsterCount(-1){}
 
@@ -20,6 +21,12 @@ HRESULT CCheck::Initialized_GameObject()
 
 int CCheck::Update_GameObject()
 {
+	if (GAMEOBJECTMGR->isChanging())
+	{
+		D3DXMatrixTranslation(&m_tInfo.matTrans, m_tInfo.vPos.x + SCROLLMGR->GetScrollVec().x, m_tInfo.vPos.y + SCROLLMGR->GetScrollVec().y, m_tInfo.vPos.z);
+		m_tInfo.matWorld = m_tInfo.matScale * m_tInfo.matTrans;
+	}
+
 	//다 잡혔는지 확인 
 	if (m_iMonsterCount == 0) 
 	{
@@ -39,8 +46,9 @@ int CCheck::Update_GameObject()
 			vector<CGameObject*> vecInteraction = GAMEOBJECTMGR->GetObjList(INTERACTION);
 			for (auto& iter : vecInteraction)
 			{
-				if (typeid(iter) == typeid(CDoor*) && iter->GetRoomIndex() == m_iRoomIndex)
+				if (typeid(*iter) == typeid(CDoor) && iter->GetRoomIndex() == m_iRoomIndex)
 				{
+					(static_cast<CDoor*>(iter))->GetAnimator()->SetAniState(L"IDLE_OPEN", L"", 1);
 					static_cast<CDoor*>(iter)->MoveDoor(L"OPEN");
 				}
 			}
@@ -59,13 +67,14 @@ void CCheck::Release_GameObject()
 	m_pObj = nullptr;
 }
 
-CCheck * CCheck::Create(char* str)
+CCheck * CCheck::Create(char* str, int id)
 {
 	CCheck* pInstance = new CCheck;
 	if (FAILED(pInstance->Initialized_GameObject()))
 		Safe_Delete(pInstance);
 
 	pInstance->SetStrValue(str);
+	pInstance->SetEventID(id);
 	return pInstance;
 }
 

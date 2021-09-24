@@ -100,7 +100,7 @@ void CScene::CreateInteractionObj(string strName,int index, INFO * pInfo)
 	else if (int i = strName.find_last_of("Door") >= 0)
 	{
 		pGameObj = CDoor::Create();
-		string str = strName.substr(i + 1, strName.length());
+		string str = strName.substr(5, strName.length());
 		wstring wst;
 		wst.assign(str.begin(), str.end());
 
@@ -117,31 +117,18 @@ void CScene::CreateInteractionObj(string strName,int index, INFO * pInfo)
 	}
 }
 
-void CScene::CreateEnter(string strName, int index, INFO * pInfo)
-{
-	CGameObject* pGameObj = CEnter::Create();
-
-	if ("Up" == strName) {
-		pInfo->eDir = DIR::BACK;
-		pInfo->vPos.y -= 8.f;
-	}
-	else if ("Down" == strName) {
-		pInfo->eDir = DIR::FRONT;
-		pInfo->vPos.y += 8.f;
-	}else if ("Left" == strName){
-		pInfo->eDir = DIR::LEFT;
-		pInfo->vPos.x -= 8.f;
-	}else if ("Right" == strName) {
-		pInfo->eDir = DIR::RIGHT;
-		pInfo->vPos.x += 8.f;
-	}
-	pGameObj->SetRoomIndex(index);
-	pGameObj->SetInfo(*pInfo);
-	pGameObj->SetTransMat();
-	pGameObj->SetWorldMat();
-
-	GAMEOBJECTMGR->Add_GameObject(ENTER, pGameObj);
-}
+//void CScene::CreateEnter(string strName, int index, INFO * pInfo)
+//{
+//	CGameObject* pGameObj = CEnter::Create();
+//
+//	
+//	pGameObj->SetRoomIndex(index);
+//	pGameObj->SetInfo(*pInfo);
+//	pGameObj->SetTransMat();
+//	pGameObj->SetWorldMat();
+//
+//	GAMEOBJECTMGR->Add_GameObject(ENTER, pGameObj);
+//}
 
 void CScene::LoadGameObject(const wstring & wstrFilePath)
 {
@@ -205,9 +192,9 @@ void CScene::LoadGameObject(const wstring & wstrFilePath)
 			case INTERACTION:
 				CreateInteractionObj(str, iRoomIndex, pInfo);
 				break;
-			case ENTER:
-				CreateEnter(str, iRoomIndex, pInfo);
-				break;
+			//case ENTER:
+			//	CreateEnter(str, iRoomIndex, pInfo);
+			//	break;
 			}
 		}
 		else
@@ -277,7 +264,7 @@ void CScene::LoadEvent(const wstring & wstrFilePath)
 		switch (iEventID)
 		{
 		case EVENT::BUTTON:
-			pGameObj = CGameButton::Create(pStr);
+			pGameObj = CGameButton::Create(pStr, iEventID);
 			pGameObj->SetRoomIndex(iRoomIndex);
 
 			pGameObj->SetPos(vPos);
@@ -285,7 +272,7 @@ void CScene::LoadEvent(const wstring & wstrFilePath)
 			pGameObj->SetWorldMat();
 			break;
 		case EVENT::CHECK:
-			pGameObj = CCheck::Create(pStr);
+			pGameObj = CCheck::Create(pStr, iEventID);
 			pGameObj->SetRoomIndex(iRoomIndex);
 			static_cast<CCheck*>(pGameObj)->SetMonsterCount();
 			pGameObj->SetPos(vPos);
@@ -293,13 +280,17 @@ void CScene::LoadEvent(const wstring & wstrFilePath)
 		case EVENT::OPEN:
 			break;
 		case EVENT::CLOSE:
-			pGameObj = CClose::Create();
+			pGameObj = CClose::Create(iEventID);
 			pGameObj->SetRoomIndex(iRoomIndex);
 			pGameObj->SetPos(vPos);
 			pGameObj->SetTransMat();
 			pGameObj->SetWorldMat();
-			static_cast<CClose*>(pGameObj)->CloseDoor();
 			break;
+		case ENTER:
+			pGameObj = CEnter::Create(vPos,pStr,iEventID);
+			pGameObj->SetRoomIndex(iRoomIndex);
+			pGameObj->SetTransMat();
+			pGameObj->SetWorldMat();
 		}
 
 		GAMEOBJECTMGR->Add_GameObject(EVENT, pGameObj);

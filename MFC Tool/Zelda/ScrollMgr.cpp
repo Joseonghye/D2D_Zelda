@@ -23,7 +23,7 @@ bool CScrollMgr::ChangeScroll()
 
 	D3DXVec3Normalize(&dir, &dir);
 
-	m_vScroll += (dir * 128 * TIMEMGR->Get_DeltaTime());
+	m_vScroll += (dir * 256 * TIMEMGR->Get_DeltaTime());//(dir * 128 * TIMEMGR->Get_DeltaTime());
 
 	return false;
 }

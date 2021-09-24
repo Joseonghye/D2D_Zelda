@@ -49,11 +49,59 @@ void CEnter::Release_GameObject()
 	m_vecComponet.clear();
 }
 
-CEnter* CEnter::Create()
+CEnter* CEnter::Create(D3DXVECTOR3 vPos, string str,int ID)
 {
 	CEnter* pInstance = new CEnter;
 	if (FAILED(pInstance->Initialized_GameObject()))
 		Safe_Delete(pInstance);
 
+	pInstance->SetPos(vPos);
+	pInstance->SetDir(str);
+	pInstance->SetEventID(ID);
+
 	return pInstance;
+}
+
+void CEnter::SetDir(string str)
+{
+	if ("Up" == str) {
+		m_tInfo.eDir = DIR::BACK;
+		m_tInfo.vPos.y -= 8.f;
+	}
+	else if ("Down" == str) {
+		m_tInfo.eDir = DIR::FRONT;
+		m_tInfo.vPos.y += 8.f;
+	}
+	else if ("Left" == str) {
+		m_tInfo.eDir = DIR::LEFT;
+		m_tInfo.vPos.x -= 8.f;
+	}
+	else if ("Right" == str) {
+		m_tInfo.eDir = DIR::RIGHT;
+		m_tInfo.vPos.x += 8.f;
+	}
+}
+
+void CEnter::Using()
+{
+	int index = 0;
+	switch (m_tInfo.eDir)
+	{
+	case FRONT:
+		index = GAMEOBJECTMGR->SetNextIndex((int)TOTAL_TILEX);
+		SCROLLMGR->SetScroll(index);
+		break;
+	case BACK:
+		index = GAMEOBJECTMGR->SetNextIndex(-((int)TOTAL_TILEX));
+		SCROLLMGR->SetScroll(index);
+		break;
+	case LEFT:
+		index = GAMEOBJECTMGR->SetNextIndex(-1);
+		SCROLLMGR->SetScroll(index);
+		break;
+	case RIGHT:
+		index = GAMEOBJECTMGR->SetNextIndex(1);
+		SCROLLMGR->SetScroll(index);
+		break;
+	}
 }

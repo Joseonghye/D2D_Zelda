@@ -160,6 +160,7 @@
     <ClInclude Include="Equipment.h" />
     <ClInclude Include="FrameMgr.h" />
     <ClInclude Include="GameButton.h" />
+    <ClInclude Include="GameEvent.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameObjectMgr.h" />
     <ClInclude Include="GameScene.h" />

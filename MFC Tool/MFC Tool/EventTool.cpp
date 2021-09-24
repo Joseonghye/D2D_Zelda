@@ -39,6 +39,7 @@ BOOL CEventTool::OnInitDialog()
 	m_tComboBox.AddString(L"Check");
 	m_tComboBox.AddString(L"Open");
 	m_tComboBox.AddString(L"Close");
+	m_tComboBox.AddString(L"Enter");
 
 	return TRUE;  // return TRUE unless you set the focus to a control
 				  // 예외: OCX 속성 페이지는 FALSE를 반환해야 합니다.

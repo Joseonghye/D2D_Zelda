@@ -2,10 +2,9 @@
 #ifndef __GAMEBUTTON_H__
 #define __GAMEBUTTON_H__
 
-#include "GameObject.h"
+#include "GameEvent.h"
 class CBoxCollider;
-class CGameButton :
-	public CGameObject
+class CGameButton : public CGameEvent
 {
 public:
 	CGameButton();
@@ -18,10 +17,11 @@ public:
 	virtual void Render_GameObject() override;
 	virtual void Release_GameObject() override;
 
-	void SetStrValue(char* str) { m_strValue= str; }
-	static CGameButton* Create(char* str);
-
-	void PushButton();
+	virtual void Using() override;
+	
+public:
+	static CGameButton* Create(char* str,int id);
+	void SetStrValue(char* str) { m_strValue = str; }
 
 private:
 	CGameObject* m_pObj;

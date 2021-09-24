@@ -21,13 +21,9 @@ public:
 	virtual void Render_GameObject() override;
 	virtual void Release_GameObject() override;
 
-	int GetTileOption(D3DXVECTOR3 vPos);
-
 private:
 	HRESULT LoadTileFile(const wstring & wstrFilePath);
 	HRESULT LoadColliderFile(const wstring & wstrFilePath);
-
-	int GetTileIndex(D3DXVECTOR3 vPos);
 
 private:
 	int m_RoomIndex;

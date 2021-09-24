@@ -24,7 +24,12 @@ HRESULT CKey::Initialized_GameObject()
 
 int CKey::Update_GameObject()
 {
-	return 0;
+	if (GAMEOBJECTMGR->isChanging())
+	{
+		D3DXMatrixTranslation(&m_tInfo.matTrans, m_tInfo.vPos.x + SCROLLMGR->GetScrollVec().x, m_tInfo.vPos.y + SCROLLMGR->GetScrollVec().y, m_tInfo.vPos.z);
+		m_tInfo.matWorld = m_tInfo.matScale * m_tInfo.matTrans;
+	}
+	return NO_EVENT;
 }
 
 void CKey::LateUpdate_GameObject()

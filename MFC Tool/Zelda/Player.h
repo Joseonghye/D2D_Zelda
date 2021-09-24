@@ -26,6 +26,7 @@ public:
 
 private:
 	void Attack();
+	void Defense();
 	void ChangeState();
 
 private:

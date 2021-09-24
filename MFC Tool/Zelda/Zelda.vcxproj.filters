@@ -104,9 +104,6 @@
     <Filter Include="98. Manager\ScrollMgr">
       <UniqueIdentifier>{9b823732-e9f1-41b6-ad11-18c0c5a50d6e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. Game Object\Enter">
-      <UniqueIdentifier>{f007389e-8a82-4e08-b1a9-7920e30ec6ca}</UniqueIdentifier>
-    </Filter>
     <Filter Include="01. Game Object\Equipment\Key">
       <UniqueIdentifier>{086e1d4f-64ad-4d44-b8f6-1f30f25092f7}</UniqueIdentifier>
     </Filter>
@@ -127,6 +124,12 @@
     </Filter>
     <Filter Include="01. Game Object\Event\Close">
       <UniqueIdentifier>{3811f412-7f6c-4b95-ba4d-4d0f3f3adac8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Game Object\Event\Enter">
+      <UniqueIdentifier>{f007389e-8a82-4e08-b1a9-7920e30ec6ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Game Object\Equipment\Shield">
+      <UniqueIdentifier>{15c88488-c47e-4bcc-8a87-8ba5eb5618a7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -225,7 +228,7 @@
       <Filter>98. Manager\ScrollMgr</Filter>
     </ClInclude>
     <ClInclude Include="Enter.h">
-      <Filter>01. Game Object\Enter</Filter>
+      <Filter>01. Game Object\Event\Enter</Filter>
     </ClInclude>
     <ClInclude Include="Key.h">
       <Filter>01. Game Object\Equipment\Key</Filter>
@@ -247,6 +250,9 @@
     </ClInclude>
     <ClInclude Include="Close.h">
       <Filter>01. Game Object\Event\Close</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEvent.h">
+      <Filter>01. Game Object\Event</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -336,7 +342,7 @@
       <Filter>98. Manager\ScrollMgr</Filter>
     </ClCompile>
     <ClCompile Include="Enter.cpp">
-      <Filter>01. Game Object\Enter</Filter>
+      <Filter>01. Game Object\Event\Enter</Filter>
     </ClCompile>
     <ClCompile Include="Key.cpp">
       <Filter>01. Game Object\Equipment\Key</Filter>

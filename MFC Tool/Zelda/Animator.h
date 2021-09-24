@@ -4,7 +4,7 @@ class CAnimator :
 	public CBaseComponent
 {
 public:
-	CAnimator(CGameObject* owner, const wstring& wstrObjectKey, wstring wstrState, wstring wstrdir = L"FRONT", float fEndFrame = 1);
+	CAnimator(CGameObject* owner, const wstring& wstrObjectKey, wstring wstrState, wstring wstrdir = L"FRONT", float fEndFrame = 1, float fSpeed = 5);
 	virtual ~CAnimator();
 
 	// CBaseComponent을(를) 통해 상속됨
@@ -15,8 +15,10 @@ public:
 
 	void Update_Animation();
 
-	void SetAniState(const wstring& wstrState, wstring wstrdir, float fEndFrame);
-	void AniPlayOnce(const wstring& wstrState, wstring wstrdir, float fEndFrame);
+	void SetAniState(const wstring& wstrState, wstring wstrdir, float fEndFrame, float fSpeed = 5);
+	void AniPlayOnce(const wstring& wstrState, wstring wstrdir, float fEndFrame, float fSpeed = 5);
+
+	bool GatPlayOnce() { return m_bOnce; }
 //	void ChangeAnimation();
 	//void SetAniSpeed(float fSpeed);
 private:
@@ -29,6 +31,8 @@ private:
 
 	float m_fFrame;
 	float m_fEndFrame;
+
+	float m_fSpeed;
 	
 	bool m_bOnce;
 

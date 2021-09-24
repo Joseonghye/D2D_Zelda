@@ -1,9 +1,9 @@
 #include "stdafx.h"
 #include "Animator.h"
 
-CAnimator::CAnimator(CGameObject* owner, const wstring & wstrObjectKey, wstring wstrState, wstring wstrdir,float fEndFrame)
+CAnimator::CAnimator(CGameObject* owner, const wstring & wstrObjectKey, wstring wstrState, wstring wstrdir, float fEndFrame, float fSpeed)
 	:CBaseComponent(owner, COMPONENTID::ANIMATOR),
-	m_wstrObjectKey(wstrObjectKey)
+	m_wstrObjectKey(wstrObjectKey), m_fSpeed(fSpeed)
 {
 	m_bOnce = false;
 
@@ -47,7 +47,7 @@ void CAnimator::Release_Component()
 
 void CAnimator::Update_Animation()
 {
-	m_fFrame += m_fEndFrame * TIMEMGR->Get_DeltaTime() * 5;
+	m_fFrame += m_fEndFrame * TIMEMGR->Get_DeltaTime() *m_fSpeed;
 	if (m_fFrame >= m_fEndFrame) 
 	{
 		m_fFrame = 0;
@@ -60,7 +60,7 @@ void CAnimator::Update_Animation()
 	}
 }
 
-void CAnimator::SetAniState(const wstring& wstrState, wstring wstrdir,float fEndFrame)
+void CAnimator::SetAniState(const wstring& wstrState, wstring wstrdir,float fEndFrame, float fSpeed)
 {
 	if (fEndFrame != -1)
 	{
@@ -77,10 +77,10 @@ void CAnimator::SetAniState(const wstring& wstrState, wstring wstrdir,float fEnd
 
 	m_wstrStateKey += L"_" + m_wstrDir;
 	m_fFrame = 0;
-
+	m_fSpeed = fSpeed;
 }
 
-void CAnimator::AniPlayOnce(const wstring & wstrState, wstring wstrdir, float fEndFrame)
+void CAnimator::AniPlayOnce(const wstring & wstrState, wstring wstrdir, float fEndFrame, float fSpeed)
 {
 	m_bOnce = true;
 	m_wstrOnceStateKey = m_wstrStateKey;
@@ -100,6 +100,7 @@ void CAnimator::AniPlayOnce(const wstring & wstrState, wstring wstrdir, float fE
 	}
 	m_wstrStateKey += L"_" + m_wstrDir;
 	m_fFrame = 0;
+	m_fSpeed = fSpeed;
 }
 
 

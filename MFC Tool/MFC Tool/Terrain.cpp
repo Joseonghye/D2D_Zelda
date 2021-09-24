@@ -180,6 +180,9 @@ void Terrain::RenderEvent()
 		case EVENT::CLOSE:
 			name = L"Close";
 			break;
+		case EVENT::ENTER:
+			name.assign(iter.second->strValue.begin(), iter.second->strValue.end());
+			break;
 		}
 		const TEXINFO* pTexInfo = CTexturMgr::GetInstance()->getTexture(name);
 		if (nullptr == pTexInfo)

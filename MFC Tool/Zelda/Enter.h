@@ -1,9 +1,9 @@
 #pragma once
 #ifndef __ENTER_H__
 #define __ENTER_H__
-#include "GameObject.h"
+#include "GameEvent.h"
 
-class CEnter : public CGameObject
+class CEnter : public CGameEvent
 {
 public:
 	CEnter();
@@ -16,8 +16,12 @@ public:
 	virtual void Render_GameObject() override;
 	virtual void Release_GameObject() override;
 
+	virtual void Using();
 public:
-	static CEnter* Create();
+	static CEnter* Create(D3DXVECTOR3 vPos,string str,int ID);
+	
+	void SetDir(string str);
+
 };
 
 #endif // !__ENTER_H__

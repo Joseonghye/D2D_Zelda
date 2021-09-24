@@ -21,12 +21,18 @@ HRESULT CDoor::Initialized_GameObject()
 	D3DXMatrixScaling(&m_tInfo.matScale, 1.f, 1.f, 1.f);
 
 	m_Collider = static_cast<CBoxCollider*>(AddComponent(new CBoxCollider(this, m_tInfo.vSize.x, m_tInfo.vSize.y)));
+	m_Collider->SetActive(false);
 //	
 	return S_OK;
 }
 
 int CDoor::Update_GameObject()
 {
+	if (GAMEOBJECTMGR->isChanging())
+	{
+		D3DXMatrixTranslation(&m_tInfo.matTrans, m_tInfo.vPos.x + SCROLLMGR->GetScrollVec().x, m_tInfo.vPos.y + SCROLLMGR->GetScrollVec().y, m_tInfo.vPos.z);
+		m_tInfo.matWorld = m_tInfo.matScale * m_tInfo.matTrans;
+	}
 	return 0;
 }
 
@@ -78,6 +84,14 @@ void CDoor::SetDir(wstring _wstr)
 
 void CDoor::MoveDoor(const wstring& wstrState)
 {
+	if (wstrState == L"OPEN")
+	{
+		//Ãæµ¹ »ç¶óÁü 
+		m_Collider->SetActive(false);
+	}
+	else
+		m_Collider->SetActive(true);
+
 	wstring wstrStateKey = wstrState;
-	m_Animator->AniPlayOnce(wstrStateKey,L"",3);
+	m_Animator->AniPlayOnce(wstrStateKey,L"",3,3);
 }

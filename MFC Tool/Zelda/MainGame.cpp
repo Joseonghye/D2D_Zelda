@@ -58,7 +58,13 @@ HRESULT CMainGame::Initialized()
 		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Player/Push/Link_Push_Right0%d.png", L"Player", L"PUSH_RIGHT", 2)))
 			return E_FAIL;
 
-		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Player/Fall/Fall0%d.png", L"Player", L"Fall", 3)))
+		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Player/Fall/Fall0%d.png", L"Player", L"FALL_FRONT", 3)))
+			return E_FAIL;
+		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Player/Fall/Fall0%d.png", L"Player", L"FALL_LEFT", 3)))
+			return E_FAIL;
+		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Player/Fall/Fall0%d.png", L"Player", L"FALL_RIGHT", 3)))
+			return E_FAIL;
+		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Player/Fall/Fall0%d.png", L"Player", L"FALL_BACK", 3)))
 			return E_FAIL;
 
 		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Player/Damaged/Damaged0%d.png", L"Player", L"DAMAGED_FRONT",4)))
@@ -78,31 +84,31 @@ HRESULT CMainGame::Initialized()
 		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::SINGLE, L"../Texture/Event/Button.png", L"Button")))
 			return E_FAIL;
 
-		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::SINGLE, L"../Texture/Object/Door/Door00.png", L"DOOR",L"IDLE_OPEN_FRONT")))
+		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Object/Door/Door_Close00.png", L"DOOR",L"IDLE_OPEN_FRONT",1)))
 			return E_FAIL;
 		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Object/Door/Door0%d.png", L"DOOR", L"OPEN_FRONT", 3)))
 			return E_FAIL;
-		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::SINGLE, L"../Texture/Object/Door/Door_Left00.png", L"DOOR", L"IDLE_OPEN_LEFT")))
+		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Object/Door/Door_Close_Left00.png", L"DOOR", L"IDLE_OPEN_LEFT", 1)))
 			return E_FAIL;
 		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Object/Door/Door_Left0%d.png", L"DOOR", L"OPEN_LEFT", 3)))
 			return E_FAIL;
-		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::SINGLE, L"../Texture/Object/Door/Door_Right00.png", L"DOOR", L"IDLE_OPEN_RIGHT")))
+		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Object/Door/Door_Close_Right00.png", L"DOOR", L"IDLE_OPEN_RIGHT", 1)))
 			return E_FAIL;
 		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Object/Door/Door_Right0%d.png", L"DOOR", L"OPEN_RIGHT", 3)))
 			return E_FAIL;
 
 
-		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::SINGLE, L"../Texture/Object/Door/Door_CLOSE00.png", L"DOOR", L"IDLE_CLOSE_FRONT")))
+		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Object/Door/Door00.png", L"DOOR", L"IDLE_CLOSE_FRONT", 1)))
 			return E_FAIL;
-		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Object/Door/Door_CLOSE0%d.png", L"DOOR", L"CLOSE_FRONT", 3)))
+		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Object/Door/Door_Close0%d.png", L"DOOR", L"CLOSE_FRONT", 3)))
 			return E_FAIL;
-		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::SINGLE, L"../Texture/Object/Door/Door_CLOSE_Left00.png", L"DOOR", L"IDLE_CLOSE_LEFT")))
+		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Object/Door/Door_Left00.png", L"DOOR", L"IDLE_CLOSE_LEFT", 1)))
 			return E_FAIL;
-		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Object/Door/Door_CLOSE_Left0%d.png", L"DOOR", L"CLOSE_LEFT", 3)))
+		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Object/Door/Door_Close_Left0%d.png", L"DOOR", L"CLOSE_LEFT", 3)))
 			return E_FAIL;
-		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::SINGLE, L"../Texture/Object/Door/Door_CLOSE_Right00.png", L"DOOR", L"IDLE_CLOSE_RIGHT")))
+		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Object/Door/Door_Right00.png", L"DOOR", L"IDLE_CLOSE_RIGHT", 1)))
 			return E_FAIL;
-		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Object/Door/Door_CLOSE_Right0%d.png", L"DOOR", L"CLOSE_RIGHT", 3)))
+		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Object/Door/Door_Close_Right0%d.png", L"DOOR", L"CLOSE_RIGHT", 3)))
 			return E_FAIL;
 	}
 

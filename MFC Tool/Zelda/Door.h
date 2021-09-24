@@ -26,7 +26,7 @@ public:
 	CAnimator* GetAnimator() { return m_Animator; }
 private:
 	virtual void Damaged() override {}
-	virtual bool Pushed(DIR _dir) override {}
+	virtual bool Pushed(DIR _dir) override { return false; }
 
 private:
 	CAnimator* m_Animator;

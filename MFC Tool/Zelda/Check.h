@@ -2,10 +2,10 @@
 #ifndef __CHECK_H__
 #define __CHECK_H__
 
-#include "GameObject.h"
+#include "GameEvent.h"
 #include "Observer.h"
 
-class CCheck :  public CGameObject , public CObserver
+class CCheck :  public CGameEvent, public CObserver
 {
 public:
 	CCheck();
@@ -18,8 +18,10 @@ public:
 	virtual void Render_GameObject() override;
 	virtual void Release_GameObject() override;
 
+	// CGameEvent을(를) 통해 상속됨
+	virtual void Using() override {}
 public:
-	static CCheck* Create(char* str);
+	static CCheck* Create(char* str,int id);
 
 public:
 	virtual void OnNotify()override;
@@ -30,6 +32,8 @@ private:
 	int m_iMonsterCount;
 	string m_strValue;
 	CGameObject* m_pObj;
+
+	
 };
 
 #endif // !__CHECK_H__
