@@ -177,6 +177,7 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneMgr.h" />
     <ClInclude Include="ScrollMgr.h" />
+    <ClInclude Include="Shield.h" />
     <ClInclude Include="SingTexture.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Subject.h" />
@@ -199,7 +200,6 @@
     <ClCompile Include="CollisionMgr.cpp" />
     <ClCompile Include="Door.cpp" />
     <ClCompile Include="Enter.cpp" />
-    <ClCompile Include="Equipment.cpp" />
     <ClCompile Include="FrameMgr.cpp" />
     <ClCompile Include="GameButton.cpp" />
     <ClCompile Include="GameObject.cpp" />
@@ -216,6 +216,7 @@
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneMgr.cpp" />
     <ClCompile Include="ScrollMgr.cpp" />
+    <ClCompile Include="Shield.cpp" />
     <ClCompile Include="SingTexture.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

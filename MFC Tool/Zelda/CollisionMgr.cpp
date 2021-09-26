@@ -41,11 +41,19 @@ bool CCollisionMgr::PlayerCollision(CGameObject * pPlayer, vector<CGameObject*> 
 			{
 				switch (_id)
 				{
-				case MONSTER:
-					static_cast<CPlayer*>(pPlayer)->SetState(STATE::DAMAGED);
-					// hp 감소 
-
+				case MONSTER: {
+					CGameObject* monster = another->GetParent();
+					if (static_cast<CPlayer*>(pPlayer)->Defense(monster->GetPos(), monster->GetVecDir()))
+					{
+						//적밀림	
+					}
+					else {
+					//	static_cast<CPlayer*>(pPlayer)->SetState(STATE::DAMAGED);
+						// hp 감소 
+					}
+					monster = nullptr;
 					break;
+				}  
 				case POTAL:
 					break;
 				case INTERACTION:

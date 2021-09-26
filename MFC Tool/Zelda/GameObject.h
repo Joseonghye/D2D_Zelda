@@ -50,6 +50,7 @@ public:
 	const D3DXMATRIX& GetWorldMat() { return m_tInfo.matWorld; }
 	//const D3DXVECTOR3& GetDir() { return m_tInfo.vDir; }
 	const int GetRoomIndex() { return m_iRoomIndex; }
+	const D3DXVECTOR3& GetVecDir() { return m_tInfo.vDir; }
 	DIR GetDir() { return m_tInfo.eDir; }
 
 	const bool& const GetVisible() { return m_bVisible; }

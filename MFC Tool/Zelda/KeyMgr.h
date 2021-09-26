@@ -14,6 +14,8 @@
 #define KEY_UP		0x00000020
 #define KEY_DOWN	0x00000040
 
+#define KEY_CTRL	0x00000080
+
 class CKeyMgr: public CSingleTon<CKeyMgr>
 {
 	friend CSingleTon;

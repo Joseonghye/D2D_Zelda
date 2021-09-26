@@ -3,6 +3,7 @@
 
 class CBoxCollider;
 class CAnimator;
+class CEquipment;
 class CPlayer :
 	public CGameObject
 {
@@ -23,10 +24,10 @@ public:
 
 	void SetStartPos(D3DXVECTOR3 vPos) { m_tInfo.vPos = vPos; }
 	void SetState(STATE eState) { m_eNextState = eState; ChangeState(); }
+	bool Defense(D3DXVECTOR3 vPos, D3DXVECTOR3 vMonDir);
 
 private:
 	void Attack();
-	void Defense();
 	void ChangeState();
 
 private:
@@ -34,7 +35,11 @@ private:
 	CBoxCollider* m_Collider;
 	CAnimator* m_Animator;
 
-	CGameObject* m_pItem;
+	CEquipment* m_pItem[2];
+
+	bool m_bDefense;
+	bool m_bPush;
+	DWORD m_dwPushTime;
 
 	DIR m_eCurDir;
 	DIR m_eNextDir;

@@ -50,9 +50,6 @@
     <Filter Include="01. Game Object\Terrain">
       <UniqueIdentifier>{5e57a3a8-44e0-46b1-9101-6ffbe5848457}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. Game Object\Player">
-      <UniqueIdentifier>{cba603d9-b89f-4a2a-9713-3f03558dcb88}</UniqueIdentifier>
-    </Filter>
     <Filter Include="98. Manager\KeyMgr">
       <UniqueIdentifier>{e4d2042b-9920-4723-9017-97dbc6680190}</UniqueIdentifier>
     </Filter>
@@ -131,6 +128,9 @@
     <Filter Include="01. Game Object\Equipment\Shield">
       <UniqueIdentifier>{15c88488-c47e-4bcc-8a87-8ba5eb5618a7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Game Object\01. Player">
+      <UniqueIdentifier>{cba603d9-b89f-4a2a-9713-3f03558dcb88}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Zelda.h">
@@ -180,7 +180,7 @@
       <Filter>98. Manager\KeyMgr</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
-      <Filter>01. Game Object\Player</Filter>
+      <Filter>01. Game Object\01. Player</Filter>
     </ClInclude>
     <ClInclude Include="BaseComponent.h">
       <Filter>97.Componet</Filter>
@@ -254,6 +254,7 @@
     <ClInclude Include="GameEvent.h">
       <Filter>01. Game Object\Event</Filter>
     </ClInclude>
+    <ClInclude Include="Shield.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -300,7 +301,7 @@
       <Filter>98. Manager\KeyMgr</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
-      <Filter>01. Game Object\Player</Filter>
+      <Filter>01. Game Object\01. Player</Filter>
     </ClCompile>
     <ClCompile Include="BoxCollider.cpp">
       <Filter>97.Componet\BoxCollider</Filter>
@@ -325,9 +326,6 @@
     </ClCompile>
     <ClCompile Include="CollisionMgr.cpp">
       <Filter>98. Manager\CollisionMgr</Filter>
-    </ClCompile>
-    <ClCompile Include="Equipment.cpp">
-      <Filter>01. Game Object\Equipment</Filter>
     </ClCompile>
     <ClCompile Include="Weed.cpp">
       <Filter>01. Game Object\Interaction\Weed</Filter>
@@ -359,6 +357,7 @@
     <ClCompile Include="Close.cpp">
       <Filter>01. Game Object\Event\Close</Filter>
     </ClCompile>
+    <ClCompile Include="Shield.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Zelda.rc">

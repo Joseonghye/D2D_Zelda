@@ -47,6 +47,27 @@ HRESULT CMainGame::Initialized()
 			return E_FAIL;
 		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Player/Attak/Link_Attack_Left0%d.png", L"Player", L"ATTACK_LEFT", 3)))
 			return E_FAIL;
+		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Player/Attak/Link_Attack_Right0%d.png", L"Player", L"ATTACK_RIGHT", 3)))
+			return E_FAIL;
+
+		//Shield
+		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Player/Shield/Shield0%d.png", L"Player", L"WALK_SHIELD_FRONT", 2)))
+			return E_FAIL;
+		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Player/Shield/Shield_Back0%d.png", L"Player", L"WALK_SHIELD_BACK", 2)))
+			return E_FAIL;
+		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Player/Shield/Shield_Left0%d.png", L"Player", L"WALK_SHIELD_LEFT", 2)))
+			return E_FAIL;
+		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Player/Shield/Shield_Right0%d.png", L"Player", L"WALK_SHIELD_RIGHT", 2)))
+			return E_FAIL;
+
+		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Player/Shield/Shield00.png", L"Player", L"IDLE_SHIELD_FRONT", 1)))
+			return E_FAIL;
+		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Player/Shield/Shield_Back00.png", L"Player", L"IDLE_SHIELD_BACK", 1)))
+			return E_FAIL;
+		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Player/Shield/Shield_Left00.png", L"Player", L"IDLE_SHIELD_LEFT", 1)))
+			return E_FAIL;
+		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Player/Shield/Shield_Right00.png", L"Player", L"IDLE_SHIELD_RIGHT", 1)))
+			return E_FAIL;
 
 		//Push
 		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Player/Push/Link_Push0%d.png", L"Player", L"PUSH_FRONT", 2)))

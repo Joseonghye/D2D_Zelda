@@ -5,23 +5,18 @@ class CBoxCollider;
 class CEquipment : public CGameObject
 {
 public:
-	CEquipment();
-	~CEquipment();
-
-public:
-	// CGameObject을(를) 통해 상속됨
-	virtual HRESULT Initialized_GameObject() override;
-	virtual int Update_GameObject() override;
-	virtual void LateUpdate_GameObject() override;
-	virtual void Render_GameObject() override;
-	virtual void Release_GameObject() override;
+	CEquipment() {};
+	virtual ~CEquipment() {};
 
 public:
 	void SetPlayer(CGameObject* player) { m_pPlayer = player; }
-	virtual void StartUsing(DIR _dir) {};
+	virtual void StartUsing(DIR _dir) = 0;
+	
+	void SetUse(bool bUse) { m_bUse = bUse; }
+	bool isUsing() { return m_bUse; }
 	
 protected:
-	virtual void Using() {};
+	virtual void Using() = 0;
 
 protected:
 	CGameObject* m_pPlayer;

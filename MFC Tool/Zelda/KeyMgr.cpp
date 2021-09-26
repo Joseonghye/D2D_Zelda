@@ -33,6 +33,9 @@ void CKeyMgr::Update_KeyMgr()
 
 	if (GetAsyncKeyState(VK_DOWN) & 0x8000)
 		m_dwKey |= KEY_DOWN;
+
+	if (GetAsyncKeyState(VK_CONTROL) & 0x8000)
+		m_dwKey |= KEY_CTRL;
 }
 
 bool CKeyMgr::Key_Up(DWORD dwKey)
