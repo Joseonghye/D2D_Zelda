@@ -35,10 +35,6 @@ int CWeed::Update_GameObject()
 	return NO_EVENT;
 }
 
-void CWeed::LateUpdate_GameObject()
-{
-}
-
 void CWeed::Render_GameObject()
 {
 	const TEXINFO* pTexInfo = TEXTUREMGR->GetTexture(L"Weed");
@@ -47,13 +43,6 @@ void CWeed::Render_GameObject()
 
 	GRAPHICDEVICE->GetSprite()->SetTransform(&m_tInfo.matWorld);
 	GRAPHICDEVICE->GetSprite()->Draw(pTexInfo->pTexture, nullptr, &pTexInfo->tCenter, nullptr, D3DCOLOR_ARGB(255, 255, 255, 255));
-
-}
-
-void CWeed::Release_GameObject()
-{
-	for_each(m_vecComponet.begin(), m_vecComponet.end(), Safe_Delete<CBaseComponent*>);
-	m_vecComponet.clear();
 }
 
 void CWeed::Damaged()

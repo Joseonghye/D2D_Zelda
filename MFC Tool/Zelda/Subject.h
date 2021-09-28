@@ -2,6 +2,8 @@
 #ifndef __SUBJECT_H__
 #define __SUBJECT_H__
 
+#include "Observer.h"
+
 class CObserver;
 class CSubject
 {
@@ -13,6 +15,8 @@ public:
 	virtual void RemoveObserver() = 0;
 	virtual void NotifyObserver() = 0;
 
+protected:
+	CObserver* m_pObserver;
 };
 
 #endif // !__SUBJECT_H__

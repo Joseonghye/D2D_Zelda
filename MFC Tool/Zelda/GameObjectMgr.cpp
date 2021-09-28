@@ -21,6 +21,10 @@ void CGameObjectMgr::Update_GameObjectMgr()
 			m_bChange = false;
 		}
 
+	CollisionMgr.MonsterCollision(m_ObjList[OBJID::MONSTER], m_ObjList[OBJID::WALL], WALL, m_iRoomIndex, m_iNextIndex);
+	CollisionMgr.MonsterCollision(m_ObjList[OBJID::MONSTER], m_ObjList[OBJID::HOLE], HOLE, m_iRoomIndex, m_iNextIndex);
+
+
 	for (int i = 0; i < OBJID::OBJID_END; ++i)
 	{
 		if (i > OBJID::PLAYER) 
@@ -102,6 +106,8 @@ void CGameObjectMgr::Release_GameObjectMgr()
 void CGameObjectMgr::Add_GameObject(OBJID eID, CGameObject * pGameObject)
 {
 	if (pGameObject == nullptr) return;
+	if (eID == OBJID::PLAYER)
+		UIMgr.SetPlayer(pGameObject);
 
 	m_ObjList[eID].emplace_back(pGameObject);
 	//m_ObjList[eID].emplace_back(pGameObject);

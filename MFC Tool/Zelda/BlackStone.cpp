@@ -54,10 +54,6 @@ int CBlackStone::Update_GameObject()
 	return 0;
 }
 
-void CBlackStone::LateUpdate_GameObject()
-{
-}
-
 void CBlackStone::Render_GameObject()
 {
 	const TEXINFO* pTexInfo = TEXTUREMGR->GetTexture(L"BALCKSTONE");
@@ -67,16 +63,6 @@ void CBlackStone::Render_GameObject()
 	GRAPHICDEVICE->GetSprite()->SetTransform(&m_tInfo.matWorld);
 	GRAPHICDEVICE->GetSprite()->Draw(pTexInfo->pTexture, nullptr, &pTexInfo->tCenter, nullptr, D3DCOLOR_ARGB(255, 255, 255, 255));
 
-}
-
-void CBlackStone::Release_GameObject()
-{
-	for_each(m_vecComponet.begin(), m_vecComponet.end(), Safe_Delete<CBaseComponent*>);
-	m_vecComponet.clear();
-}
-
-void CBlackStone::Damaged()
-{
 }
 
 bool CBlackStone::Pushed(DIR _dir)

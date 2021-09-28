@@ -15,10 +15,14 @@ CHardHat::~CHardHat()
 
 HRESULT CHardHat::Initialized_GameObject()
 {
+	m_iHp = 1;
+	m_iTotalHp = 1;
+	m_iAtt = 1;
+
 	m_fSpeed = 20.0f;
 	m_tInfo.vSize = D3DXVECTOR3(32.f,32.f, 0);
-
 	D3DXMatrixScaling(&m_tInfo.matScale, 1.f, 1.f, 1.f);
+
 	m_pTarget = GAMEOBJECTMGR->GetPlayer();
 
 	AddComponent(new CBoxCollider(this, m_tInfo.vSize.x, m_tInfo.vSize.y));
@@ -35,10 +39,19 @@ int CHardHat::Update_GameObject()
 		return DEAD;
 	}
 
-	m_tInfo.vDir = (m_pTarget->GetPos() - m_tInfo.vPos);
-	D3DXVec3Normalize(&m_tInfo.vDir, &m_tInfo.vDir);
+	if (m_bPushed)
+	{
+		m_tInfo.vPos += (-m_tInfo.vDir) * (m_fSpeed * 10) * TIMEMGR->Get_DeltaTime();
+		m_dwPushTime++;
+		if (m_dwPushTime >= 40) {
+			m_bPushed = false;
+			m_dwPushTime = 0;
+		}
+	}
 
-	m_tInfo.vPos += (m_tInfo.vDir * m_fSpeed * TIMEMGR->Get_DeltaTime());
+	else
+		Attack();
+
 	D3DXMatrixTranslation(&m_tInfo.matTrans, m_tInfo.vPos.x + SCROLLMGR->GetScrollVec().x , m_tInfo.vPos.y + SCROLLMGR->GetScrollVec().y, m_tInfo.vPos.z);
 
 	m_tInfo.matWorld = m_tInfo.matScale * m_tInfo.matTrans;
@@ -46,21 +59,6 @@ int CHardHat::Update_GameObject()
 	return NO_EVENT;
 }
 
-void CHardHat::LateUpdate_GameObject()
-{
-}
-
-void CHardHat::Render_GameObject()
-{
-}
-
-void CHardHat::Release_GameObject()
-{
-	RemoveObserver();
-	for_each(m_vecComponet.begin(), m_vecComponet.end(), Safe_Delete<CBaseComponent*>);
-	m_vecComponet.clear();
-	m_vecComponet.swap(vector<CBaseComponent*>());
-}
 
 CHardHat * CHardHat::Create()
 {
@@ -71,18 +69,11 @@ CHardHat * CHardHat::Create()
 	return pInstance;
 }
 
-void CHardHat::RegisterObserver(CObserver * observer)
+void CHardHat::Attack()
 {
-	m_pObserver = observer;
-}
+	m_tInfo.vDir = (m_pTarget->GetPos() - m_tInfo.vPos);
+	D3DXVec3Normalize(&m_tInfo.vDir, &m_tInfo.vDir);
 
-void CHardHat::RemoveObserver()
-{
-	m_pObserver = nullptr;
-}
+	m_tInfo.vPos += (m_tInfo.vDir * m_fSpeed * TIMEMGR->Get_DeltaTime());
 
-void CHardHat::NotifyObserver()
-{
-	if(m_pObserver)
-		m_pObserver->OnNotify();
 }

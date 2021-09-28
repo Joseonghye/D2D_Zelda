@@ -3,6 +3,7 @@
 #define __GAMEOBJMGR_H__
 #include "SingleTon.h"
 #include "CollisionMgr.h"
+#include "UIMgr.h"
 
 class CGameObject;
 class CGameObjectMgr :public CSingleTon<CGameObjectMgr>
@@ -31,6 +32,7 @@ public:
 private:
 	vector<CGameObject*> m_ObjList[OBJID::OBJID_END];
 	CCollisionMgr CollisionMgr;
+	CUIMgr UIMgr;
 	
 	int m_iRoomIndex;
 	int m_iNextIndex;

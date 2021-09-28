@@ -7,6 +7,7 @@
 #include "GameButton.h"
 #include "GameEvent.h"
 #include "Close.h"
+#include "Monster.h"
 
 CCollisionMgr::CCollisionMgr()
 {
@@ -41,15 +42,18 @@ bool CCollisionMgr::PlayerCollision(CGameObject * pPlayer, vector<CGameObject*> 
 			{
 				switch (_id)
 				{
-				case MONSTER: {
-					CGameObject* monster = another->GetParent();
+				case MONSTER: 
+				{
+					CMonster* monster = static_cast<CMonster*>(another->GetParent());
 					if (static_cast<CPlayer*>(pPlayer)->Defense(monster->GetPos(), monster->GetVecDir()))
 					{
 						//적밀림	
+						(monster)->Pushed();
 					}
-					else {
-					//	static_cast<CPlayer*>(pPlayer)->SetState(STATE::DAMAGED);
+					else 
+					{
 						// hp 감소 
+						static_cast<CPlayer*>(pPlayer)->Damaged(monster->GetAtt(), DAMAGED);
 					}
 					monster = nullptr;
 					break;
@@ -72,8 +76,8 @@ bool CCollisionMgr::PlayerCollision(CGameObject * pPlayer, vector<CGameObject*> 
 					break;
 				}
 				case HOLE:
-					static_cast<CPlayer*>(pPlayer)->SetState(STATE::FALL);
 					//데미지
+					static_cast<CPlayer*>(pPlayer)->Damaged(1, FALL);
 					// 재위치
 					break;
 				case EVENT:
@@ -87,6 +91,46 @@ bool CCollisionMgr::PlayerCollision(CGameObject * pPlayer, vector<CGameObject*> 
 				}
 			}
 		}
+	}
+	return false;
+}
+
+bool CCollisionMgr::MonsterCollision(vector<CGameObject*> pDst, vector<CGameObject*> pSrc, OBJID _id, int iRoomIndex, int iNextRoom)
+{
+	for (auto& dst = pDst.begin(); dst != pDst.end(); ++dst)
+	{
+		for (auto& src = pSrc.begin(); src != pSrc.end(); ++src)
+		{
+			int index = (*src)->GetRoomIndex();
+			if (iNextRoom == -1) {
+				if (index != iRoomIndex) continue;
+			}
+			else
+				if (index != iNextRoom) continue;
+
+			CBoxCollider* Monster = static_cast<CBoxCollider*>((*dst)->GetComponent(COMPONENTID::COLLISION));
+			CBoxCollider* another = static_cast<CBoxCollider*>((*src)->GetComponent(COMPONENTID::COLLISION));
+
+			if (Monster->CheckCollision(another))
+			{
+				switch (_id)
+				{
+				case WALL:
+					Monster->WallCollision();
+					break;
+
+				case HOLE:
+					if (static_cast<CMonster*>(*dst)->isPushed())
+						(*dst)->SetDestory();
+					else
+						Monster->WallCollision();
+		
+					break;
+				}
+			}
+
+		}
+
 	}
 	return false;
 }

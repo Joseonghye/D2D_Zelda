@@ -150,6 +150,7 @@
   <ItemGroup>
     <ClInclude Include="Animator.h" />
     <ClInclude Include="BaseComponent.h" />
+    <ClInclude Include="Bat.h" />
     <ClInclude Include="BlackStone.h" />
     <ClInclude Include="BoxCollider.h" />
     <ClInclude Include="Check.h" />
@@ -158,6 +159,8 @@
     <ClInclude Include="Door.h" />
     <ClInclude Include="Enter.h" />
     <ClInclude Include="Equipment.h" />
+    <ClInclude Include="Fire.h" />
+    <ClInclude Include="FireBall.h" />
     <ClInclude Include="FrameMgr.h" />
     <ClInclude Include="GameButton.h" />
     <ClInclude Include="GameEvent.h" />
@@ -166,10 +169,12 @@
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="GraphicDevice.h" />
     <ClInclude Include="HardHat.h" />
+    <ClInclude Include="HeartUI.h" />
     <ClInclude Include="InteractionObj.h" />
     <ClInclude Include="Key.h" />
     <ClInclude Include="KeyMgr.h" />
     <ClInclude Include="MainGame.h" />
+    <ClInclude Include="Monster.h" />
     <ClInclude Include="MultiTexture.h" />
     <ClInclude Include="Observer.h" />
     <ClInclude Include="Player.h" />
@@ -187,12 +192,14 @@
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TextureMgr.h" />
     <ClInclude Include="TimeMgr.h" />
+    <ClInclude Include="UIMgr.h" />
     <ClInclude Include="Wall.h" />
     <ClInclude Include="Weed.h" />
     <ClInclude Include="Zelda.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animator.cpp" />
+    <ClCompile Include="Bat.cpp" />
     <ClCompile Include="BlackStone.cpp" />
     <ClCompile Include="BoxCollider.cpp" />
     <ClCompile Include="Check.cpp" />
@@ -200,6 +207,8 @@
     <ClCompile Include="CollisionMgr.cpp" />
     <ClCompile Include="Door.cpp" />
     <ClCompile Include="Enter.cpp" />
+    <ClCompile Include="Fire.cpp" />
+    <ClCompile Include="FireBall.cpp" />
     <ClCompile Include="FrameMgr.cpp" />
     <ClCompile Include="GameButton.cpp" />
     <ClCompile Include="GameObject.cpp" />
@@ -207,10 +216,12 @@
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="GraphicDevice.cpp" />
     <ClCompile Include="HardHat.cpp" />
+    <ClCompile Include="HeartUI.cpp" />
     <ClCompile Include="InteractionObj.cpp" />
     <ClCompile Include="Key.cpp" />
     <ClCompile Include="KeyMgr.cpp" />
     <ClCompile Include="MainGame.cpp" />
+    <ClCompile Include="Monster.cpp" />
     <ClCompile Include="MultiTexture.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Scene.cpp" />
@@ -229,6 +240,7 @@
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TextureMgr.cpp" />
     <ClCompile Include="TimeMgr.cpp" />
+    <ClCompile Include="UIMgr.cpp" />
     <ClCompile Include="Wall.cpp" />
     <ClCompile Include="Weed.cpp" />
     <ClCompile Include="Zelda.cpp" />

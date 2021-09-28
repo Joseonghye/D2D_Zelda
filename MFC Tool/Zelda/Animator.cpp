@@ -80,6 +80,23 @@ void CAnimator::SetAniState(const wstring& wstrState, wstring wstrdir,float fEnd
 	m_fSpeed = fSpeed;
 }
 
+void CAnimator::SetDefensAni(bool bDefens)
+{
+	size_t nPos = m_wstrStateKey.find(L"SHIELD");
+	if (nPos == std::string::npos) 
+	{
+		if (!bDefens) return;
+		size_t index = m_wstrStateKey.rfind('_');
+		m_wstrStateKey.insert(index + 1, L"SHIELD_");
+	}
+	else
+	{
+		if (bDefens) return;
+		m_wstrStateKey = m_wstrStateKey.substr(0, nPos);
+		m_wstrStateKey +=m_wstrDir;
+	}
+}
+
 void CAnimator::AniPlayOnce(const wstring & wstrState, wstring wstrdir, float fEndFrame, float fSpeed)
 {
 	m_bOnce = true;

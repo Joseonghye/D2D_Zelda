@@ -14,12 +14,20 @@ CPlayer::CPlayer() :m_eCurState(IDLE), m_eNextState(STATE_END), m_eCurDir(FRONT)
 CPlayer::~CPlayer()
 {
 	Release_GameObject();
+	RemoveObserver();
 }
 
 HRESULT CPlayer::Initialized_GameObject()
 {
+	m_iTotalHp = 6;
+	m_iHp = 6;
+
+	m_bSuper = false;
+	m_dwSuperTime = 0;
+
 	m_bDefense = false;
 	m_bPush = false;
+	m_dwPushTime = 0;
 	
 	m_iRoomIndex = -1;
 	m_fSpeed = 100.f;
@@ -50,23 +58,33 @@ int CPlayer::Update_GameObject()
 	if (m_pItem[0] != nullptr)
 		m_pItem[0]->Update_GameObject();
 
+	if (m_bSuper)
+	{
+		m_dwSuperTime++;
+		if (m_dwSuperTime >= 40)
+			m_bSuper = false;
+	}
+
 	if (m_bPush)
 	{
-		m_tInfo.vPos+=m_tInfo.vDir * m_fSpeed * TIMEMGR->Get_DeltaTime();
+		m_tInfo.vPos += m_tInfo.vDir * m_fSpeed * TIMEMGR->Get_DeltaTime();
 		m_dwPushTime++;
-		if (m_dwPushTime >=25)
+		if (m_dwPushTime >= 25) {
 			m_bPush = false;
+			m_dwPushTime = 0;
+		}
 	}
 	else {
 		m_eNextState = IDLE;
 	
-		if (KEYMGR->Key_Pressing(KEY_CTRL))
+		if (KEYMGR->Key_Down(KEY_CTRL) || KEYMGR->Key_Pressing(KEY_CTRL))
 		{
 			m_bDefense = true;
 			m_pItem[1]->StartUsing(m_tInfo.eDir);
 		}
-		else
+		else {
 			m_bDefense = false;
+		}
 
 		if (KEYMGR->Key_Pressing(KEY_LEFT))
 		{
@@ -102,9 +120,6 @@ int CPlayer::Update_GameObject()
 		{
 			m_eNextState = ATTACK;
 		}
-	
-
-
 		ChangeState();
 	}
 
@@ -149,19 +164,43 @@ void CPlayer::Attack()
 	m_pItem[0]->StartUsing(m_eCurDir);
 }
 
+void CPlayer::Damaged(int att, STATE eState)
+{
+	if (m_bSuper) return;
+
+	m_bPush = true;
+
+	m_dwSuperTime = 0;
+	m_bSuper = true;
+
+	NotifyObserver();
+	m_iHp -= att;
+	if (m_iHp <= 0)
+	{
+		//사망
+		return;
+	}
+
+	m_tInfo.vDir *= -1;
+
+	SetState(eState);
+}
+
 bool CPlayer::Defense(D3DXVECTOR3 vPos, D3DXVECTOR3 vMonDir)
 {
 	if (!m_bDefense) return false;
 
 	//방패앞쪽에서 맞앗나?
 	D3DXVECTOR3 vDir = vPos - m_tInfo.vPos;
+	D3DXVec3Normalize(&vDir, &vDir);
+
 	if (D3DXVec3Dot(&m_tInfo.vDir, &vDir) > 0)
 	{
 		m_bPush = true;
 		m_dwPushTime = 0;
 		//젤다 뒤로 밀림
 		m_tInfo.vDir = vMonDir;
-		// 적도 뒤로 밀림 
+
 		return true;
 	}
 	return false;
@@ -170,8 +209,12 @@ bool CPlayer::Defense(D3DXVECTOR3 vPos, D3DXVECTOR3 vMonDir)
 void CPlayer::ChangeState()
 {
 	if (m_Animator->GatPlayOnce()) return;
-	if (m_eCurState == m_eNextState && m_eCurDir == m_eNextDir) return;
 
+	if (m_eCurState == m_eNextState && m_eCurDir == m_eNextDir)
+	{
+		m_Animator->SetDefensAni(m_bDefense);
+		return;
+	}
 	wstring wstrStateKey;
 	wstring wstrDir;
 	float fEndFrame = -1;
@@ -233,11 +276,27 @@ void CPlayer::ChangeState()
 		m_tInfo.eDir = m_eNextDir;
 	}
 
-	if (m_eCurState == FALL)
+	if (m_eCurState == FALL || m_eCurState == DAMAGED)
 		m_Animator->AniPlayOnce(wstrStateKey, wstrDir, fEndFrame, fSpeed);
-	else {
-		if (m_bDefense)
-			wstrStateKey += L"_SHIELD";
+	else 
+	{	
 		m_Animator->SetAniState(wstrStateKey, wstrDir, fEndFrame, fSpeed);
+		m_Animator->SetDefensAni(m_bDefense);
 	}
+}
+
+void CPlayer::RegisterObserver(CObserver * observer)
+{
+	m_pObserver = observer;
+}
+
+void CPlayer::RemoveObserver()
+{
+	m_pObserver = nullptr;
+}
+
+void CPlayer::NotifyObserver()
+{
+	if (m_pObserver)
+		m_pObserver->OnNotify();
 }

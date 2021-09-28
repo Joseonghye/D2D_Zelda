@@ -16,6 +16,7 @@ public:
 	void Update_Animation();
 
 	void SetAniState(const wstring& wstrState, wstring wstrdir, float fEndFrame, float fSpeed = 5);
+	void SetDefensAni(bool bDefens);
 	void AniPlayOnce(const wstring& wstrState, wstring wstrdir, float fEndFrame, float fSpeed = 5);
 
 	bool GatPlayOnce() { return m_bOnce; }

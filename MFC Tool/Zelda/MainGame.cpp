@@ -90,12 +90,16 @@ HRESULT CMainGame::Initialized()
 
 		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Player/Damaged/Damaged0%d.png", L"Player", L"DAMAGED_FRONT",4)))
 			return E_FAIL;
+		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Player/Damaged/Damaged_Back0%d.png", L"Player", L"DAMAGED_BACK", 4)))
+			return E_FAIL;
+		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Player/Damaged/Damaged_Left0%d.png", L"Player", L"DAMAGED_LEFT", 4)))
+			return E_FAIL;
+		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Player/Damaged/Damaged_Right0%d.png", L"Player", L"DAMAGED_RIGHT", 4)))
+			return E_FAIL;
 		
 	}
-	//Insert Monster Texture / Interaction
+	//Insert Interaction
 	{
-		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Monster/HardHat/HardHat0%d.png", L"HardHat", L"IDLE_FRONT", 2)))
-			return E_FAIL;
 		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::SINGLE, L"../Texture/Object/weed.png", L"Weed")))
 			return E_FAIL;
 		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::SINGLE, L"../Texture/Object/Black.png", L"BALCKSTONE")))
@@ -131,8 +135,26 @@ HRESULT CMainGame::Initialized()
 			return E_FAIL;
 		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Object/Door/Door_Close_Right0%d.png", L"DOOR", L"CLOSE_RIGHT", 3)))
 			return E_FAIL;
-	}
 
+	}
+	//Monster
+	{
+		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Monster/HardHat/HardHat0%d.png", L"HardHat", L"IDLE_FRONT", 2)))
+			return E_FAIL;
+		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Monster/Bat/Bat00.png", L"Bat", L"IDLE_FRONT", 1)))
+			return E_FAIL;
+		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Monster/Bat/Bat0%d.png", L"Bat", L"ATTACK_FRONT", 2)))
+			return E_FAIL;
+	}
+	//UI
+	{
+		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::SINGLE, L"../Texture/Ui/Heart_Full.png", L"Heart_Full")))
+			return E_FAIL;
+		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::SINGLE, L"../Texture/Ui/Heart_Half.png", L"Heart_Half")))
+			return E_FAIL;
+		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::SINGLE, L"../Texture/Ui/Heart_Frame.png", L"Heart_Frame")))
+			return E_FAIL;
+	}
 	//Set Scene
 	if (FAILED(SCENEMGR->Change_SceneMgr(SCENE::GAME)))
 		return E_FAIL;

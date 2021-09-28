@@ -1,13 +1,18 @@
 #include "stdafx.h"
 #include "Scene.h"
 #include "HardHat.h"
+#include "Bat.h"
+
 #include "Weed.h"
 #include "BlackStone.h"
-#include "Enter.h"
+#include "Fire.h"
+#include "Door.h"
+
 #include "GameButton.h"
 #include "Check.h"
 #include "Close.h"
-#include "Door.h"
+#include "Enter.h"
+
 
 CScene::CScene()
 {
@@ -75,6 +80,10 @@ void CScene::CreateMonster(string strName,int index, INFO* pInfo)
 	{
 		pGameObj = CHardHat::Create();
 	}
+	else if ("Bat" == strName)
+	{
+		pGameObj = CBat::Create();
+	}
 	
 	if (pGameObj != nullptr) 
 	{
@@ -86,16 +95,24 @@ void CScene::CreateMonster(string strName,int index, INFO* pInfo)
 	}
 }
 
-void CScene::CreateInteractionObj(string strName,int index, INFO * pInfo)
+void CScene::CreateInteractionObj(string strName,int index, INFO * pInfo, OBJINFO& ObjInfo)
 {
 	CGameObject* pGameObj = nullptr;
 	if ("Weed" == strName)
 	{
 		pGameObj = CWeed::Create();
 	}
-	else if ("BlackStone" == strName)
+	else if ("Fire" == strName)
+	{
+		pGameObj = CFire::Create();
+	}
+	else if (strName.find("BlackStone") != string::npos)
 	{
 		pGameObj = CBlackStone::Create();
+
+		if (!ObjInfo.m_bMove)
+			pGameObj->SetMove(false);
+
 	}
 	else if (int i = strName.find_last_of("Door") >= 0)
 	{
@@ -116,19 +133,6 @@ void CScene::CreateInteractionObj(string strName,int index, INFO * pInfo)
 		GAMEOBJECTMGR->Add_GameObject(INTERACTION, pGameObj);
 	}
 }
-
-//void CScene::CreateEnter(string strName, int index, INFO * pInfo)
-//{
-//	CGameObject* pGameObj = CEnter::Create();
-//
-//	
-//	pGameObj->SetRoomIndex(index);
-//	pGameObj->SetInfo(*pInfo);
-//	pGameObj->SetTransMat();
-//	pGameObj->SetWorldMat();
-//
-//	GAMEOBJECTMGR->Add_GameObject(ENTER, pGameObj);
-//}
 
 void CScene::LoadGameObject(const wstring & wstrFilePath)
 {
@@ -190,11 +194,8 @@ void CScene::LoadGameObject(const wstring & wstrFilePath)
 				CreateMonster(str, iRoomIndex, pInfo);
 				break;
 			case INTERACTION:
-				CreateInteractionObj(str, iRoomIndex, pInfo);
+				CreateInteractionObj(str, iRoomIndex, pInfo, iter->second);
 				break;
-			//case ENTER:
-			//	CreateEnter(str, iRoomIndex, pInfo);
-			//	break;
 			}
 		}
 		else

@@ -131,6 +131,15 @@
     <Filter Include="01. Game Object\01. Player">
       <UniqueIdentifier>{cba603d9-b89f-4a2a-9713-3f03558dcb88}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Game Object\Monster\Bat">
+      <UniqueIdentifier>{156c451f-11ad-455e-8c7d-8d1f617d8607}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Game Object\Monster\FireBall">
+      <UniqueIdentifier>{0b147b58-856b-47b5-99af-e96b0fa3a104}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Game Object\Interaction\Fire">
+      <UniqueIdentifier>{775513d2-d3bf-4f16-9944-d472edda0f15}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Zelda.h">
@@ -254,7 +263,25 @@
     <ClInclude Include="GameEvent.h">
       <Filter>01. Game Object\Event</Filter>
     </ClInclude>
-    <ClInclude Include="Shield.h" />
+    <ClInclude Include="Shield.h">
+      <Filter>01. Game Object\Equipment\Shield</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster.h">
+      <Filter>01. Game Object\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="HeartUI.h">
+      <Filter>01. Game Object\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Bat.h">
+      <Filter>01. Game Object\Monster\Bat</Filter>
+    </ClInclude>
+    <ClInclude Include="UIMgr.h">
+      <Filter>98. Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Fire.h">
+      <Filter>01. Game Object\Interaction\Fire</Filter>
+    </ClInclude>
+    <ClInclude Include="FireBall.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -357,7 +384,25 @@
     <ClCompile Include="Close.cpp">
       <Filter>01. Game Object\Event\Close</Filter>
     </ClCompile>
-    <ClCompile Include="Shield.cpp" />
+    <ClCompile Include="Shield.cpp">
+      <Filter>01. Game Object\Equipment\Shield</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster.cpp">
+      <Filter>01. Game Object\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="HeartUI.cpp">
+      <Filter>01. Game Object\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Bat.cpp">
+      <Filter>01. Game Object\Monster\Bat</Filter>
+    </ClCompile>
+    <ClCompile Include="UIMgr.cpp">
+      <Filter>98. Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Fire.cpp">
+      <Filter>01. Game Object\Interaction\Fire</Filter>
+    </ClCompile>
+    <ClCompile Include="FireBall.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Zelda.rc">
