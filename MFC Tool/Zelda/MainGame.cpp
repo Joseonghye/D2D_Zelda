@@ -19,7 +19,7 @@ HRESULT CMainGame::Initialized()
 		return E_FAIL;
 
 	//Insert Tile Texture
-	if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Tile/tile%d.png", L"Terrain", L"Tile", 28)))
+	if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Tile/tile%d.png", L"Terrain", L"Tile", 45)))
 		return E_FAIL;
 	//Insert Player Texture
 	{
@@ -103,6 +103,8 @@ HRESULT CMainGame::Initialized()
 		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::SINGLE, L"../Texture/Object/weed.png", L"Weed")))
 			return E_FAIL;
 		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::SINGLE, L"../Texture/Object/Black.png", L"BALCKSTONE")))
+			return E_FAIL;
+		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Object/fire/fire%d.png", L"Fire",L"IDLE_FRONT",4)))
 			return E_FAIL;
 		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::SINGLE, L"../Texture/Object/Key.png", L"KEY")))
 			return E_FAIL;

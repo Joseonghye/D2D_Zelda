@@ -154,14 +154,14 @@ void CMFCToolView::OnInitialUpdate()
 
 	//텍스쳐추가
 	{
-		CTexturMgr::GetInstance()->InsertTexture(TEXTYPE::MULTI, L"../Texture/Tile/tile%d.png", L"Terrain", L"Tile", 28);
+		CTexturMgr::GetInstance()->InsertTexture(TEXTYPE::MULTI, L"../Texture/Tile/tile%d.png", L"Terrain", L"Tile", 45);
 
-		CTexturMgr::GetInstance()->InsertTexture(TEXTYPE::MULTI, L"../Texture/Monster/Octo/Walk/Octo0%d.png", L"Octo",L"Walk",2);
-		CTexturMgr::GetInstance()->InsertTexture(TEXTYPE::SINGLE, L"../Texture/Monster/Goomba/Goomba.png", L"Goomba");
-		CTexturMgr::GetInstance()->InsertTexture(TEXTYPE::MULTI, L"../Texture/Monster/HardHat/HardHat0%d.png", L"HardHat", L"Walk", 2);
+		CTexturMgr::GetInstance()->InsertTexture(TEXTYPE::SINGLE, L"../Texture/Monster/HardHat/HardHat00.png", L"HardHat");
+		CTexturMgr::GetInstance()->InsertTexture(TEXTYPE::SINGLE, L"../Texture/Monster/Bat/Bat00.png", L"Bat");
 
 		CTexturMgr::GetInstance()->InsertTexture(TEXTYPE::SINGLE, L"../Texture/Object/weed.png", L"Weed");
 		CTexturMgr::GetInstance()->InsertTexture(TEXTYPE::SINGLE, L"../Texture/Object/Black.png", L"BlackStone");
+		CTexturMgr::GetInstance()->InsertTexture(TEXTYPE::SINGLE, L"../Texture/Object/fire/fire0.png", L"Fire");
 
 		CTexturMgr::GetInstance()->InsertTexture(TEXTYPE::SINGLE, L"../Texture/Object/Up.png", L"Up");
 		CTexturMgr::GetInstance()->InsertTexture(TEXTYPE::SINGLE, L"../Texture/Object/Down.png", L"Down");

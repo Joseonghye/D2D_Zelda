@@ -252,7 +252,7 @@ void Terrain::ChangeTile(const D3DXVECTOR3 & vMouse, const int & iDrawID, const 
 
 	m_vecTile[iIndex]->dwDrawID = iDrawID;
 
-	if (22 < iDrawID && iDrawID < 27)
+	if (23 < iDrawID && iDrawID <28)
 		m_vecTile[iIndex]->dwOption = 2;
 	else
 		m_vecTile[iIndex]->dwOption = iOption;

@@ -281,7 +281,9 @@
     <ClInclude Include="Fire.h">
       <Filter>01. Game Object\Interaction\Fire</Filter>
     </ClInclude>
-    <ClInclude Include="FireBall.h" />
+    <ClInclude Include="FireBall.h">
+      <Filter>01. Game Object\Monster\FireBall</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -402,7 +404,9 @@
     <ClCompile Include="Fire.cpp">
       <Filter>01. Game Object\Interaction\Fire</Filter>
     </ClCompile>
-    <ClCompile Include="FireBall.cpp" />
+    <ClCompile Include="FireBall.cpp">
+      <Filter>01. Game Object\Monster\FireBall</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Zelda.rc">

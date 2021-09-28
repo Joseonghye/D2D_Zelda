@@ -34,7 +34,7 @@ HRESULT CPlayer::Initialized_GameObject()
 	m_bVisible = true;
 
 	m_tInfo.vDir = { 0.f,1.f,0.f };
-	m_tInfo.vSize = { 32.f, 32.f, 0.f };
+	m_tInfo.vSize = { 30.f, 30.f, 0.f };
 	m_tInfo.eDir = FRONT;
 
 	D3DXMatrixScaling(&m_tInfo.matScale, 1.f, 1.f, 1.f);

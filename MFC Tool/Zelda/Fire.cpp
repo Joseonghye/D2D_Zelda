@@ -9,6 +9,7 @@ CFire::~CFire() { Release_GameObject(); }
 HRESULT CFire::Initialized_GameObject()
 {
 	m_bMove = false;
+	m_bVisible = true;
 
 	m_tInfo.vSize = { 32.f, 32.f, 0.f };
 	D3DXMatrixScaling(&m_tInfo.matScale, 1.f, 1.f, 1.f);

@@ -17,7 +17,7 @@ HRESULT CBat::Initialized_GameObject()
 	m_iTotalHp = 2;
 	m_iAtt = 1;
 
-	m_fRad = 3.f;
+	m_fRad = 0.5f;
 
 	m_fSpeed = 20.0f;
 	m_tInfo.vSize = D3DXVECTOR3(32.f, 32.f, 0);
@@ -92,7 +92,7 @@ void CBat::Attack()
 	}
 	//È¸Àü
 	D3DXMATRIX matTrans;
-	D3DXMatrixTranslation(&matTrans, m_vCenter.x, m_vCenter.y, 0);
+	D3DXMatrixTranslation(&matTrans, m_vCenter.x + SCROLLMGR->GetScrollVec().x, m_vCenter.y + SCROLLMGR->GetScrollVec().y, 0);
 
 	m_fAngle += 300.f * TIMEMGR->Get_DeltaTime();
 	D3DXMatrixRotationZ(&m_tInfo.matRevol, D3DXToRadian(m_fAngle));
