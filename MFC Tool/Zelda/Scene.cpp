@@ -9,6 +9,7 @@
 #include "BlackStone.h"
 #include "Fire.h"
 #include "Door.h"
+#include "Crystal.h"
 
 #include "GameButton.h"
 #include "Check.h"
@@ -114,6 +115,10 @@ void CScene::CreateInteractionObj(string strName,int index, INFO * pInfo, OBJINF
 	if ("Weed" == strName)
 	{
 		pGameObj = CWeed::Create();
+	}
+	else if ("Crystal" == strName)
+	{
+		pGameObj = CCrystal::Create();
 	}
 	else if ("Fire" == strName)
 	{

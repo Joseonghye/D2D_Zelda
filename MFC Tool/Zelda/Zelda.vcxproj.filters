@@ -146,6 +146,12 @@
     <Filter Include="01. Game Object\Monster\Three_Of_A_Kind\Kind">
       <UniqueIdentifier>{347b944a-cd43-440a-b777-9bbda6b0b6f8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Game Object\Interaction\Crystal">
+      <UniqueIdentifier>{9743344f-0b98-41d0-8782-ac2ded6df9b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Game Object\Monster\BladeTrap">
+      <UniqueIdentifier>{448831dd-6727-4038-aaae-53967548c575}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Zelda.h">
@@ -296,6 +302,12 @@
     <ClInclude Include="Kind.h">
       <Filter>01. Game Object\Monster\Three_Of_A_Kind\Kind</Filter>
     </ClInclude>
+    <ClInclude Include="Crystal.h">
+      <Filter>01. Game Object\Interaction\Crystal</Filter>
+    </ClInclude>
+    <ClInclude Include="BladeTrap.h">
+      <Filter>01. Game Object\Monster\BladeTrap</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -424,6 +436,12 @@
     </ClCompile>
     <ClCompile Include="Kind.cpp">
       <Filter>01. Game Object\Monster\Three_Of_A_Kind\Kind</Filter>
+    </ClCompile>
+    <ClCompile Include="Crystal.cpp">
+      <Filter>01. Game Object\Interaction\Crystal</Filter>
+    </ClCompile>
+    <ClCompile Include="BladeTrap.cpp">
+      <Filter>01. Game Object\Monster\BladeTrap</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -152,10 +152,12 @@
     <ClInclude Include="BaseComponent.h" />
     <ClInclude Include="Bat.h" />
     <ClInclude Include="BlackStone.h" />
+    <ClInclude Include="BladeTrap.h" />
     <ClInclude Include="BoxCollider.h" />
     <ClInclude Include="Check.h" />
     <ClInclude Include="Close.h" />
     <ClInclude Include="CollisionMgr.h" />
+    <ClInclude Include="Crystal.h" />
     <ClInclude Include="Door.h" />
     <ClInclude Include="Enter.h" />
     <ClInclude Include="Equipment.h" />
@@ -203,10 +205,12 @@
     <ClCompile Include="Animator.cpp" />
     <ClCompile Include="Bat.cpp" />
     <ClCompile Include="BlackStone.cpp" />
+    <ClCompile Include="BladeTrap.cpp" />
     <ClCompile Include="BoxCollider.cpp" />
     <ClCompile Include="Check.cpp" />
     <ClCompile Include="Close.cpp" />
     <ClCompile Include="CollisionMgr.cpp" />
+    <ClCompile Include="Crystal.cpp" />
     <ClCompile Include="Door.cpp" />
     <ClCompile Include="Enter.cpp" />
     <ClCompile Include="Fire.cpp" />
