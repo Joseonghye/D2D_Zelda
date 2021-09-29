@@ -173,6 +173,7 @@
     <ClInclude Include="InteractionObj.h" />
     <ClInclude Include="Key.h" />
     <ClInclude Include="KeyMgr.h" />
+    <ClInclude Include="Kind.h" />
     <ClInclude Include="MainGame.h" />
     <ClInclude Include="Monster.h" />
     <ClInclude Include="MultiTexture.h" />
@@ -191,6 +192,7 @@
     <ClInclude Include="Terrain.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TextureMgr.h" />
+    <ClInclude Include="ThreeOfOne.h" />
     <ClInclude Include="TimeMgr.h" />
     <ClInclude Include="UIMgr.h" />
     <ClInclude Include="Wall.h" />
@@ -220,6 +222,7 @@
     <ClCompile Include="InteractionObj.cpp" />
     <ClCompile Include="Key.cpp" />
     <ClCompile Include="KeyMgr.cpp" />
+    <ClCompile Include="Kind.cpp" />
     <ClCompile Include="MainGame.cpp" />
     <ClCompile Include="Monster.cpp" />
     <ClCompile Include="MultiTexture.cpp" />
@@ -239,6 +242,7 @@
     <ClCompile Include="Terrain.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TextureMgr.cpp" />
+    <ClCompile Include="ThreeOfOne.cpp" />
     <ClCompile Include="TimeMgr.cpp" />
     <ClCompile Include="UIMgr.cpp" />
     <ClCompile Include="Wall.cpp" />

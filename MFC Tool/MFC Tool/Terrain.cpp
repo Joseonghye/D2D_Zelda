@@ -131,7 +131,7 @@ void Terrain::RenderObject()
 
 	for (auto& iter : m_ObjMap)
 	{
-		const TEXINFO* pTexInfo = CTexturMgr::GetInstance()->getTexture(iter.second->szName, L"Walk");
+		const TEXINFO* pTexInfo = CTexturMgr::GetInstance()->getTexture(iter.second->szName);
 		if (nullptr == pTexInfo)
 			return;
 

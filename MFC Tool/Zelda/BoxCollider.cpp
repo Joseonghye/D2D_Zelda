@@ -25,15 +25,16 @@ void CBoxCollider::LateUpdate_Component()
 
 void CBoxCollider::Render_Component()
 {
-	D3DXVECTOR2 vLine[4] = {
+	D3DXVECTOR2 vLine[5] = {
 		{ (float)m_rcBound.left,(float)m_rcBound.top },
 		{ (float)m_rcBound.right,(float)m_rcBound.top },
 		{ (float)m_rcBound.right, (float)m_rcBound.bottom },
-		{ (float)m_rcBound.left, (float)m_rcBound.bottom }
+		{ (float)m_rcBound.left, (float)m_rcBound.bottom },
+		{ (float)m_rcBound.left,(float)m_rcBound.top }
 	};
 
 	GRAPHICDEVICE->GetLine()->SetWidth(5.f);
-	GRAPHICDEVICE->GetLine()->Draw(vLine, 4, D3DCOLOR_ARGB(255, 255, 0, 0));
+	GRAPHICDEVICE->GetLine()->Draw(vLine, 5, D3DCOLOR_ARGB(255, 255, 0, 0));
 
 	GRAPHICDEVICE->GetLine()->End();
 }
@@ -153,8 +154,25 @@ void CBoxCollider::Update_Rect()
 	for (int i = 0; i < 2; ++i)
 		D3DXVec3TransformCoord(&pOut[i], &pIn[i], &m_pObject->GetWorldMat());
 
-	m_rcBound.left = (LONG) pOut[0].x;
-	m_rcBound.top = (LONG) pOut[0].y;
-	m_rcBound.right = (LONG) pOut[1].x;
-	m_rcBound.bottom = (LONG) pOut[1].y;
+	if (pOut[0].x < pOut[1].x)
+	{
+		m_rcBound.left = (LONG)pOut[0].x;
+		m_rcBound.right = (LONG)pOut[1].x;
+	}
+	else
+	{
+		m_rcBound.left = (LONG)pOut[1].x;
+		m_rcBound.right = (LONG)pOut[0].x;
+	}
+
+	if (pOut[0].y < pOut[1].y) 
+	{
+		m_rcBound.top = (LONG)pOut[0].y;
+		m_rcBound.bottom = (LONG)pOut[1].y;
+	}
+	else
+	{
+		m_rcBound.top = (LONG)pOut[1].y;
+		m_rcBound.bottom = (LONG)pOut[0].y;
+	}
 }

@@ -36,11 +36,11 @@ void CUIMgr::SetPlayer(CGameObject * _player)
 	m_pPlayer = static_cast<CPlayer*>(_player);
 	m_pPlayer->RegisterObserver(this);
 
-	int size = m_pPlayer->GetTotalHp()*0.5;
+	int size = (int)(m_pPlayer->GetTotalHp()/2);
 	m_vecHeart.resize(size);
 
 	D3DXVECTOR3 vStart{ 200.f,270.f,0.f };
-	for (int i = 0; i < m_vecHeart.size(); ++i)
+	for (size_t i = 0; i < m_vecHeart.size(); ++i)
 	{
 		m_vecHeart[i] = new CHeartUI;
 		m_vecHeart[i]->Initialized_GameObject();

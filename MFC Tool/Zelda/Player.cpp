@@ -167,9 +167,6 @@ void CPlayer::Attack()
 void CPlayer::Damaged(int att, STATE eState)
 {
 	if (m_bSuper) return;
-
-	m_bPush = true;
-
 	m_dwSuperTime = 0;
 	m_bSuper = true;
 
@@ -182,6 +179,9 @@ void CPlayer::Damaged(int att, STATE eState)
 	}
 
 	m_tInfo.vDir *= -1;
+
+	if(eState != FALL)
+		m_bPush = true;
 
 	SetState(eState);
 }

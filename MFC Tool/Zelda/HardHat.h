@@ -14,8 +14,9 @@ public:
 	virtual HRESULT Initialized_GameObject() override;
 	virtual int Update_GameObject() override;
 
+	virtual void Damaged(int Att) override;
 public:
-	static CHardHat* Create();
+	static CHardHat* Create(MONSTERID eID);
 
 	// CMonster을(를) 통해 상속됨
 	virtual void Attack() override;

@@ -2,6 +2,7 @@
 #include "Sword.h"
 #include "BoxCollider.h"
 #include "InteractionObj.h"
+#include "Monster.h"
 
 CSword::CSword() :m_fAngle(0.f)
 {
@@ -15,9 +16,10 @@ CSword::~CSword()
 HRESULT CSword::Initialized_GameObject()
 {
 	m_bVisible = false;
-
+	m_iAtt = 1;
+	
 	m_tInfo.vPos = D3DXVECTOR3(-20.f, 0, 0);
-	m_tInfo.vSize = D3DXVECTOR3(30, 12, 0);
+	m_tInfo.vSize = D3DXVECTOR3(35, 20, 0);
 
 	D3DXMatrixScaling(&m_tInfo.matScale, 1.f, 1.f, 1.f);
 	D3DXMatrixTranslation(&m_tInfo.matTrans, m_tInfo.vPos.x, m_tInfo.vPos.y, m_tInfo.vPos.z);
@@ -41,7 +43,6 @@ int CSword::Update_GameObject()
 		//몬스터와 충돌체크 
 		if (m_Collider != nullptr)
 		{
-//			map<int,CGameObject*> mapObj = GAMEOBJECTMGR->GetObjList(MONSTER);
 			vector<CGameObject*> vecObj = GAMEOBJECTMGR->GetObjList(MONSTER);
 
 			for (size_t i = 0; i < vecObj.size(); ++i)
@@ -51,8 +52,7 @@ int CSword::Update_GameObject()
 				if (another != nullptr && m_Collider->CheckCollision(another))
 				{
 					//충돌
-					//몬스터 사망 
-					vecObj[i]->SetDestory();
+					static_cast<CMonster*>(vecObj[i])->Damaged(m_iAtt);
 				}
 			}
 
@@ -127,13 +127,15 @@ void CSword::SetAngle(DIR _dir)
 		m_fStartAngle = 0;
 		break;
 	case BACK:
-		m_fStartAngle = -180;
+		//m_fStartAngle = -180;
+		m_fStartAngle = 180;
 		break;
 	case LEFT:
 		m_fStartAngle = 90;
 		break;
 	case RIGHT :
-		m_fStartAngle = -90;
+		//m_fStartAngle = -90;
+		m_fStartAngle = 270;
 		break;
 	}
 

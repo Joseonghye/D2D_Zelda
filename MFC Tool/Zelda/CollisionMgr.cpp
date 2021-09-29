@@ -9,14 +9,8 @@
 #include "Close.h"
 #include "Monster.h"
 
-CCollisionMgr::CCollisionMgr()
-{
-}
-
-
-CCollisionMgr::~CCollisionMgr()
-{
-}
+CCollisionMgr::CCollisionMgr() {}
+CCollisionMgr::~CCollisionMgr() {}
 
 bool CCollisionMgr::PlayerCollision(CGameObject * pPlayer, vector<CGameObject*> pSrc, OBJID _id, int iRoomIndex, int iNextRoom)
 {
@@ -108,22 +102,26 @@ bool CCollisionMgr::MonsterCollision(vector<CGameObject*> pDst, vector<CGameObje
 			else
 				if (index != iNextRoom) continue;
 
-			CBoxCollider* Monster = static_cast<CBoxCollider*>((*dst)->GetComponent(COMPONENTID::COLLISION));
+			if (static_cast<CMonster*>(*dst)->GetMonsterID() == BAT) continue;
+
+			CBoxCollider* MonsterColl = static_cast<CBoxCollider*>((*dst)->GetComponent(COMPONENTID::COLLISION));
 			CBoxCollider* another = static_cast<CBoxCollider*>((*src)->GetComponent(COMPONENTID::COLLISION));
 
-			if (Monster->CheckCollision(another))
+			if (!MonsterColl || !another) continue;
+
+			if (MonsterColl->CheckCollision(another))
 			{
 				switch (_id)
 				{
 				case WALL:
-					Monster->WallCollision();
+					MonsterColl->WallCollision();
 					break;
 
 				case HOLE:
 					if (static_cast<CMonster*>(*dst)->isPushed())
 						(*dst)->SetDestory();
 					else
-						Monster->WallCollision();
+						MonsterColl->WallCollision();
 		
 					break;
 				}

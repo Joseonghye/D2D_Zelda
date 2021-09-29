@@ -158,9 +158,11 @@ void CMFCToolView::OnInitialUpdate()
 
 		CTexturMgr::GetInstance()->InsertTexture(TEXTYPE::SINGLE, L"../Texture/Monster/HardHat/HardHat00.png", L"HardHat");
 		CTexturMgr::GetInstance()->InsertTexture(TEXTYPE::SINGLE, L"../Texture/Monster/Bat/Bat00.png", L"Bat");
+		CTexturMgr::GetInstance()->InsertTexture(TEXTYPE::SINGLE, L"../Texture/Monster/Three/Yellow.png", L"Kind");
 
 		CTexturMgr::GetInstance()->InsertTexture(TEXTYPE::SINGLE, L"../Texture/Object/weed.png", L"Weed");
 		CTexturMgr::GetInstance()->InsertTexture(TEXTYPE::SINGLE, L"../Texture/Object/Black.png", L"BlackStone");
+		CTexturMgr::GetInstance()->InsertTexture(TEXTYPE::SINGLE, L"../Texture/Object/Black.png", L"BlackStone_NO");
 		CTexturMgr::GetInstance()->InsertTexture(TEXTYPE::SINGLE, L"../Texture/Object/fire/fire0.png", L"Fire");
 
 		CTexturMgr::GetInstance()->InsertTexture(TEXTYPE::SINGLE, L"../Texture/Object/Up.png", L"Up");
@@ -173,7 +175,7 @@ void CMFCToolView::OnInitialUpdate()
 		CTexturMgr::GetInstance()->InsertTexture(TEXTYPE::SINGLE, L"../Texture/Event/Open.png", L"Open");
 		CTexturMgr::GetInstance()->InsertTexture(TEXTYPE::SINGLE, L"../Texture/Event/Close.png", L"Close");
 
-		CTexturMgr::GetInstance()->InsertTexture(TEXTYPE::SINGLE, L"../Texture/Object/Door/Door00.png", L"Door_FORNT");
+		CTexturMgr::GetInstance()->InsertTexture(TEXTYPE::SINGLE, L"../Texture/Object/Door/Door00.png", L"Door_FRONT");
 		CTexturMgr::GetInstance()->InsertTexture(TEXTYPE::SINGLE, L"../Texture/Object/Door/Door_Left00.png", L"Door_LEFT");
 		CTexturMgr::GetInstance()->InsertTexture(TEXTYPE::SINGLE, L"../Texture/Object/Door/Door_Right00.png", L"Door_RIGHT");
 	}

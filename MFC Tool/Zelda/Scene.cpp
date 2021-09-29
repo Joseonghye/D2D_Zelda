@@ -2,6 +2,8 @@
 #include "Scene.h"
 #include "HardHat.h"
 #include "Bat.h"
+#include "Kind.h"
+#include "ThreeOfOne.h"
 
 #include "Weed.h"
 #include "BlackStone.h"
@@ -78,11 +80,22 @@ void CScene::CreateMonster(string strName,int index, INFO* pInfo)
 	CGameObject* pGameObj = nullptr;
 	if ("HardHat" == strName) 
 	{
-		pGameObj = CHardHat::Create();
+		pGameObj = CHardHat::Create(HARDHAT);
 	}
 	else if ("Bat" == strName)
 	{
-		pGameObj = CBat::Create();
+		pGameObj = CBat::Create(BAT);
+	}
+	else if ("Kind" == strName)
+	{
+		pGameObj = CKind::Create(KIND);
+		CThreeOfOne* Three = static_cast<CThreeOfOne*>(GAMEOBJECTMGR->GetObjList(MONSTER).front());
+		Three->SetKind(static_cast<CKind*>(pGameObj));
+		if (Three->GetSize() == 1)
+		{
+			Three->SetRoomIndex(index);
+		}
+
 	}
 	
 	if (pGameObj != nullptr) 

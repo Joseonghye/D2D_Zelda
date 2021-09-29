@@ -140,6 +140,12 @@
     <Filter Include="01. Game Object\Interaction\Fire">
       <UniqueIdentifier>{775513d2-d3bf-4f16-9944-d472edda0f15}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Game Object\Monster\Three_Of_A_Kind">
+      <UniqueIdentifier>{27ca5019-7e32-48b9-b319-5112d42ff7d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Game Object\Monster\Three_Of_A_Kind\Kind">
+      <UniqueIdentifier>{347b944a-cd43-440a-b777-9bbda6b0b6f8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Zelda.h">
@@ -284,6 +290,12 @@
     <ClInclude Include="FireBall.h">
       <Filter>01. Game Object\Monster\FireBall</Filter>
     </ClInclude>
+    <ClInclude Include="ThreeOfOne.h">
+      <Filter>01. Game Object\Monster\Three_Of_A_Kind</Filter>
+    </ClInclude>
+    <ClInclude Include="Kind.h">
+      <Filter>01. Game Object\Monster\Three_Of_A_Kind\Kind</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -406,6 +418,12 @@
     </ClCompile>
     <ClCompile Include="FireBall.cpp">
       <Filter>01. Game Object\Monster\FireBall</Filter>
+    </ClCompile>
+    <ClCompile Include="ThreeOfOne.cpp">
+      <Filter>01. Game Object\Monster\Three_Of_A_Kind</Filter>
+    </ClCompile>
+    <ClCompile Include="Kind.cpp">
+      <Filter>01. Game Object\Monster\Three_Of_A_Kind\Kind</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

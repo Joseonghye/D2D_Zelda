@@ -138,10 +138,10 @@ void CEventTool::OnBnClickedEventObjLoad()
 			ReadFile(hFile, &pInfo->iEventID, sizeof(int), &dwByte, nullptr);
 
 			ReadFile(hFile, &dwStrByte, sizeof(DWORD), &dwByte, nullptr);
-			pStr = new char[dwStrByte]{};
+			pStr = new char[dwStrByte];
 			ReadFile(hFile, pStr, dwStrByte, &dwByte, nullptr);
 		
-			ReadFile(hFile, pInfo->vPos, sizeof(D3DXVECTOR3), &dwByte, nullptr);
+			ReadFile(hFile, &pInfo->vPos, sizeof(D3DXVECTOR3), &dwByte, nullptr);
 
 			if (0 == dwByte)
 			{
@@ -152,12 +152,13 @@ void CEventTool::OnBnClickedEventObjLoad()
 				break;
 			}
 
-			int len = wcslen((wchar_t*)pStr);
+			/*int len = wcslen((wchar_t*)pStr);
 			char* szName = new char[2 * len + 1];
 			size_t tcnt;
-			wcstombs_s(&tcnt, szName, 2 * len + 1 * sizeof(char), (wchar_t*)pStr, 100);
-			pInfo->strValue = szName;
+			wcstombs_s(&tcnt, szName, 2 * len + 1 * sizeof(char), (wchar_t*)pStr, 100);*/
+		//	pInfo->strValue = szName;
 
+			pInfo->strValue = pStr;
 		//	lstrcpy(pInfo->strValue, pStr);
 			
 			pView->m_Terrain->AddEventData(index, pInfo);

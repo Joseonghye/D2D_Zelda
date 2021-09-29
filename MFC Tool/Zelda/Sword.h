@@ -25,5 +25,6 @@ private:
 	float m_fAngle;
 	float m_fStartAngle;
 
+	int m_iAtt;
 };
 

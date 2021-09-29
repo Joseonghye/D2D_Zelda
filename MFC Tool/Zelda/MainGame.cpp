@@ -147,6 +147,14 @@ HRESULT CMainGame::Initialized()
 			return E_FAIL;
 		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Monster/Bat/Bat0%d.png", L"Bat", L"ATTACK_FRONT", 2)))
 			return E_FAIL;
+		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Monster/Three/Yellow.png", L"Three", L"YELLOW_FRONT", 1)))
+			return E_FAIL;
+		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Monster/Three/Red.png", L"Three", L"RED_FRONT", 1)))
+			return E_FAIL;
+		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Monster/Three/Green.png", L"Three", L"GREEN_FRONT", 1)))
+			return E_FAIL;
+		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Monster/Three/Blue.png", L"Three", L"BLUE_FRONT", 1)))
+			return E_FAIL;
 	}
 	//UI
 	{

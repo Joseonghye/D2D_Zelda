@@ -59,12 +59,19 @@ int CHardHat::Update_GameObject()
 	return NO_EVENT;
 }
 
+void CHardHat::Damaged(int Att)
+{
+	m_bPushed = true;
+}
 
-CHardHat * CHardHat::Create()
+
+CHardHat * CHardHat::Create(MONSTERID eID)
 {
 	CHardHat* pInstance = new CHardHat;
 	if (FAILED(pInstance->Initialized_GameObject()))
 		Safe_Delete(pInstance);
+
+	pInstance->SetMonsterID(eID);
 
 	return pInstance;
 }

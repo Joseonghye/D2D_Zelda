@@ -15,7 +15,7 @@ HRESULT CFire::Initialized_GameObject()
 	D3DXMatrixScaling(&m_tInfo.matScale, 1.f, 1.f, 1.f);
 
 	AddComponent(new CBoxCollider(this, m_tInfo.vSize.x, m_tInfo.vSize.y));
-	AddComponent(new CAnimator(this, L"Fire", L"IDLE", L"FRONT", 4, 3.f));
+	AddComponent(new CAnimator(this, L"Fire", L"IDLE", L"FRONT", 4, 1.f));
 
 	return S_OK;
 }

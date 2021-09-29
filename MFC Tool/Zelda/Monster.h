@@ -17,6 +17,11 @@ public:
 	virtual void RegisterObserver(CObserver * observer) override;
 	virtual void RemoveObserver() override;
 
+	virtual void Damaged(int Att) = 0;
+
+	void SetMonsterID(MONSTERID eID) { m_eID = eID; }
+	MONSTERID GetMonsterID() { return m_eID; }
+	
 	bool isPushed() { return m_bPushed; }
 	void Pushed() { m_bPushed = true; }
 
@@ -29,7 +34,8 @@ protected:
 
 protected:
 	CGameObject* m_pTarget;
-	
+	MONSTERID m_eID;
+
 	int m_iHp;
 	int m_iTotalHp;
 	int m_iAtt;

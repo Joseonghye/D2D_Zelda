@@ -53,7 +53,7 @@ public:
 	const D3DXVECTOR3& GetVecDir() { return m_tInfo.vDir; }
 	DIR GetDir() { return m_tInfo.eDir; }
 
-	const bool& const GetVisible() { return m_bVisible; }
+	const bool const GetVisible() { return m_bVisible; }
 	bool GetMove() { return m_bMove; }
 protected:
 	vector<CBaseComponent*> m_vecComponet;

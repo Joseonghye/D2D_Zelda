@@ -2,6 +2,7 @@
 #include "GameScene.h"
 #include "Terrain.h"
 #include "Player.h"
+#include "ThreeOfOne.h"
 
 CGameScene::CGameScene()
 {
@@ -17,13 +18,18 @@ HRESULT CGameScene::Initialized_Scene()
 	CGameObject* pGameObject = Terrain::Create();
 	GAMEOBJECTMGR->Add_GameObject(BACKGROUND, pGameObject);
 	
-	D3DXVECTOR3 vStart = pGameObject->GetPos();// +SCROLLMGR->GetScrollVec();
+	D3DXVECTOR3 vStart = pGameObject->GetPos();
 
 	pGameObject = CPlayer::Create();
 	pGameObject->SetPos(vStart);
 	pGameObject->SetTransMat();
 	pGameObject->SetWorldMat();
 	GAMEOBJECTMGR->Add_GameObject(PLAYER,pGameObject);
+
+	pGameObject = CThreeOfOne::Create(THREE);
+	GAMEOBJECTMGR->Add_GameObject(MONSTER, pGameObject);
+
+	pGameObject = nullptr;
 
 	LoadGameObject(L"../Data/Obj/ObjData.dat");
 	LoadEvent(L"../Data/Event.dat");

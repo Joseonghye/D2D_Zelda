@@ -16,10 +16,10 @@ public:
 	void Release();
 
 public:
-	const LPDIRECT3DDEVICE9& const GetDevice() { return m_pDevice; }
-	const LPD3DXSPRITE& const GetSprite() { return m_pSprite; }
-	const LPD3DXFONT& const GetFont() { return m_pFont; }
-	const LPD3DXLINE& const GetLine() { return m_pLine; }
+	const LPDIRECT3DDEVICE9 const GetDevice() { return m_pDevice; }
+	const LPD3DXSPRITE const GetSprite() { return m_pSprite; }
+	const LPD3DXFONT const GetFont() { return m_pFont; }
+	const LPD3DXLINE const GetLine() { return m_pLine; }
 private:
 	void SetParmeter(D3DPRESENT_PARAMETERS& d3pp);
 
