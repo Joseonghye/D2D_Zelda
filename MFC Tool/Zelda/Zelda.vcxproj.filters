@@ -152,6 +152,12 @@
     <Filter Include="01. Game Object\Monster\BladeTrap">
       <UniqueIdentifier>{448831dd-6727-4038-aaae-53967548c575}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Game Object\UI\HeartUI">
+      <UniqueIdentifier>{d6f6cf3c-a41d-4d5d-a80e-e979c2d16309}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Game Object\Monster\SpikeBettle">
+      <UniqueIdentifier>{c0f61c76-4a95-42a5-a8bb-1defdc6c1065}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Zelda.h">
@@ -281,9 +287,6 @@
     <ClInclude Include="Monster.h">
       <Filter>01. Game Object\Monster</Filter>
     </ClInclude>
-    <ClInclude Include="HeartUI.h">
-      <Filter>01. Game Object\UI</Filter>
-    </ClInclude>
     <ClInclude Include="Bat.h">
       <Filter>01. Game Object\Monster\Bat</Filter>
     </ClInclude>
@@ -307,6 +310,15 @@
     </ClInclude>
     <ClInclude Include="BladeTrap.h">
       <Filter>01. Game Object\Monster\BladeTrap</Filter>
+    </ClInclude>
+    <ClInclude Include="HeartUI.h">
+      <Filter>01. Game Object\UI\HeartUI</Filter>
+    </ClInclude>
+    <ClInclude Include="BottomUI.h">
+      <Filter>01. Game Object\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="SpikedBettle.h">
+      <Filter>01. Game Object\Monster\SpikeBettle</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -416,9 +428,6 @@
     <ClCompile Include="Monster.cpp">
       <Filter>01. Game Object\Monster</Filter>
     </ClCompile>
-    <ClCompile Include="HeartUI.cpp">
-      <Filter>01. Game Object\UI</Filter>
-    </ClCompile>
     <ClCompile Include="Bat.cpp">
       <Filter>01. Game Object\Monster\Bat</Filter>
     </ClCompile>
@@ -442,6 +451,15 @@
     </ClCompile>
     <ClCompile Include="BladeTrap.cpp">
       <Filter>01. Game Object\Monster\BladeTrap</Filter>
+    </ClCompile>
+    <ClCompile Include="HeartUI.cpp">
+      <Filter>01. Game Object\UI\HeartUI</Filter>
+    </ClCompile>
+    <ClCompile Include="BottomUI.cpp">
+      <Filter>01. Game Object\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="SpikedBettle.cpp">
+      <Filter>01. Game Object\Monster\SpikeBettle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

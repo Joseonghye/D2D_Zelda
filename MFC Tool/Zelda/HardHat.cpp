@@ -19,6 +19,8 @@ HRESULT CHardHat::Initialized_GameObject()
 	m_iTotalHp = 1;
 	m_iAtt = 1;
 
+	m_bFall = false;
+
 	m_fSpeed = 20.0f;
 	m_tInfo.vSize = D3DXVECTOR3(32.f,32.f, 0);
 	D3DXMatrixScaling(&m_tInfo.matScale, 1.f, 1.f, 1.f);
@@ -26,7 +28,7 @@ HRESULT CHardHat::Initialized_GameObject()
 	m_pTarget = GAMEOBJECTMGR->GetPlayer();
 
 	AddComponent(new CBoxCollider(this, m_tInfo.vSize.x, m_tInfo.vSize.y));
-	AddComponent(new CAnimator(this, L"HardHat", L"IDLE",L"FRONT",2));
+	m_Animator= static_cast<CAnimator*>(AddComponent(new CAnimator(this, L"HardHat", L"IDLE",L"FRONT",2)));
 
 	return S_OK;
 }
@@ -38,23 +40,30 @@ int CHardHat::Update_GameObject()
 		NotifyObserver();
 		return DEAD;
 	}
-
-	if (m_bPushed)
+	if (m_bFall)
 	{
-		m_tInfo.vPos += (-m_tInfo.vDir) * (m_fSpeed * 10) * TIMEMGR->Get_DeltaTime();
-		m_dwPushTime++;
-		if (m_dwPushTime >= 40) {
-			m_bPushed = false;
-			m_dwPushTime = 0;
-		}
+		if (!m_Animator->GatPlayOnce())
+			m_bDestory = true;
 	}
-
 	else
-		Attack();
+	{
+		if (m_bPushed)
+		{
+			m_tInfo.vPos += (-m_tInfo.vDir) * (m_fSpeed * 10) * TIMEMGR->Get_DeltaTime();
+			m_dwPushTime++;
+			if (m_dwPushTime >= 40) {
+				m_bPushed = false;
+				m_dwPushTime = 0;
+			}
+		}
 
-	D3DXMatrixTranslation(&m_tInfo.matTrans, m_tInfo.vPos.x + SCROLLMGR->GetScrollVec().x , m_tInfo.vPos.y + SCROLLMGR->GetScrollVec().y, m_tInfo.vPos.z);
+		else
+			Attack();
 
-	m_tInfo.matWorld = m_tInfo.matScale * m_tInfo.matTrans;
+		D3DXMatrixTranslation(&m_tInfo.matTrans, m_tInfo.vPos.x + SCROLLMGR->GetScrollVec().x, m_tInfo.vPos.y + SCROLLMGR->GetScrollVec().y, m_tInfo.vPos.z);
+
+		m_tInfo.matWorld = m_tInfo.matScale * m_tInfo.matTrans;
+	}
 
 	return NO_EVENT;
 }
@@ -83,4 +92,12 @@ void CHardHat::Attack()
 
 	m_tInfo.vPos += (m_tInfo.vDir * m_fSpeed * TIMEMGR->Get_DeltaTime());
 
+}
+
+void CHardHat::Fall()
+{
+	m_Animator->SetObjectKey(L"Monster");
+	m_Animator->AniPlayOnce(L"FALL", L"", 2);
+
+	m_bFall = true;
 }

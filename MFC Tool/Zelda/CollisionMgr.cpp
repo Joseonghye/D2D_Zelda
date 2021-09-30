@@ -113,16 +113,22 @@ bool CCollisionMgr::MonsterCollision(vector<CGameObject*> pDst, vector<CGameObje
 			{
 				switch (_id)
 				{
+				case INTERACTION:
 				case WALL:
 					MonsterColl->WallCollision();
 					break;
 
-				case HOLE:
+				case HOLE: 
+				{
 					if (static_cast<CMonster*>(*dst)->isPushed())
-						(*dst)->SetDestory();
+					{
+						D3DXVECTOR3 vec = (*dst)->GetPos() - (*src)->GetPos();
+						if(D3DXVec3Length(&vec) <=8.f)
+							static_cast<CMonster*>(*dst)->Fall();
+					}
 					else
 						MonsterColl->WallCollision();
-		
+				}
 					break;
 				}
 			}

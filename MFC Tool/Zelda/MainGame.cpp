@@ -19,7 +19,7 @@ HRESULT CMainGame::Initialized()
 		return E_FAIL;
 
 	//Insert Tile Texture
-	if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Tile/tile%d.png", L"Terrain", L"Tile", 45)))
+	if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Tile/tile%d.png", L"Terrain", L"Tile", 48)))
 		return E_FAIL;
 	//Insert Player Texture
 	{
@@ -97,12 +97,22 @@ HRESULT CMainGame::Initialized()
 		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Player/Damaged/Damaged_Right0%d.png", L"Player", L"DAMAGED_RIGHT", 4)))
 			return E_FAIL;
 		
+		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Player/Jump/Jump%d.png", L"Player", L"JUMP_FRONT", 6)))
+			return E_FAIL;
+		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Player/Jump/Jump%d.png", L"Player", L"JUMP_BACK", 6)))
+			return E_FAIL;
+		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Player/Jump/Jump_left%d.png", L"Player", L"JUMP_LEFT", 6)))
+			return E_FAIL;
+		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Player/Jump/Jump_Right%d.png", L"Player", L"JUMP_RIGHT", 6)))
+			return E_FAIL;
 	}
 	//Insert Interaction
 	{
 		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::SINGLE, L"../Texture/Object/weed.png", L"Weed")))
 			return E_FAIL;
 		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::SINGLE, L"../Texture/Object/Black.png", L"BALCKSTONE")))
+			return E_FAIL;
+		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::SINGLE, L"../Texture/Object/Crystal.png", L"CRYSTAL")))
 			return E_FAIL;
 		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Object/fire/fire%d.png", L"Fire",L"IDLE_FRONT",4)))
 			return E_FAIL;
@@ -141,11 +151,17 @@ HRESULT CMainGame::Initialized()
 	}
 	//Monster
 	{
+		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Monster/Monster_Fall%d.png", L"Monster", L"FALL_FRONT", 2)))
+			return E_FAIL;
+
+
 		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Monster/HardHat/HardHat0%d.png", L"HardHat", L"IDLE_FRONT", 2)))
 			return E_FAIL;
 		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Monster/Bat/Bat00.png", L"Bat", L"IDLE_FRONT", 1)))
 			return E_FAIL;
 		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Monster/Bat/Bat0%d.png", L"Bat", L"ATTACK_FRONT", 2)))
+			return E_FAIL;
+		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::SINGLE, L"../Texture/Monster/BladeTrap.png", L"BLADE_TRAP")))
 			return E_FAIL;
 		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::MULTI, L"../Texture/Monster/Three/Yellow.png", L"Three", L"YELLOW_FRONT", 1)))
 			return E_FAIL;
@@ -158,6 +174,9 @@ HRESULT CMainGame::Initialized()
 	}
 	//UI
 	{
+		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::SINGLE, L"../Texture/Ui/Bottom.png", L"Bottom")))
+			return E_FAIL;
+
 		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::SINGLE, L"../Texture/Ui/Heart_Full.png", L"Heart_Full")))
 			return E_FAIL;
 		if (FAILED(TEXTUREMGR->InsertTexture(TEXTYPE::SINGLE, L"../Texture/Ui/Heart_Half.png", L"Heart_Half")))

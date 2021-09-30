@@ -3,6 +3,7 @@
 #include "Terrain.h"
 #include "Player.h"
 #include "ThreeOfOne.h"
+#include "BottomUI.h"
 
 CGameScene::CGameScene()
 {
@@ -15,7 +16,10 @@ CGameScene::~CGameScene()
 
 HRESULT CGameScene::Initialized_Scene()
 {
-	CGameObject* pGameObject = Terrain::Create();
+	CGameObject* pGameObject = CBottomUI::Create();
+	GAMEOBJECTMGR->Add_GameObject(UI, pGameObject);
+
+	pGameObject = Terrain::Create();
 	GAMEOBJECTMGR->Add_GameObject(BACKGROUND, pGameObject);
 	
 	D3DXVECTOR3 vStart = pGameObject->GetPos();

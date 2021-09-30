@@ -7,6 +7,7 @@ CBoxCollider::CBoxCollider(CGameObject * const owner, float width, float height)
 {
 	m_rcBound = { 0,0,0,0 };
 	Update_Rect();
+	m_bColl = false;
 }
 
 CBoxCollider::~CBoxCollider()
@@ -45,6 +46,8 @@ void CBoxCollider::Release_Component()
 
 void CBoxCollider::WallCollision()
 {
+	m_bColl = true;
+
 	int collX = m_rcCollision.right - m_rcCollision.left;
 	int collY = m_rcCollision.bottom - m_rcCollision.top;
 

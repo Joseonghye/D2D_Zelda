@@ -15,20 +15,21 @@ public:
 
 	void Update_Animation();
 
+	void SetObjectKey(wstring wstrObjKey) { m_wstrObjectKey = wstrObjKey; }
 	void SetAniState(const wstring& wstrState, wstring wstrdir, float fEndFrame, float fSpeed = 5);
 	void SetDefensAni(bool bDefens);
 	void AniPlayOnce(const wstring& wstrState, wstring wstrdir, float fEndFrame, float fSpeed = 5);
 
 	bool GatPlayOnce() { return m_bOnce; }
-//	void ChangeAnimation();
-	//void SetAniSpeed(float fSpeed);
+
 private:
-	const wstring m_wstrObjectKey;
+	wstring m_wstrObjectKey;
 	wstring m_wstrStateKey;
 	wstring m_wstrDir;
 
 	wstring m_wstrOnceStateKey;
 	float m_fOnceEndFrame;
+	float m_fOnceSpeed;
 
 	float m_fFrame;
 	float m_fEndFrame;

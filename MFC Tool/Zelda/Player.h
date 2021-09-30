@@ -52,6 +52,7 @@ private:
 
 	CEquipment* m_pItem[2];
 
+	bool m_bJump;
 	bool m_bDefense;
 	bool m_bPush;
 	DWORD m_dwPushTime;

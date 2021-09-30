@@ -153,6 +153,7 @@
     <ClInclude Include="Bat.h" />
     <ClInclude Include="BlackStone.h" />
     <ClInclude Include="BladeTrap.h" />
+    <ClInclude Include="BottomUI.h" />
     <ClInclude Include="BoxCollider.h" />
     <ClInclude Include="Check.h" />
     <ClInclude Include="Close.h" />
@@ -187,6 +188,7 @@
     <ClInclude Include="ScrollMgr.h" />
     <ClInclude Include="Shield.h" />
     <ClInclude Include="SingTexture.h" />
+    <ClInclude Include="SpikedBettle.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Subject.h" />
     <ClInclude Include="Sword.h" />
@@ -206,6 +208,7 @@
     <ClCompile Include="Bat.cpp" />
     <ClCompile Include="BlackStone.cpp" />
     <ClCompile Include="BladeTrap.cpp" />
+    <ClCompile Include="BottomUI.cpp" />
     <ClCompile Include="BoxCollider.cpp" />
     <ClCompile Include="Check.cpp" />
     <ClCompile Include="Close.cpp" />
@@ -236,6 +239,7 @@
     <ClCompile Include="ScrollMgr.cpp" />
     <ClCompile Include="Shield.cpp" />
     <ClCompile Include="SingTexture.cpp" />
+    <ClCompile Include="SpikedBettle.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

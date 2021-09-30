@@ -50,13 +50,14 @@ void CAnimator::Update_Animation()
 	m_fFrame += m_fEndFrame * TIMEMGR->Get_DeltaTime() *m_fSpeed;
 	if (m_fFrame >= m_fEndFrame) 
 	{
-		m_fFrame = 0;
 		if (m_bOnce)
 		{
 			m_bOnce = false;
 			m_wstrStateKey = m_wstrOnceStateKey;
 			m_fEndFrame = m_fOnceEndFrame;
+			m_fSpeed = m_fOnceSpeed;
 		}
+		m_fFrame = 0;
 	}
 }
 
@@ -99,9 +100,13 @@ void CAnimator::SetDefensAni(bool bDefens)
 
 void CAnimator::AniPlayOnce(const wstring & wstrState, wstring wstrdir, float fEndFrame, float fSpeed)
 {
+	if (m_bOnce) return;
+
 	m_bOnce = true;
+
 	m_wstrOnceStateKey = m_wstrStateKey;
 	m_fOnceEndFrame = m_fEndFrame;
+	m_fOnceSpeed = m_fSpeed;
 
 	if (fEndFrame != -1)
 	{

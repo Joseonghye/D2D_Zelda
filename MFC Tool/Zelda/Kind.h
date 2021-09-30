@@ -28,6 +28,7 @@ public:
 
 private:
 	virtual void Attack() override;
+	virtual void Fall() override {}
 
 private:
 	CAnimator* m_Animator;

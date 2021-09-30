@@ -4,6 +4,8 @@
 
 #include "Monster.h"
 #include "Subject.h"
+
+class CAnimator;
 class CHardHat : public CMonster
 {
 private:
@@ -20,6 +22,12 @@ public:
 
 	// CMonster을(를) 통해 상속됨
 	virtual void Attack() override;
+	virtual void Fall() override;
+
+private:
+	CAnimator* m_Animator;
+
+	bool m_bFall;
 };
 
 #endif // !__HARDHAT_H__

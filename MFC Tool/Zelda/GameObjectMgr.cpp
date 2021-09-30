@@ -23,6 +23,7 @@ void CGameObjectMgr::Update_GameObjectMgr()
 
 	CollisionMgr.MonsterCollision(m_ObjList[OBJID::MONSTER], m_ObjList[OBJID::WALL], WALL, m_iRoomIndex, m_iNextIndex);
 	CollisionMgr.MonsterCollision(m_ObjList[OBJID::MONSTER], m_ObjList[OBJID::HOLE], HOLE, m_iRoomIndex, m_iNextIndex);
+	CollisionMgr.MonsterCollision(m_ObjList[OBJID::MONSTER], m_ObjList[OBJID::INTERACTION], HOLE, m_iRoomIndex, m_iNextIndex);
 
 
 	for (int i = 0; i < OBJID::OBJID_END; ++i)

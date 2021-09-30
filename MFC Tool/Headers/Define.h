@@ -3,7 +3,7 @@
 #define __DEFINE_H__
 
 #define WINCX 1280//320//1280
-#define WINCY 720//256//720
+#define WINCY 720//320//720
 #define PURE = 0
 #define VIR_KEY 0xff
 #define SAFE_DELETE(p) if(p) {delete p; p=nullptr;}

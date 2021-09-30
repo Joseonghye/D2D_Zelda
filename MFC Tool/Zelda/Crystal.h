@@ -17,7 +17,7 @@ public:
 	virtual void Render_GameObject() override;
 
 	virtual void Damaged() override;
-	virtual bool Pushed(DIR _dir) override {}
+	virtual bool Pushed(DIR _dir) override { return false; }
 public:
 	static CCrystal* Create();
 

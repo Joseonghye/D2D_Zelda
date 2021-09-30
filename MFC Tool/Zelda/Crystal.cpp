@@ -31,7 +31,7 @@ int CCrystal::Update_GameObject()
 
 void CCrystal::Render_GameObject()
 {
-	const TEXINFO* pTexInfo = TEXTUREMGR->GetTexture(L"Crystal");
+	const TEXINFO* pTexInfo = TEXTUREMGR->GetTexture(L"CRYSTAL");
 	if (nullptr == pTexInfo)
 		return;
 

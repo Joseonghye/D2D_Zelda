@@ -23,6 +23,9 @@ public:
 	int GetSize() { return m_vecKind.size(); }
 
 private:
+	virtual void Fall() override {}
+
+private:
 	vector<CKind*> m_vecKind;
 };
 #endif // !__THREEOFONE_H__

@@ -19,6 +19,9 @@ public:
 	bool PointCollision(CBoxCollider* pDst);
 
 	RECT GetBound() { return m_rcBound; }
+
+	void SetbColl(bool b) { m_bColl = b; }
+	bool GetbColl() { return m_bColl; }
 private:
 	void Update_Rect();
 
@@ -28,5 +31,7 @@ private:
 
 	float m_iWidth;
 	float m_iHeight;
+
+	bool m_bColl;
 };
 

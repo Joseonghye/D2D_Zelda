@@ -8,13 +8,14 @@
 //					0000 0010
 #define KEY_RBUTTON 0x00000002
 //					0000 0100
-#define KEY_RETURN	0x00000004
+#define KEY_SPACE	0x00000004
 #define KEY_LEFT	0x00000008
 #define KEY_RIGHT	0x00000010
 #define KEY_UP		0x00000020
 #define KEY_DOWN	0x00000040
 
 #define KEY_CTRL	0x00000080
+#define KEY_ALT		0x00000100
 
 class CKeyMgr: public CSingleTon<CKeyMgr>
 {

@@ -25,6 +25,7 @@ HRESULT CPlayer::Initialized_GameObject()
 	m_bSuper = false;
 	m_dwSuperTime = 0;
 
+	m_bJump = false;
 	m_bDefense = false;
 	m_bPush = false;
 	m_dwPushTime = 0;
@@ -74,9 +75,15 @@ int CPlayer::Update_GameObject()
 			m_dwPushTime = 0;
 		}
 	}
-	else {
+	else if(!m_bJump)
+	{
 		m_eNextState = IDLE;
 	
+		if (KEYMGR->Key_Down(KEY_ALT))
+		{
+			m_eNextState = JUMP;
+		}
+
 		if (KEYMGR->Key_Down(KEY_CTRL) || KEYMGR->Key_Pressing(KEY_CTRL))
 		{
 			m_bDefense = true;
@@ -116,12 +123,12 @@ int CPlayer::Update_GameObject()
 			m_eNextState = WALK;
 		}
 
-		if (KEYMGR->Key_Pressing(KEY_RETURN))
+		if (KEYMGR->Key_Pressing(KEY_SPACE))
 		{
 			m_eNextState = ATTACK;
 		}
-		ChangeState();
 	}
+	ChangeState();
 
 	D3DXMatrixTranslation(&m_tInfo.matTrans, m_tInfo.vPos.x + SCROLLMGR->GetScrollVec().x, 
 								m_tInfo.vPos.y + SCROLLMGR->GetScrollVec().y, m_tInfo.vPos.z);
@@ -208,7 +215,12 @@ bool CPlayer::Defense(D3DXVECTOR3 vPos, D3DXVECTOR3 vMonDir)
 
 void CPlayer::ChangeState()
 {
-	if (m_Animator->GatPlayOnce()) return;
+	if (m_Animator->GatPlayOnce()) 
+		return;
+	else
+	{
+		if (m_bJump) m_bJump = false;
+	}
 
 	if (m_eCurState == m_eNextState && m_eCurDir == m_eNextDir)
 	{
@@ -241,6 +253,12 @@ void CPlayer::ChangeState()
 			wstrStateKey = L"PUSH";
 			fEndFrame = 2;
 			break;
+		case JUMP:
+			wstrStateKey = L"JUMP";
+			fEndFrame = 6;
+			fSpeed = 1;
+			m_bJump = true;
+			break;
 		case DAMAGED:
 			wstrStateKey = L"DAMAGED";
 			fEndFrame = 4;
@@ -249,7 +267,7 @@ void CPlayer::ChangeState()
 		case FALL:
 			wstrStateKey = L"FALL";
 			fEndFrame = 3;
-			fSpeed = 1;
+			fSpeed = 3;
 			break;
 		}
 		m_eCurState = m_eNextState;
@@ -276,8 +294,8 @@ void CPlayer::ChangeState()
 		m_tInfo.eDir = m_eNextDir;
 	}
 
-	if (m_eCurState == FALL || m_eCurState == DAMAGED)
-		m_Animator->AniPlayOnce(wstrStateKey, wstrDir, fEndFrame, fSpeed);
+	if (m_eCurState == JUMP ||m_eCurState == FALL || m_eCurState == DAMAGED)
+  		m_Animator->AniPlayOnce(wstrStateKey, wstrDir, fEndFrame, fSpeed);
 	else 
 	{	
 		m_Animator->SetAniState(wstrStateKey, wstrDir, fEndFrame, fSpeed);

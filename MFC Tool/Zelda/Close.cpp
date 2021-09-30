@@ -4,13 +4,10 @@
 #include "Animator.h"
 #include "BoxCollider.h"
 
-CClose::CClose()
-{
-}
-
-
+CClose::CClose() {}
 CClose::~CClose()
 {
+	Release_GameObject();
 }
 
 HRESULT CClose::Initialized_GameObject()
@@ -40,14 +37,14 @@ int CClose::Update_GameObject()
 	return NO_EVENT;
 }
 
-void CClose::LateUpdate_GameObject()
-{
-}
-
+void CClose::LateUpdate_GameObject() {}
 void CClose::Render_GameObject() {}
 
 void CClose::Release_GameObject()
 {
+	for_each(m_vecComponet.begin(), m_vecComponet.end(), Safe_Delete<CBaseComponent*>);
+	m_vecComponet.clear();
+	m_vecComponet.swap(vector<CBaseComponent*>());
 }
 
 CClose * CClose::Create(int id)

@@ -4,6 +4,7 @@
 #include "Bat.h"
 #include "Kind.h"
 #include "ThreeOfOne.h"
+#include "BladeTrap.h"
 
 #include "Weed.h"
 #include "BlackStone.h"
@@ -87,6 +88,10 @@ void CScene::CreateMonster(string strName,int index, INFO* pInfo)
 	{
 		pGameObj = CBat::Create(BAT);
 	}
+	else if ("BladeTrap" == strName)
+	{
+		pGameObj = CBladeTrap::Create(BLADE);
+	}
 	else if ("Kind" == strName)
 	{
 		pGameObj = CKind::Create(KIND);
@@ -96,7 +101,6 @@ void CScene::CreateMonster(string strName,int index, INFO* pInfo)
 		{
 			Three->SetRoomIndex(index);
 		}
-
 	}
 	
 	if (pGameObj != nullptr) 

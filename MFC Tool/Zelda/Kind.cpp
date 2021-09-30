@@ -97,7 +97,7 @@ void CKind::Attack()
 	}
 
 	//계속해서 문양이 바뀜
-	m_fColor += (5*TIMEMGR->Get_DeltaTime());
+	m_fColor += (3*TIMEMGR->Get_DeltaTime());
 	if (m_fColor >= 4) m_fColor = 0;
 
 	switch ((int)m_fColor)

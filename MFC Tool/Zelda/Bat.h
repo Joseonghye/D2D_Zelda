@@ -22,9 +22,12 @@ public:
 private:
 	// CMonster을(를) 통해 상속됨
 	virtual void Attack() override;
+	virtual void Fall() override;
 
 private:
+	bool m_bDead;
 	bool m_bAttack;
+	bool m_bFall;
 	
 	bool m_bIdle;
 	DWORD m_dwIdleTime;
@@ -39,6 +42,7 @@ private:
 	D3DXVECTOR3 m_vCenter;
 	D3DXVECTOR3 m_vOrign;
 	CAnimator* m_Animator;
+	
 };
 
 #endif // !__BAT_H__

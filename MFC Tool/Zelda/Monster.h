@@ -18,6 +18,7 @@ public:
 	virtual void RemoveObserver() override;
 
 	virtual void Damaged(int Att) = 0;
+	virtual void Fall() = 0;
 
 	void SetMonsterID(MONSTERID eID) { m_eID = eID; }
 	MONSTERID GetMonsterID() { return m_eID; }

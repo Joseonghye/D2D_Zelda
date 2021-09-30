@@ -19,8 +19,8 @@ void CKeyMgr::Update_KeyMgr()
 	//0000 0011
 	if (GetAsyncKeyState(VK_RBUTTON) & 0x8000)
 		m_dwKey |= KEY_RBUTTON;
-	if (GetAsyncKeyState(VK_RETURN) & 0x8000)
-		m_dwKey |= KEY_RETURN;
+	if (GetAsyncKeyState(VK_SPACE) & 0x8000)
+		m_dwKey |= KEY_SPACE;
 
 	if (GetAsyncKeyState(VK_LEFT) & 0x8000)
 		m_dwKey |= KEY_LEFT;
@@ -36,6 +36,9 @@ void CKeyMgr::Update_KeyMgr()
 
 	if (GetAsyncKeyState(VK_CONTROL) & 0x8000)
 		m_dwKey |= KEY_CTRL;
+
+	if (GetAsyncKeyState(VK_MENU) & 0x8000)
+		m_dwKey |= KEY_ALT;
 }
 
 bool CKeyMgr::Key_Up(DWORD dwKey)

@@ -17,6 +17,8 @@ HRESULT CBat::Initialized_GameObject()
 	m_iTotalHp = 2;
 	m_iAtt = 1;
 
+	m_bDead = false;
+	m_bFall = false;
 	m_bAttack = false;
 	m_fRad = 40.f;
 	m_fDist = 70.f;
@@ -38,43 +40,51 @@ HRESULT CBat::Initialized_GameObject()
 
 int CBat::Update_GameObject()
 {
+
 	if (m_bDestory)
 	{
 		NotifyObserver();
 		return DEAD;
 	}
-	if (m_bPushed)
-	{
-		m_tInfo.vPos += (-m_tInfo.vDir) * (m_fSpeed * 10) * TIMEMGR->Get_DeltaTime();
-		m_dwPushTime++;
-		if (m_dwPushTime >= 40) 
-		{
-			m_bPushed = false;
-			m_dwPushTime = 0;
-		}
 
-		D3DXMatrixTranslation(&m_tInfo.matTrans, m_tInfo.vPos.x + SCROLLMGR->GetScrollVec().x, m_tInfo.vPos.y + SCROLLMGR->GetScrollVec().y, m_tInfo.vPos.z);
-		m_tInfo.matWorld = m_tInfo.matScale * m_tInfo.matTrans;
-	}
-	else
+	if (m_bFall)
 	{
-		D3DXVECTOR3 vDir = m_pTarget->GetPos() - m_tInfo.vPos;
-		
-		if (m_bIdle) {
-			++m_dwIdleTime;
-			if (m_dwIdleTime >=300)
+		if (!m_Animator->GatPlayOnce())
+			m_bDestory = true;
+	}
+	else 
+	{
+		if (m_bPushed)
+		{
+			m_tInfo.vPos += (-m_tInfo.vDir) * (m_fSpeed * 10) * TIMEMGR->Get_DeltaTime();
+			m_dwPushTime++;
+			if (m_dwPushTime >= 40)
 			{
-				m_bIdle = false;
-				m_dwIdleTime = 0;
+				m_bPushed = false;
+				m_dwPushTime = 0;
+
+				if (m_bDead)
+					m_bDestory = true;
 			}
+
+			D3DXMatrixTranslation(&m_tInfo.matTrans, m_tInfo.vPos.x + SCROLLMGR->GetScrollVec().x, m_tInfo.vPos.y + SCROLLMGR->GetScrollVec().y, m_tInfo.vPos.z);
+			m_tInfo.matWorld = m_tInfo.matScale * m_tInfo.matTrans;
 		}
 		else
-			Attack();	
+		{
+			if (m_bIdle) 
+			{
+				++m_dwIdleTime;
+				if (m_dwIdleTime >= 300)
+				{
+					m_bIdle = false;
+					m_dwIdleTime = 0;
+				}
+			}
+			else
+				Attack();
+		}
 	}
-
-
-//	D3DXMatrixTranslation(&m_tInfo.matTrans, m_tInfo.vPos.x + SCROLLMGR->GetScrollVec().x, m_tInfo.vPos.y + SCROLLMGR->GetScrollVec().y, m_tInfo.vPos.z);
-//	m_tInfo.matWorld = m_tInfo.matScale * m_tInfo.matTrans;
 
 	return NO_EVENT;
 }
@@ -86,8 +96,10 @@ void CBat::Damaged(int Att)
 	m_iHp -= Att;
 
 	if (m_iHp <= 0)
-		m_bDestory = true;
-
+	{
+		D3DXVec3Normalize(&m_tInfo.vDir,&D3DXVECTOR3(m_pTarget->GetPos() - m_tInfo.vPos));
+		m_bDead = true;
+	}
 	//데미지 애니메이션 
 }
 
@@ -189,4 +201,12 @@ void CBat::Attack()
 			m_fAngle = 0;
 		}
 	}
+}
+
+void CBat::Fall()
+{
+	m_Animator->SetObjectKey(L"Monster");
+	m_Animator->AniPlayOnce(L"FALL", L"", 2);
+
+	m_bFall = true;
 }
