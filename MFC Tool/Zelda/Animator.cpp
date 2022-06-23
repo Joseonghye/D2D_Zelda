@@ -23,12 +23,12 @@ CAnimator::~CAnimator()
 
 int CAnimator::Update_Component()
 {
-	Update_Animation();
 	return 0;
 }
 
 void CAnimator::LateUpdate_Component()
 {
+	Update_Animation();
 }
 
 void CAnimator::Render_Component()
@@ -120,7 +120,9 @@ void CAnimator::AniPlayOnce(const wstring & wstrState, wstring wstrdir, float fE
 
 		m_wstrDir = wstrdir;
 	}
+
 	m_wstrStateKey += L"_" + m_wstrDir;
+
 	m_fFrame = 0;
 	m_fSpeed = fSpeed;
 }

@@ -12,8 +12,11 @@
 CCollisionMgr::CCollisionMgr() {}
 CCollisionMgr::~CCollisionMgr() {}
 
-bool CCollisionMgr::PlayerCollision(CGameObject * pPlayer, vector<CGameObject*> pSrc, OBJID _id, int iRoomIndex, int iNextRoom)
+void CCollisionMgr::PlayerCollision(CGameObject * pPlayer, vector<CGameObject*> pSrc, OBJID _id, int iRoomIndex, int iNextRoom)
 {
+	if (pPlayer->isPushed())
+		if (_id != HOLE) return;
+
 	CBoxCollider* playerCollider = static_cast<CBoxCollider*>(pPlayer->GetComponent(COMPONENTID::COLLISION));
 
 	if (playerCollider != nullptr)
@@ -54,6 +57,11 @@ bool CCollisionMgr::PlayerCollision(CGameObject * pPlayer, vector<CGameObject*> 
 				}  
 				case POTAL:
 					break;
+				case HOLE:
+					//데미지
+					static_cast<CPlayer*>(pPlayer)->Damaged(1, FALL);
+					// 재위치
+					break;
 				case INTERACTION:
 				case WALL:
 				{
@@ -69,11 +77,6 @@ bool CCollisionMgr::PlayerCollision(CGameObject * pPlayer, vector<CGameObject*> 
 
 					break;
 				}
-				case HOLE:
-					//데미지
-					static_cast<CPlayer*>(pPlayer)->Damaged(1, FALL);
-					// 재위치
-					break;
 				case EVENT:
 				{
 					if (static_cast<CGameEvent*>(another->GetParent())->GetEventID() == (int)ENTER)
@@ -86,13 +89,22 @@ bool CCollisionMgr::PlayerCollision(CGameObject * pPlayer, vector<CGameObject*> 
 			}
 		}
 	}
-	return false;
 }
 
 bool CCollisionMgr::MonsterCollision(vector<CGameObject*> pDst, vector<CGameObject*> pSrc, OBJID _id, int iRoomIndex, int iNextRoom)
 {
 	for (auto& dst = pDst.begin(); dst != pDst.end(); ++dst)
 	{
+		int index = (*dst)->GetRoomIndex();
+		if (iNextRoom == -1) 
+		{
+			if (index != iRoomIndex) continue;
+		}
+		else
+		{
+			if (index != iNextRoom) continue;
+		}
+
 		for (auto& src = pSrc.begin(); src != pSrc.end(); ++src)
 		{
 			int index = (*src)->GetRoomIndex();
@@ -120,10 +132,10 @@ bool CCollisionMgr::MonsterCollision(vector<CGameObject*> pDst, vector<CGameObje
 
 				case HOLE: 
 				{
-					if (static_cast<CMonster*>(*dst)->isPushed())
+					if ((*dst)->isPushed())
 					{
 						D3DXVECTOR3 vec = (*dst)->GetPos() - (*src)->GetPos();
-						if(D3DXVec3Length(&vec) <=8.f)
+					//	if(D3DXVec3Length(&vec) <=8.f)
 							static_cast<CMonster*>(*dst)->Fall();
 					}
 					else
@@ -137,4 +149,54 @@ bool CCollisionMgr::MonsterCollision(vector<CGameObject*> pDst, vector<CGameObje
 
 	}
 	return false;
+}
+
+void CCollisionMgr::InteractionCollision(vector<CGameObject*> pDst, vector<CGameObject*> pSrc, OBJID _id, int iRoomIndex, int iNextRoom)
+{
+	for (auto& dst = pDst.begin(); dst != pDst.end(); ++dst)
+	{
+		int index = (*dst)->GetRoomIndex();
+		if (iNextRoom == -1)
+			if (index != iRoomIndex) continue;
+		else
+			if (index != iNextRoom) continue;
+
+		for (auto& src = pSrc.begin(); src != pSrc.end(); ++src)
+		{
+			int index = (*src)->GetRoomIndex();
+			if (iNextRoom == -1) {
+				if (index != iRoomIndex) continue;
+			}
+			else
+				if (index != iNextRoom) continue;
+
+			if (static_cast<CMonster*>(*dst)->GetMonsterID() == BAT) continue;
+
+			CBoxCollider* MonsterColl = static_cast<CBoxCollider*>((*dst)->GetComponent(COMPONENTID::COLLISION));
+			CBoxCollider* another = static_cast<CBoxCollider*>((*src)->GetComponent(COMPONENTID::COLLISION));
+
+			if (!MonsterColl || !another) continue;
+
+			if (MonsterColl->CheckCollision(another))
+			{
+				switch (_id)
+				{
+				case INTERACTION:
+				case WALL:
+					MonsterColl->WallCollision();
+					break;
+
+				case EVENT:
+					static_cast<CGameEvent*>(another->GetParent())->Using();
+					break;
+
+				case HOLE:
+					MonsterColl->WallCollision();
+					break;
+				}
+			}
+
+		}
+
+	}
 }

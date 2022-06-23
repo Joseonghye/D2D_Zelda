@@ -19,13 +19,18 @@ CPlayer::~CPlayer()
 
 HRESULT CPlayer::Initialized_GameObject()
 {
+	m_bRealSuper = false;
+
 	m_iTotalHp = 6;
 	m_iHp = 6;
 
 	m_bSuper = false;
 	m_dwSuperTime = 0;
 
+	m_fJumpY = 0;
 	m_bJump = false;
+	m_bUp = true;
+
 	m_bDefense = false;
 	m_bPush = false;
 	m_dwPushTime = 0;
@@ -35,12 +40,12 @@ HRESULT CPlayer::Initialized_GameObject()
 	m_bVisible = true;
 
 	m_tInfo.vDir = { 0.f,1.f,0.f };
-	m_tInfo.vSize = { 30.f, 30.f, 0.f };
+	m_tInfo.vSize = { 25.f, 25.f, 0.f };
 	m_tInfo.eDir = FRONT;
 
 	D3DXMatrixScaling(&m_tInfo.matScale, 1.f, 1.f, 1.f);
 
-	m_Collider = static_cast<CBoxCollider*>(AddComponent(new CBoxCollider(this, m_tInfo.vSize.x, m_tInfo.vSize.y)));
+	m_Collider = static_cast<CBoxCollider*>(AddComponent(new CBoxCollider(this, m_tInfo.vSize.x, m_tInfo.vSize.y,true)));
 	m_Animator = static_cast<CAnimator*>(AddComponent(new CAnimator(this, L"Player", L"IDLE")));
 
 	m_pItem[0] = new CSword();
@@ -56,90 +61,109 @@ HRESULT CPlayer::Initialized_GameObject()
 
 int CPlayer::Update_GameObject()
 {
+	if (m_bDestory)
+	{
+		SCENEMGR->Change_SceneMgr(SCENE::PLAYER_DEAD);
+		return DEAD;
+	}
+
 	if (m_pItem[0] != nullptr)
 		m_pItem[0]->Update_GameObject();
+
+	if (m_eCurState == FALL) 
+	{
+		if (!m_Animator->GatPlayOnce())
+		{
+			//ÀÚ¸®ÁöÁ¤ 
+			m_tInfo.vPos.y += 18;
+			//
+			Damaged(0, DAMAGED);
+		}
+	}
+
+	if (m_bJump)
+	{
+		if (m_bUp)
+			m_fJumpY -= 0.2f;
+		else {
+			m_fJumpY += 0.2f;
+
+			if (m_fJumpY >= 0)
+				m_fJumpY = 0;
+		}
+		if (m_fJumpY <= -10.f)
+		{
+			m_bUp = false;
+		}
+
+	}
+	else
+	{
+		m_bUp = true;
+		m_fJumpY = 0;
+	}
 
 	if (m_bSuper)
 	{
 		m_dwSuperTime++;
-		if (m_dwSuperTime >= 40)
+		if (m_dwSuperTime >= 100)
 			m_bSuper = false;
 	}
-
 	if (m_bPush)
 	{
 		m_tInfo.vPos += m_tInfo.vDir * m_fSpeed * TIMEMGR->Get_DeltaTime();
 		m_dwPushTime++;
-		if (m_dwPushTime >= 25) {
+		if (m_dwPushTime >= 30) 
 			m_bPush = false;
-			m_dwPushTime = 0;
-		}
 	}
-	else if(!m_bJump)
+	else 
 	{
 		m_eNextState = IDLE;
-	
-		if (KEYMGR->Key_Down(KEY_ALT))
+
+		Move();
+
+		if (KEYMGR->Key_Down(KEY_Q))
+		{
+			if (!m_bRealSuper)m_bRealSuper = true;
+			else m_bRealSuper = false;
+		}
+
+		if (KEYMGR->Key_Down(KEY_Z))
 		{
 			m_eNextState = JUMP;
+			SOUNDMGR->StopSound(CSoundMgr::PLAYER);
+			SOUNDMGR->PlaySound(L"LA_Link_Jump.wav", CSoundMgr::PLAYER);
 		}
-
-		if (KEYMGR->Key_Down(KEY_CTRL) || KEYMGR->Key_Pressing(KEY_CTRL))
-		{
-			m_bDefense = true;
-			m_pItem[1]->StartUsing(m_tInfo.eDir);
-		}
-		else {
-			m_bDefense = false;
-		}
-
-		if (KEYMGR->Key_Pressing(KEY_LEFT))
-		{
-			m_tInfo.vPos.x -= m_fSpeed * TIMEMGR->Get_DeltaTime();
-			m_tInfo.vDir.x = -1.f;
-			m_eNextDir = LEFT;
-			m_eNextState = WALK;
-		}
-		else if (KEYMGR->Key_Pressing(KEY_RIGHT))
-		{
-			m_tInfo.vPos.x += m_fSpeed* TIMEMGR->Get_DeltaTime();
-			m_tInfo.vDir.x = 1.f;
-			m_eNextDir = RIGHT;
-			m_eNextState = WALK;
-		}
-
-		if (KEYMGR->Key_Pressing(KEY_UP))
-		{
-			m_tInfo.vPos.y -= m_fSpeed* TIMEMGR->Get_DeltaTime();
-			m_tInfo.vDir.y = -1.f;
-			m_eNextDir = BACK;
-			m_eNextState = WALK;
-		}
-		else if (KEYMGR->Key_Pressing(KEY_DOWN))
-		{
-			m_tInfo.vPos.y += m_fSpeed* TIMEMGR->Get_DeltaTime();
-			m_tInfo.vDir.y = 1.f;
-			m_eNextDir = FRONT;
-			m_eNextState = WALK;
-		}
-
-		if (KEYMGR->Key_Pressing(KEY_SPACE))
+		else if (KEYMGR->Key_Pressing(KEY_SPACE))
 		{
 			m_eNextState = ATTACK;
 		}
+		
+		if (KEYMGR->Key_Down(KEY_CTRL) || KEYMGR->Key_Pressing(KEY_CTRL))
+		{
+			if (!m_bDefense) 
+			{
+				SOUNDMGR->StopSound(CSoundMgr::PLAYER);
+				SOUNDMGR->PlaySound(L"LA_Shield.wav", CSoundMgr::PLAYER);
+				m_bDefense = true;
+			}
+			m_pItem[1]->StartUsing(m_tInfo.eDir);
+		}
+		else if (m_bDefense)
+			m_bDefense = false;
 	}
+	
 	ChangeState();
 
-	D3DXMatrixTranslation(&m_tInfo.matTrans, m_tInfo.vPos.x + SCROLLMGR->GetScrollVec().x, 
-								m_tInfo.vPos.y + SCROLLMGR->GetScrollVec().y, m_tInfo.vPos.z);
+
+	D3DXMatrixTranslation(&m_tInfo.matTrans, m_tInfo.vPos.x + SCROLLMGR->GetScrollVec().x,
+		m_tInfo.vPos.y+ m_fJumpY + SCROLLMGR->GetScrollVec().y, m_tInfo.vPos.z);
 	m_tInfo.matWorld = m_tInfo.matScale * m_tInfo.matTrans;
 
 	return NO_EVENT;
 }
 
-void CPlayer::LateUpdate_GameObject()
-{
-}
+void CPlayer::LateUpdate_GameObject() {}
 
 void CPlayer::Render_GameObject()
 {
@@ -166,29 +190,80 @@ CPlayer * CPlayer::Create()
 	return pInstance;
 }
 
+void CPlayer::Move()
+{
+	if (KEYMGR->Key_Pressing(KEY_LEFT))
+	{
+		m_tInfo.vPos.x -= m_fSpeed * TIMEMGR->Get_DeltaTime();
+		m_tInfo.vDir.x = -1.f;
+		m_eNextDir = LEFT;
+		m_eNextState = WALK;
+	}
+	else if (KEYMGR->Key_Pressing(KEY_RIGHT))
+	{
+		m_tInfo.vPos.x += m_fSpeed* TIMEMGR->Get_DeltaTime();
+		m_tInfo.vDir.x = 1.f;
+		m_eNextDir = RIGHT;
+		m_eNextState = WALK;
+	}
+
+	if (KEYMGR->Key_Pressing(KEY_UP))
+	{
+		m_tInfo.vPos.y -= m_fSpeed* TIMEMGR->Get_DeltaTime();
+		m_tInfo.vDir.y = -1.f;
+		m_eNextDir = BACK;
+		m_eNextState = WALK;
+	}
+	else if (KEYMGR->Key_Pressing(KEY_DOWN))
+	{
+		m_tInfo.vPos.y += m_fSpeed* TIMEMGR->Get_DeltaTime();
+		m_tInfo.vDir.y = 1.f;
+		m_eNextDir = FRONT;
+		m_eNextState = WALK;
+	}
+
+}
+
 void CPlayer::Attack()
 {
+	SOUNDMGR->StopSound(CSoundMgr::PLAYER);
+	SOUNDMGR->PlaySound(L"LOZ_Sword_Slash.wav", CSoundMgr::PLAYER);
 	m_pItem[0]->StartUsing(m_eCurDir);
 }
 
 void CPlayer::Damaged(int att, STATE eState)
 {
-	if (m_bSuper) return;
+	if (m_bJump) return;
+	if (m_bPush) return;
+	if(att >0)
+		if (m_bSuper) return;
+	
 	m_dwSuperTime = 0;
 	m_bSuper = true;
 
-	NotifyObserver();
-	m_iHp -= att;
-	if (m_iHp <= 0)
+	if (eState != FALL)
 	{
-		//»ç¸Á
-		return;
+		if (att > 0) {
+			m_bPush = true;
+			m_dwPushTime = 0;
+			m_tInfo.vDir *= -1;
+		}
 	}
 
-	m_tInfo.vDir *= -1;
+	if (!m_bRealSuper) {
+		m_iHp -= att;
+		if (m_iHp <= 0)
+		{
+			m_bDestory = true;
+			//»ç¸Á
+			return;
+		}
 
-	if(eState != FALL)
-		m_bPush = true;
+		if (att > 0) {
+			//hp UI
+			NotifyObserver();
+		}
+	}
 
 	SetState(eState);
 }
@@ -204,6 +279,9 @@ bool CPlayer::Defense(D3DXVECTOR3 vPos, D3DXVECTOR3 vMonDir)
 	if (D3DXVec3Dot(&m_tInfo.vDir, &vDir) > 0)
 	{
 		m_bPush = true;
+		SOUNDMGR->StopSound(CSoundMgr::PLAYER);
+		SOUNDMGR->PlaySound(L"LA_Shield_Deflect.wav", CSoundMgr::PLAYER);
+
 		m_dwPushTime = 0;
 		//Á©´Ù µÚ·Î ¹Ð¸²
 		m_tInfo.vDir = vMonDir;
@@ -215,11 +293,11 @@ bool CPlayer::Defense(D3DXVECTOR3 vPos, D3DXVECTOR3 vMonDir)
 
 void CPlayer::ChangeState()
 {
-	if (m_Animator->GatPlayOnce()) 
-		return;
+	if (m_Animator->GatPlayOnce()) return;
 	else
 	{
-		if (m_bJump) m_bJump = false;
+		if (m_bJump) 
+			m_bJump = false;
 	}
 
 	if (m_eCurState == m_eNextState && m_eCurDir == m_eNextDir)
@@ -255,19 +333,21 @@ void CPlayer::ChangeState()
 			break;
 		case JUMP:
 			wstrStateKey = L"JUMP";
-			fEndFrame = 6;
-			fSpeed = 1;
+			fEndFrame = 4;
+			fSpeed = 1.5f;
 			m_bJump = true;
 			break;
 		case DAMAGED:
 			wstrStateKey = L"DAMAGED";
 			fEndFrame = 4;
-			fSpeed = 7;
+			fSpeed = 5;
 			break;
 		case FALL:
 			wstrStateKey = L"FALL";
 			fEndFrame = 3;
 			fSpeed = 3;
+			SOUNDMGR->StopSound(CSoundMgr::PLAYER);
+			SOUNDMGR->PlaySound(L"LA_Link_Fall.wav", CSoundMgr::PLAYER);
 			break;
 		}
 		m_eCurState = m_eNextState;
@@ -305,16 +385,17 @@ void CPlayer::ChangeState()
 
 void CPlayer::RegisterObserver(CObserver * observer)
 {
-	m_pObserver = observer;
+	m_pObserver.emplace_back(observer);
 }
 
 void CPlayer::RemoveObserver()
 {
-	m_pObserver = nullptr;
+	m_pObserver.clear();
+	m_pObserver.swap(vector<CObserver*>());
 }
 
 void CPlayer::NotifyObserver()
 {
-	if (m_pObserver)
-		m_pObserver->OnNotify();
+	for (auto& iter = m_pObserver.begin(); iter != m_pObserver.end(); ++iter)
+		(*iter)->OnNotify();
 }

@@ -96,6 +96,8 @@ void CHardHat::Attack()
 
 void CHardHat::Fall()
 {
+	if (m_bFall) return;
+
 	m_Animator->SetObjectKey(L"Monster");
 	m_Animator->AniPlayOnce(L"FALL", L"", 2);
 

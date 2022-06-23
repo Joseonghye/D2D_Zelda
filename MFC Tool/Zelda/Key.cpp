@@ -14,7 +14,7 @@ CKey::~CKey()
 HRESULT CKey::Initialized_GameObject()
 {
 	m_bVisible = true;
-	m_tInfo.vSize = D3DXVECTOR3(32, 32, 0);
+	m_tInfo.vSize = D3DXVECTOR3(16, 32, 0);
 
 	D3DXMatrixScaling(&m_tInfo.matScale, 1.f, 1.f, 1.f);
 	m_Collider = static_cast<CBoxCollider*>(AddComponent(new CBoxCollider(this, m_tInfo.vSize.x, m_tInfo.vSize.y)));
@@ -24,6 +24,9 @@ HRESULT CKey::Initialized_GameObject()
 
 int CKey::Update_GameObject()
 {
+	if (KEYMGR->Key_Down(KEY_X))
+		return DEAD;
+
 	if (GAMEOBJECTMGR->isChanging())
 	{
 		D3DXMatrixTranslation(&m_tInfo.matTrans, m_tInfo.vPos.x + SCROLLMGR->GetScrollVec().x, m_tInfo.vPos.y + SCROLLMGR->GetScrollVec().y, m_tInfo.vPos.z);

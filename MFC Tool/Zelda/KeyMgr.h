@@ -15,7 +15,9 @@
 #define KEY_DOWN	0x00000040
 
 #define KEY_CTRL	0x00000080
-#define KEY_ALT		0x00000100
+#define KEY_Z		0x00000100
+#define KEY_X		0x00000200
+#define KEY_Q		0x00000400
 
 class CKeyMgr: public CSingleTon<CKeyMgr>
 {

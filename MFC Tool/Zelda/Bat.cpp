@@ -2,6 +2,7 @@
 #include "Bat.h"
 #include "BoxCollider.h"
 #include "Animator.h"
+#include "Effect.h"
 
 CBat::CBat()
 {
@@ -44,6 +45,13 @@ int CBat::Update_GameObject()
 	if (m_bDestory)
 	{
 		NotifyObserver();
+		CGameObject* effect = CEffect::Create(m_tInfo.vPos);
+		effect->SetRoomIndex(m_iRoomIndex);
+		GAMEOBJECTMGR->Add_GameObject(EFFECT, effect);
+		effect = nullptr;
+
+		SOUNDMGR->PlaySound(L"LOZ_Enemy_Die.wav", CSoundMgr::MONSTER);
+
 		return DEAD;
 	}
 
@@ -91,6 +99,8 @@ int CBat::Update_GameObject()
 
 void CBat::Damaged(int Att)
 {
+	SOUNDMGR->PlaySound(L"LOZ_Enemy_Hit.wav", CSoundMgr::MONSTER);
+
 	m_bPushed = true;
 	
 	m_iHp -= Att;

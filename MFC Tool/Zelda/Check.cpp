@@ -31,7 +31,8 @@ int CCheck::Update_GameObject()
 	if (m_iMonsterCount == 0) 
 	{
 		//다 잡혔으면 그에 따른 결과.
-		if (m_strValue == "Key") {
+		if (m_strValue == "Key") 
+		{
 			m_pObj = CKey::Create();
 
 			m_pObj->SetRoomIndex(m_iRoomIndex);
@@ -94,7 +95,7 @@ void CCheck::SetMonsterCount()
 			if (m_iMonsterCount == -1) m_iMonsterCount = 1;
 			else  ++m_iMonsterCount;
 			
-			static_cast<CHardHat*>(iter)->RegisterObserver(this);
+			static_cast<CMonster*>(iter)->RegisterObserver(this);
 		}
 	}
 }

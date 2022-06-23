@@ -28,6 +28,8 @@ public:
 public:
 	static CPlayer* Create();
 
+	void Move();
+
 	void SetStartPos(D3DXVECTOR3 vPos) { m_tInfo.vPos = vPos; }
 	void SetState(STATE eState) { m_eNextState = eState; ChangeState(); }
 	void Damaged(int att, STATE eState);
@@ -46,6 +48,8 @@ private:
 	int m_iHp;
 	int m_iTotalHp;
 
+	bool m_bRealSuper;
+
 	float m_fSpeed;
 	CBoxCollider* m_Collider;
 	CAnimator* m_Animator;
@@ -53,6 +57,9 @@ private:
 	CEquipment* m_pItem[2];
 
 	bool m_bJump;
+	float m_fJumpY;
+	bool m_bUp;
+
 	bool m_bDefense;
 	bool m_bPush;
 	DWORD m_dwPushTime;

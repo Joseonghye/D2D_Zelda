@@ -37,8 +37,12 @@ void CKeyMgr::Update_KeyMgr()
 	if (GetAsyncKeyState(VK_CONTROL) & 0x8000)
 		m_dwKey |= KEY_CTRL;
 
-	if (GetAsyncKeyState(VK_MENU) & 0x8000)
-		m_dwKey |= KEY_ALT;
+	if (GetAsyncKeyState('Z') & 0x8000)
+		m_dwKey |= KEY_Z;
+	if (GetAsyncKeyState('X') & 0x8000)
+		m_dwKey |= KEY_X;
+	if (GetAsyncKeyState('Q') & 0x8000)
+		m_dwKey |= KEY_Q;
 }
 
 bool CKeyMgr::Key_Up(DWORD dwKey)
